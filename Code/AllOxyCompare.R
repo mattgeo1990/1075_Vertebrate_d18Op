@@ -61,6 +61,23 @@
   # calculate SE and merge with lit_data_BySpec
   lit_data_BySpec <- mutate(lit_data_BySpec, SE = (SD/sqrt(n)))
 
+  
+  # Calculate sample size for each eco_type and site
+  sample_size_by_eco_site <- lit_data_BySpec %>%
+    group_by(eco_type, site) %>%
+    summarise(Sample_Size = n())
+  
+  # Create the plot
+  ggplot(sample_size_by_eco_site, aes(x = site, y = Sample_Size, fill = eco_type)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    labs(title = "Sample Size by Eco Type and Site",
+         x = "Site",
+         y = "Sample Size",
+         fill = "Eco Type") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
+  
+
 # V1075
   # for each unique specimen in V1075, calculate mean of that specimen 
     # use dplyr to summarize by group, assign to new dataframe 
@@ -80,7 +97,6 @@
       V1075_BySpec <- mutate(V1075_BySpec, SE = (SD/sqrt(n)))
     # rename columns consistent with lit_data dataset
       names(V1075_BySpec)[names(V1075_BySpec) == "Eco"] <- "eco_type"
-
 
       
       
@@ -716,6 +732,36 @@ ggplot(lit_data_BySpec, aes(x = site, y = d18O, fill = site)) +
 summary(V1075$d18O..VSMOW.)
 
 
+
+# plot sample size by eco_type and site for lit data
+
+  # Calculate sample size for each eco_type
+  sample_size_by_eco <- V1075_BySpec %>%
+    group_by(eco_type) %>%
+    summarise(Sample_Size = n())
+  
+  # Create the plot
+  ggplot(sample_size_by_eco, aes(x = eco_type, y = Sample_Size)) +
+    geom_bar(stat = "identity", fill = "skyblue") +
+    labs(title = "Sample Size by Eco Type",
+         x = "Eco Type",
+         y = "Sample Size") +
+    theme_minimal()
+  
+# plot sample size by eco_type and site for 1075 data
+  
+  # Calculate sample size for each eco_type
+  sample_size_by_eco <- V1075_BySpec %>%
+    group_by(eco_type) %>%
+    summarise(Sample_Size = n())
+  
+  # Create the plot
+  ggplot(sample_size_by_eco, aes(x = eco_type, y = Sample_Size)) +
+    geom_bar(stat = "identity", fill = "skyblue") +
+    labs(title = "Sample Size by Eco Type",
+         x = "Eco Type",
+         y = "Sample Size") +
+    theme_minimal()
 
 # pub visuals -------------------------------------------------------------
 
