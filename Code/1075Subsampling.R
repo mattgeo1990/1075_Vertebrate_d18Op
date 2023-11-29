@@ -260,3 +260,68 @@ ggplot(plot_data, aes(x = n, y = proportion)) +
        x = "Sample Size",
        y = "Proportion") +
   theme_minimal()
+
+
+# Multi-Taxa  -------------------------------------------------------------
+
+# Assuming 'x' is your d18O values and 'Eco' is your grouping variable
+x <- V1075_BySpec$d18O
+groups <- V1075_BySpec$eco_type
+
+# Create an empty list to store results for each group
+results_list <- list()
+
+# Loop over each Eco group
+for (group in unique(groups)) {
+  # Subset the data for the current group
+  group_data <- x[groups == group]
+  
+  # Ovis Simulation 1
+  output <- matrix(0, nrow = 50, ncol = 1000)
+  output1 <- matrix(0, nrow = 50, ncol = 1000)
+  output2 <- matrix(0, nrow = 48, ncol = 1)
+  output3 <- matrix(0, nrow = 48, ncol = 1)
+  
+  for (n in 1:49) {
+    for (m in 1:1000) {
+      y <- sample(group_data, 50, replace = TRUE)
+      output[n, m] <- mean(y[1:(n + 1)])
+    }
+  }
+  
+  for (n in 1:49) {
+    for (m in 1:1000) {
+      output1[n, m] <- abs(output[n, m] - output[n + 1, m])
+    }
+  }
+  
+  for (n in 1:48) {
+    output2[n, 1] <- mean(output1[n, 1:1000])
+    output3[n, 1] <- sd(output1[n, 1:1000])
+  }
+  
+  # Store results in a data frame
+  plot_data <- data.frame(
+    Group = rep(group, 48),
+    n = 1:48,
+    mean_improvement = output2[, 1],
+    sd_improvement = output3[, 1]
+  )
+  
+  # Add results to the list
+  results_list[[group]] <- plot_data
+}
+
+# Combine results for all groups into a single data frame
+combined_results <- do.call(rbind, results_list)
+
+# Plot with ggplot2
+library(ggplot2)
+ggplot(combined_results, aes(x = n, y = mean_improvement, color = Group, linetype = Group)) +
+  geom_line() +
+  labs(title = "Mean Improvement vs. Sample Size by Eco Group",
+       x = "Sample Size",
+       y = "Mean Improvement",
+       color = "Eco Group",
+       linetype = "Eco Group") +
+  theme_minimal()
