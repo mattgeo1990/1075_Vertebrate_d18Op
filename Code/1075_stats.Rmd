@@ -1,0 +1,63 @@
+---
+title: "1075 Stats"
+author: "Matthew Allen"
+date: "2023-11-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Evaluating sample size for multi-taxon bioapatite isotope studies
+
+Accuracy and precision of paleo-temperature estimates derived from d18O of vertebrate bioapatite depend on intra-taxon sample size. That is, for each taxon or eco-type included in such an analysis, an adequate number of individuals from that group must be sampled in order to adequately reduce uncertainty and improve confidence in accuracy.
+
+Multiple biological and environmental factors introduce variability into d18O distributions within taxonomic groups within a single fossil assemblage (i.e. "site"). The influence of each of these factors is likely to vary across time and space. Thus, it is necessary to evaluate such intra-taxon d18O variability within a single assemblage to understand what is an adequate sample size for each taxon in assemblages where it is represented.
+
+Here I will demonstrate how sample size affects temperature estimates for a single assemblage in the Albian (mid-Cretaceous) of Montana. I will also demonstrate methods for determining target sample sizes for multi-taxon stable isotope analyses in general.
+
+## Effect of intra-taxon d18Op sample size on temperature estimates
+
+```{r}
+# Ultimately this code will source data from Github. For now it is local
+
+# Here I will include a code chunk that will:
+  # load the required packages
+  # source the data (V1075_BySpec.csv)
+  # plot a histogram for each eco_type to visualize the d18Op distributions
+ 
+```
+
+## Histograms of d18Op for each eco_type (taxon)
+
+Here will be a plot as described. I will include observations about noteworthy distributions here (e.g. note that small theropod distribution is bimodal, fish distribution is normal, etc.).
+
+```{r pressure, echo=TRUE}
+plot(pressure)
+```
+
+## Compute proxy parameters. Propagate uncertainties or run sensitivity analyses.
+
+```{r}
+ # Here I will include code chunk that will:
+  # Compute d18Omw and temp proxy estimates with uncertainties
+  # 
+     
+```
+
+## Demonstrate direct Monte Carlo simulation and boostrapping as methods to determine target sample size.
+
+```{r}
+# Here I will include code chunk that will:
+  # run direct Monte Carlo simulation of 1000 d18Op values
+  # run 10,000 bootstraps on simulated data
+  # generate plots that show 
+    # relationship between sample size and precision of means
+    # relationships between sample size and estimated accuracy of means (95% confidence that true mean was captured by   each subsample)
+```
+
+```{r}
+# PLACEHOLDER
+
+```

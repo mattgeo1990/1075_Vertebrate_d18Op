@@ -98,7 +98,8 @@
     # rename columns consistent with lit_data dataset
       names(V1075_BySpec)[names(V1075_BySpec) == "Eco"] <- "eco_type"
 
-      
+      setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+      write.csv(V1075_BySpec, "V1075_BySpec.csv")
       
 # visualize by specimen
     # lit_data_BySpec
@@ -763,6 +764,41 @@ summary(V1075$d18O..VSMOW.)
          y = "Sample Size") +
     theme_minimal()
 
+# histograms of d18O by eco_type
+  # Plotting a panel of histograms
+  ggplot(V1075_BySpec, aes(x = d18O, fill = eco_type)) +
+    geom_histogram(binwidth = 1, color = "black", alpha = 0.7) +
+    labs(title = "Histogram of d18O by eco_type",
+         x = "d18O",
+         y = "Frequency") +
+    theme_minimal() +
+    facet_wrap(~eco_type, scales = "free")
+  
+  
+  # Perform Shapiro-Wilk test for normality for each eco_type
+  shapiro_tests <- by(V1075_BySpec$d18O, V1075_BySpec$eco_type, shapiro.test)
+  
+  # Display normality test results
+  cat("\nNormality Tests:\n")
+  print(shapiro_tests)
+  
+  # Extract p-values from the test results
+  p_values <- sapply(shapiro_tests, function(x) x$p.value)
+  
+  # Highlight non-normally distributed groups (p-value < 0.05)
+  non_normal_groups <- names(p_values[p_values < 0.05])
+  cat("\nNon-normally distributed groups:", ifelse(length(non_normal_groups) > 0, paste(non_normal_groups, collapse = ", "), "None"), "\n")
+
+# Filter data for "Small Theropod" eco_type
+  small_theropod_data <- subset(V1075_BySpec, eco_type == "Small Theropod")
+  
+# Plotting histogram for "Small Theropod" eco_type
+  ggplot(small_theropod_data, aes(x = d18O)) +
+    geom_histogram(binwidth = 1, color = "black", fill = "lightblue", alpha = 0.7) +
+    labs(title = "Histogram of d18O for Small Theropod",
+         x = "d18O",
+         y = "Frequency") +
+    theme_minimal()
 # pub visuals -------------------------------------------------------------
 
 V1075_ByEco
