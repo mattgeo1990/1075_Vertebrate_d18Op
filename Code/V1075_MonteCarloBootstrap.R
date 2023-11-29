@@ -103,6 +103,39 @@ if (!require(dplyr)) {
 
 # Sand Box ----------------------------------------------------------------
 
+    # Assuming "grouped_data" is your grouped data frame and includes "d18O" column
+    # Replace "d18O" and "eco_type" with the actual column names in your data frame
+    
+    # Function to generate random samples for a given eco_type and calculate mean and sd
+    generate_and_summarize_samples <- function(subset_data, n_samples = 1000000, min_sample_size = 2, max_sample_size = 50) {
+      if (nrow(subset_data) == 0) {
+        return(data.frame())  # Return an empty data frame if there are no rows for the given eco_type
+      }
+      
+      sampled_data <- lapply(seq(min_sample_size, max_sample_size), function(sample_size) {
+        replicate(n_samples, {
+          sample_values <- sample(subset_data$d18O, size = sample_size, replace = TRUE)
+          data.frame(
+            eco_type = subset_data$eco_type[1],  # use the first value, assuming it's the same for all
+            sample_size = sample_size,
+            mean_value = mean(sample_values),
+            sd_value = sd(sample_values),
+            sampled_d18O = list(sample_values)
+          )
+        })
+      })
+      
+      return(bind_rows(unlist(sampled_data, recursive = FALSE)))
+    }
+    
+    # Generate random samples and calculate mean and sd for each eco_type
+    random_samples_data <- grouped_data %>%
+      group_modify(~ generate_and_summarize_samples(.x, n_samples = 1000000))
+    
+    # Check the structure of the random_samples_data
+    str(random_samples_data)
+    
+    
     
     
     
