@@ -1,13 +1,55 @@
 
 
 # Packages, Data, Objects -------------------------------------------------
+  
+  # Packages
+    # Vector of package names
+    packages <- c("dplyr", "ggplot2", "readr", "magrittr", "tidyr", "purrr")
+    
+    # Function to check and install packages
+    check_and_install_packages <- function(packages) {
+      # Check if each package is installed
+      missing_packages <- setdiff(packages, installed.packages()[,"Package"])
+      
+      # Install missing packages
+      if (length(missing_packages) > 0) {
+        install.packages(missing_packages, dependencies = TRUE)
+      }
+      
+      # Load all packages
+      loaded_packages <- sapply(packages, function(pkg) {
+        if (!requireNamespace(pkg, quietly = TRUE)) {
+          message(paste("Installing and loading", pkg))
+          install.packages(pkg, dependencies = TRUE)
+        }
+        library(pkg, character.only = TRUE)
+      })  
+      
+      # Return a logical vector indicating whether each package is successfully loaded
+      return(loaded_packages)
+    }
+    
+    check_and_install_packages(packages)
 
-# Install and load packages if not already installed
-if (!require(dplyr)) {
-  install.packages("dplyr")
-  library(dplyr)
-}
-
+  # Data
+    # GitHub raw URL for the CSV file
+    github_url <- "https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_BySpec.csv?token=GHSAT0AAAAAACK5C64YWQHDH7OGHIMUU4NQZLIUCJQ"
+    
+    # Read the CSV file into a data frame
+    V1075_BySpec <- read_csv(github_url)
+    
+    # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
+      # NEED NIST120C STD d18Op from Run 3!!!!!
+      # ultimately want this to source from GitHub
+      # the subsetting/cleaning done here should be done elsewhere and then saved as cleaned csv that can be sourced here directly from Github
+        setwd("/Users/allen/Documents/Data Analysis/Data/Geochem")
+        NIST120c <- read.csv("V1075_NIST120c_Run1&2.csv")
+        
+        hist(NIST120c$d.18O.16O)
+        # identified a single outlier. Why just this one bust? Anyways, omit it.
+        NIST120c <- subset(NIST120c, NIST120c$d.18O.16O > 20)
+        sd(NIST120c$d.18O.16O)
+        NIST120c_mean <- mean(NIST120c$d.18O.16O)
 
 # Setup
   # Omit Large Theropod and Sharks. Too few data and possible dentine contamination
@@ -47,7 +89,7 @@ if (!require(dplyr)) {
 # Simulate dataset ------------------------------------------------------
 
   # Function to generate simulated dataset for a given eco_type
-    simulate_eco_type <- function(subset_data, n_simulations = 10000) {
+    simulate_eco_type <- function(subset_data, n_simulations = 1000) {
       mean_val <- mean(subset_data$d18O)
       sd_val <- sd(subset_data$d18O)
       
@@ -57,7 +99,7 @@ if (!require(dplyr)) {
     
   # Generate simulated datasets for each eco_type
     simulated_data <- grouped_data %>%
-      summarise(simulated_d18O = list(simulate_eco_type(cur_data(), n_simulations = 10000))) %>%
+      summarise(simulated_d18O = list(simulate_eco_type(cur_data(), n_simulations = 1000))) %>%
       unnest(simulated_d18O)
     
   # Check the structure of the simulated_data
@@ -74,91 +116,228 @@ if (!require(dplyr)) {
     
     
 
-# Resampling --------------------------------------------------------------
+# Resampling simulated data--------------------------------------------------------------
 
 
     # Function to generate resamples for a given eco_type
-    generate_resamples <- function(subset_data, n_resamples = 10000, min_sample_size = 2, max_sample_size = 50) {
-      mean_val <- mean(subset_data$d18O)
-      sd_val <- sd(subset_data$d18O)
-      
-      resampled_data <- lapply(seq(min_sample_size, max_sample_size), function(sample_size) {
-        replicate(n_resamples, mean(sample(rnorm(sample_size, mean_val, sd_val))))
+
+    generate_resamples <- function(subset_data, sample_sizes = c(3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30), n_resamples = 1000) {
+      resampled_data <- lapply(sample_sizes, function(sample_size) {
+        replicate(n_resamples, mean(sample(subset_data$d18O, size = sample_size, replace = TRUE)))
       })
       
-      return(data.frame(sample_size = rep(seq(min_sample_size, max_sample_size), each = n_resamples),
-                        resampled_d18O = unlist(resampled_data)))
+      return(data.frame(
+        sample_size = rep(sample_sizes, each = n_resamples),
+        resampled_d18O = unlist(resampled_data)
+      ))
     }
     
     # Generate resamples for each eco_type
     resampled_data <- grouped_data %>%
-      group_modify(~ generate_resamples(.x, n_resamples = 10000))
+      group_modify(~ generate_resamples(.x, n_resamples = 1000))
     
     # Check the structure of the resampled_data
     str(resampled_data)
     
-
+  # Simulated resampling of NIST120c d18O data
+    
+    
+    # NEED TO RUN MONTE CARLO ON NIST120c
+    
+    
 # Gather Stats on Resamples -----------------------------------------------
 
-
-# Sand Box ----------------------------------------------------------------
-
-    # Assuming "grouped_data" is your grouped data frame and includes "d18O" column
-    # Replace "d18O" and "eco_type" with the actual column names in your data frame
+    # Assuming "resampled_data" is your previously generated resampled data frame
+    # Replace "resampled_d18O" and "sample_size" with the actual column names in your data frame
     
-    # Function to generate random samples for a given eco_type and calculate mean and sd
-    generate_and_summarize_samples <- function(subset_data, n_samples = 1000000, min_sample_size = 2, max_sample_size = 50) {
-      if (nrow(subset_data) == 0) {
-        return(data.frame())  # Return an empty data frame if there are no rows for the given eco_type
-      }
-      
-      sampled_data <- lapply(seq(min_sample_size, max_sample_size), function(sample_size) {
-        replicate(n_samples, {
-          sample_values <- sample(subset_data$d18O, size = sample_size, replace = TRUE)
-          data.frame(
-            eco_type = subset_data$eco_type[1],  # use the first value, assuming it's the same for all
-            sample_size = sample_size,
-            mean_value = mean(sample_values),
-            sd_value = sd(sample_values),
-            sampled_d18O = list(sample_values)
-          )
-        })
-      })
-      
-      return(bind_rows(unlist(sampled_data, recursive = FALSE)))
+    # Function to calculate mean, standard error, and gather results
+    calculate_summary_stats <- function(resampled_data) {
+      eco_type <- unique(resampled_data$eco_type)[1]  # Assuming eco_type is the same for all rows
+      summary_stats <- resampled_data %>%
+        group_by(sample_size) %>%
+        summarise(
+          mean_d18Op = mean(resampled_d18O),
+          se_d18Op = sd(resampled_d18O) / sqrt(length(resampled_d18O)),
+          eco_type = eco_type
+        )
+      return(summary_stats)
     }
     
-    # Generate random samples and calculate mean and sd for each eco_type
-    random_samples_data <- grouped_data %>%
-      group_modify(~ generate_and_summarize_samples(.x, n_samples = 1000000))
+    # Apply the function to each group in resampled_data
+    sim_stats <- resampled_data %>%
+      group_split(eco_type) %>%
+      map_dfr(~ calculate_summary_stats(.x))
     
-    # Check the structure of the random_samples_data
-    str(random_samples_data)
+    # Check the structure of the sim_stats
+    str(sim_stats)
     
+    # Plot se_d18Op against sample_size 
+    #ggplot(sim_stats, aes(x = sample_size, y = se_d18Op)) +
+      geom_point() +
+      geom_line() +
+      labs(title = "Plot of se_d18Op against sample_size", x = "Sample Size", y = "se_d18Op")
     
+
     
+
+# Proxy Distributions -----------------------------------------------------
+  
+  # Here are the proxy equations
+    # crocwater <- 0.82*(AquaCroc_d18Op_mean) - 19.93 #Amiot et al.(2007)
+    # turtwater <- 1.01 *(AquaTurt_d18Op_mean) - 22.3 #Barrick et al. (1999)
+    # meanCrocFish_temp <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - crocwater ) #Puceat et al. (2010)
+  
+  # Calculate d18Omw estimates
+    #create d18Omw column
+      sim_stats$d18Omw <- NA
+    # calculate d18Omw
+      sim_stats <- sim_stats %>%
+      mutate(d18Omw = case_when(
+        eco_type == "Aquatic Turtle" & is.na(d18Omw) ~ 1.01 * mean_d18Op - 22.3,
+        eco_type == "Croc G" & is.na(d18Omw) ~ 0.82 * mean_d18Op - 19.93,
+        TRUE ~ d18Omw  # Keep existing values for other cases
+      ))
+    
+    # Check if only rows with eco_type = "Croc G" have non-missing d18Omw values
+      only_croc_g_rows <- sim_stats %>%
+        filter(eco_type == "Croc G") %>%
+        pull(d18Omw) %>%
+        complete.cases()
+    
+    # Find unique eco_types with non-missing d18Omw values
+      eco_types_with_d18Omw <- sim_stats %>%
+        filter(!is.na(d18Omw)) %>%
+        distinct(eco_type)
+    
+    # Print the results
+      if (all(only_croc_g_rows)) {
+        cat("All rows with eco_type = 'Croc G' have non-missing d18Omw values.\n")
+      } else {
+        cat("There are rows with eco_type = 'Croc G' that have missing d18Omw values.\n")
+      }
+      
+      cat("Eco_types with non-missing d18Omw values:", unique(eco_types_with_d18Omw$eco_type), "\n")
+   
+    # Subset data for "Croc G"
+      croc_g_data <- sim_stats %>%
+        filter(eco_type == "Croc G")
+      
+    # Calculate simulated values
+      croc_g_data$sim_crocwater <- 0.82 * croc_g_data$mean_d18Op - 19.93
+    
+    # Plot the distribution of sim_crocwater for "Croc G"
+      hist(croc_g_data$d18Omw, main = "Distribution of d18Omw estimates (simulated Croc G)", xlab = "sim_crocwater", col = "skyblue", border = "black")
+   
+      
+    # Subset data for "Fish"
+    gar_data <- sim_stats %>%
+        filter(eco_type == "Fish")
+    
+    # Subset data for "Aquatic Turtle"
+    aquaturtle_data <- sim_stats %>%
+      filter(eco_type == "Aquatic Turtle")
+    
+      
+    
+# Sim Means and CI --------------------------------------------------------
+
+
+    
+# Sand Box ----------------------------------------------------------------
+
+    # Assuming you have the necessary data frames croc_g_data, gar_data, and NIST120c_mean
+    # Replace data frame and column names as needed
+    
+    # Set seed for reproducibility
+    set.seed(123)
+    
+    # Create a data frame to store the results
+    croc_temps <- data.frame()
+    
+    # Define the Croc_temp function
+    calculate_Croc_temp <- function(gar_d18Op_mean, croc_d18Omw, NIST120c_mean) {
+      return(118.7 - 4.22 * ((gar_d18Op_mean + (22.6 - NIST120c_mean)) - croc_d18Omw))
+    }
+    
+    your_sample_sizes_vector <- unique(sim_stats$sample_size)
+      
+    # Loop over each sample size
+    for (sample_size in your_sample_sizes_vector) {
+      # Generate combinations of data
+      combinations <- expand.grid(
+        gar_d18Op_mean = gar_data$mean_d18Op,
+        croc_d18Omw = croc_g_data$d18Omw
+      )
+      
+      # Calculate Croc_temp for each combination
+      combinations$sample_size <- sample_size
+      combinations$Croc_temp <- calculate_Croc_temp(
+        combinations$gar_d18Op_mean,
+        combinations$croc_d18Omw,
+        NIST120c_mean
+      )
+      
+      # Store the results in croc_temps
+      croc_temps <- rbind(croc_temps, combinations)
+    }
+    
+    # Print the first few rows of croc_temps
+    head(croc_temps)
     
     
     
 # Recycling Bin -----------------------------------------------------------
 
-   
+# proxy calculations
+    
+    # Calculate Croc G d18Omw from formula in Amiot et al.(2007) and store d18Omw values in a new column
+    sim_stats <- sim_stats %>%
+      mutate(d18Omw = ifelse(eco_type == "Croc G", 0.82 * mean_d18Op - 19.93, NA))
+    
+    # Check if only rows with eco_type = "Croc G" have non-missing d18Omw values
+    only_croc_g_rows <- sim_stats %>%
+      filter(eco_type == "Croc G") %>%
+      pull(d18Omw) %>%
+      complete.cases()
+    
+    # Print the result
+    if (all(only_croc_g_rows)) {
+      cat("All rows with eco_type = 'Croc G' have non-missing d18Omw values.\n")
+    } else {
+      cat("There are rows with eco_type = 'Croc G' that have missing d18Omw values.\n")
+    }
+    
+    # Subset data for "Croc G"
+    croc_g_data <- sim_stats %>%
+      filter(eco_type == "Croc G")
+    
+    # Calculate simulated values
+    croc_g_data$sim_crocwater <- 0.82 * croc_g_data$mean_d18Op - 19.93
+    
+    # Plot the distribution of sim_crocwater for "Croc G"
+    hist(croc_g_data$sim_crocwater, main = "Distribution of sim_crocwater (Croc G)", xlab = "sim_crocwater", col = "skyblue", border = "black")
+    croc_g_datasd()
     
     
+    # Calculate Aquatic Turtle d18Omw using formula from Barrick et al. (1999)
+    sim_stats <- sim_stats %>%
+      mutate(d18Omw = ifelse(eco_type == "Aquatic Turtle", 1.01 * mean_d18Op - 22.3, NA))
+    
+    # Check if rows with eco_type = "Aquatic Turtle" have non-missing d18Omw values
+    only_aquaturtle_rows <- sim_stats %>%
+      filter(eco_type == "Aquatic Turtle") %>%
+      pull(d18Omw) %>%
+      complete.cases()
+    
+    # Print the result
+    if (all(only_aquaturtle_rows)) {
+      cat("All rows with eco_type = 'Aquatic Turtle' have non-missing d18Omw values.\n")
+    } else {
+      cat("There are rows with eco_type = 'Aquatic Turtle' that have missing d18Omw values.\n")
+    }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 # Assuming 'x' is your d18O values and 'Eco' is your grouping variable
 x <- V1075_MCbs$d18O
