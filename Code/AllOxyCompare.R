@@ -99,6 +99,7 @@
       names(V1075_BySpec)[names(V1075_BySpec) == "Eco"] <- "eco_type"
 
       setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+      V1075_BySpec <- V1075_BySpec[, -1] 
       write.csv(V1075_BySpec, "V1075_BySpec.csv")
       
 # visualize by specimen
