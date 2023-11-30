@@ -33,26 +33,24 @@
 
   # Data
     # GitHub raw URL for the CSV file
-    github_url <- "https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_BySpec.csv?token=GHSAT0AAAAAACK5C64YWQHDH7OGHIMUU4NQZLIUCJQ"
+    github_url <- "https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_BySpec.csv"
     
     # Read the CSV file into a data frame
     V1075_BySpec <- read_csv(github_url)
+    str(V1075_BySpec)
     
     # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
-      # NEED NIST120C STD d18Op from Run 3!!!!!
-      # ultimately want this to source from GitHub
-      # the subsetting/cleaning done here should be done elsewhere and then saved as cleaned csv that can be sourced here directly from Github
-        setwd("/Users/allen/Documents/Data Analysis/Data/Geochem")
-        NIST120c <- read.csv("V1075_NIST120c_Run1&2.csv")
-        
-        hist(NIST120c$d.18O.16O)
-        # identified a single outlier. Why just this one bust? Anyways, omit it.
-        NIST120c <- subset(NIST120c, NIST120c$d.18O.16O > 20)
-        sd(NIST120c$d.18O.16O)
-        NIST120c_mean <- mean(NIST120c$d.18O.16O)
+    # NEED NIST120C STD d18Op from Run 3!!!!!
+    standards_githubURL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
+    NIST120c <- read_csv(standards_githubURL)
+    # check for outliers
+    hist(NIST120c$d.18O.16O)
+    # gather mean
+    NIST120c_mean <- mean(NIST120c$d.18O.16O)
+    
 
 # Setup
-  # Omit Large Theropod and Sharks. Too few data and possible dentine contamination
+  # Omit Large Theropod and Sharks. Too few data and possible diagenetic influence
     V1075_MC <- subset(V1075_BySpec, eco_type != "Large Theropod" & eco_type != "Shark")
 
   # Group by eco_type

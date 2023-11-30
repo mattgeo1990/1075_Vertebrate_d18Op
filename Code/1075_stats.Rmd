@@ -62,54 +62,172 @@ Here I will demonstrate how sample size affects temperature estimates for a sing
 
   # Data
     # Call d18Op data from GitHub, cleaned and averaged per specimen (V1075_BySpec.csv)
-    samples_githubURL <- "https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_BySpec.csv"
-    V1075_BySpec <- read_csv(samples_githubURL)
-    
+      samples_githubURL <- "https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_BySpec.csv"
+      V1075_BySpec <- read_csv(samples_githubURL)
+      
     # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
       # NEED NIST120C STD d18Op from Run 3!!!!!
-        standards_githubURL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c_Run1%262.csv"
+        standards_githubURL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
         NIST120c <- read_csv(standards_githubURL)
-        
-        setwd("/Users/allen/Documents/Data Analysis/Data/Geochem")
-        read.csv("V1075_NIST120c_Run1&2.csv")
-        
-        hist(NIST120c$d18O.16O)
-        # identified a single outlier. Why just this one bust? Anyways, omit it.
-        NIST120c <- subset(NIST120c, NIST120c$d.18O.16O > 20)
-        sd(NIST120c$d.18O.16O)
+        # gather mean
         NIST120c_mean <- mean(NIST120c$d.18O.16O)
+  
+  # Final Cleaning, Group by Eco-type
+    # Omit Large Theropod and Sharks. Too few data and possible diagenetic influence
+      V1075_MC <- subset(V1075_BySpec, eco_type != "Large Theropod" & eco_type != "Shark")
+  
+    # Group by eco_type
+      grouped_data <- V1075_MC %>% group_by(eco_type)
+
+  # Look at your data 
+    # Plotting a panel of histograms by eco_type
+      p <- ggplot(grouped_data, aes(x = d18O, fill = eco_type)) +
+        geom_histogram(binwidth = 1, color = "black", alpha = 0.7) +
+        labs(title = "Histogram of d18O by eco_type",
+             x = "d18O",
+             y = "Frequency") +
+        theme_minimal() +
+        facet_wrap(~eco_type, scales = "free")
+      
+    # Perform Shapiro-Wilk test for normality for each eco_type
+      shapiro_tests <- by(grouped_data$d18O, grouped_data$eco_type, shapiro.test)
+      
+    # Display normality test results
+      cat("\nNormality Tests:\n")
+      print(shapiro_tests)
+      
+    # Extract p-values from the test results
+      p_values <- sapply(shapiro_tests, function(x) x$p.value)
+      
+    # Highlight non-normally distributed groups (p-value < 0.05)
+      non_normal_groups <- names(p_values[p_values < 0.05])
+      cat("\nNon-normally distributed groups:", ifelse(length(non_normal_groups) > 0, paste(non_normal_groups, collapse = ", "), "None"), "\n")
+      
+    # Print the ggplot object
+      print(p)
+```
+
+
+## Simulate data for each eco_type based on distributions of emperical data. Assume normality.
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+# Simulate dataset ------------------------------------------------------
+
+  # Function to generate simulated dataset for a given eco_type
+    simulate_eco_type <- function(subset_data, n_simulations = 1000) {
+      mean_val <- mean(subset_data$d18O)
+      sd_val <- sd(subset_data$d18O)
+      
+      simulated_values <- replicate(n_simulations, rnorm(1, mean_val, sd_val))
+      return(simulated_values)
+    }
+    
+  # Generate simulated datasets for each eco_type
+    simulated_data <- grouped_data %>%
+      summarise(simulated_d18O = list(simulate_eco_type(cur_data(), n_simulations = 1000))) %>%
+      unnest(simulated_d18O)
+    
+  # Check the structure of the simulated_data
+    str(simulated_data)
+    
+  # Plot histograms of the simulated data to compare against the empirical data
+    ggplot(simulated_data, aes(x = simulated_d18O, fill = eco_type)) +
+      geom_histogram(binwidth = 0.2, position = "identity", alpha = 0.7) +
+      labs(title = "Simulated d18Op Data", x = "Simulated d18O", y = "Frequency") +
+      scale_fill_manual(values = c("A" = "blue", "B" = "green")) +
+      facet_wrap(~eco_type, scales = "free") +
+      theme_minimal()
+```
+
+## Generate random subsamples from simulated data.
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+# Resampling simulated data--------------------------------------------------------------
+
+    # Function to generate resamples for a given eco_type
+
+    generate_resamples <- function(subset_data, sample_sizes = c(3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30), n_resamples = 1000) {
+      resampled_data <- lapply(sample_sizes, function(sample_size) {
+        replicate(n_resamples, mean(sample(subset_data$d18O, size = sample_size, replace = TRUE)))
+      })
+      
+      return(data.frame(
+        sample_size = rep(sample_sizes, each = n_resamples),
+        resampled_d18O = unlist(resampled_data)
+      ))
+    }
+    
+    # Generate resamples for each eco_type
+    resampled_data <- grouped_data %>%
+      group_modify(~ generate_resamples(.x, n_resamples = 1000))
+    
+  # Simulated resampling of NIST120c d18O data
+    
+    
+    # NEED TO RUN SIMULATION ON NIST120c ???
+
 
 ```
 
-## Histograms of d18Op for each eco_type (taxon)
+## Gather summary stats on subsamples.
 
-Here will be a plot as described. I will include observations about noteworthy distributions here (e.g. note that small theropod distribution is bimodal, fish distribution is normal, etc.).
+```{r, results='hide', message=FALSE, warning=FALSE}
+# Gather Stats on Resamples -----------------------------------------------
 
-```{r pressure, echo=TRUE}
-plot(pressure)
+    # Assuming "resampled_data" is your previously generated resampled data frame
+    # Replace "resampled_d18O" and "sample_size" with the actual column names in your data frame
+    
+    # Function to calculate mean, standard error, and gather results
+    calculate_summary_stats <- function(resampled_data) {
+      eco_type <- unique(resampled_data$eco_type)[1]  # Assuming eco_type is the same for all rows
+      summary_stats <- resampled_data %>%
+        group_by(sample_size) %>%
+        summarise(
+          mean_d18Op = mean(resampled_d18O),
+          se_d18Op = sd(resampled_d18O) / sqrt(length(resampled_d18O)),
+          eco_type = eco_type
+        )
+      return(summary_stats)
+    }
+    
+    # Apply the function to each group in resampled_data
+    sim_stats <- resampled_data %>%
+      group_split(eco_type) %>%
+      map_dfr(~ calculate_summary_stats(.x))
+    
+    # Check the structure of the sim_stats
+    str(sim_stats)
+    
+    # Plot se_d18Op against sample_size 
+    ggplot(sim_stats, aes(x = sample_size, y = se_d18Op)) +
+      geom_point() +
+      geom_line() +
+      labs(title = "Plot of se_d18Op against sample_size", x = "Sample Size", y = "se_d18Op")
+    
+
 ```
 
-## Compute proxy parameters. Propagate uncertainties or run sensitivity analyses.
 
-```{r}
- # Here I will include code chunk that will:
-  # Compute d18Omw and temp proxy estimates with uncertainties
-  # 
-     
+## Compute d18Omw and water temperature proxies.
+
+### Here are the proxy equations
+   crocwater <- 0.82*(AquaCroc_d18Op_mean) - 19.93 #Amiot et al.(2007)
+    turtwater <- 1.01 *(AquaTurt_d18Op_mean) - 22.3 #Barrick et al. (1999)
+    meanCrocFish_temp <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - crocwater ) #Puceat et al. (2010)
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+
+  
+  # Calculate d18Omw estimates
+    #create d18Omw column
+      sim_stats$d18Omw <- NA
+    # calculate d18Omw
+      sim_stats <- sim_stats %>%
+      mutate(d18Omw = case_when(
+        eco_type == "Aquatic Turtle" & is.na(d18Omw) ~ 1.01 * mean_d18Op - 22.3,
+        eco_type == "Croc G" & is.na(d18Omw) ~ 0.82 * mean_d18Op - 19.93,
+        TRUE ~ d18Omw  # Keep existing values for other cases
+      ))
+    
 ```
 
-## Demonstrate direct Monte Carlo simulation and boostrapping as methods to determine target sample size.
-
-```{r}
-# Here I will include code chunk that will:
-  # run direct Monte Carlo simulation of 1000 d18Op values
-  # run 10,000 bootstraps on simulated data
-  # generate plots that show 
-    # relationship between sample size and precision of means
-    # relationships between sample size and estimated accuracy of means (95% confidence that true mean was captured by   each subsample)
-```
-
-```{r}
-# PLACEHOLDER
-
-```
