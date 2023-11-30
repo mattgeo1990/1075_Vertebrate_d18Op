@@ -32,6 +32,13 @@ raw <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
 
 setwd("/Users/allen/Documents/Data Analysis/Data/Geochem")
 NIST120c <- read.csv("V1075_NIST120c_Run1&2.csv")
+hist(NIST120c$d.18O.16O)
+# identified a single outlier. Why just this one bust? Anyways, omit it.
+NIST120c <- subset(NIST120c, NIST120c$d.18O.16O > 20)
+hist(NIST120c$d.18O.16O)
+setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+write.csv(NIST120c, "V1075_NIST120c.csv", row.names = FALSE)
+
 
 NIST120c_mean <- mean(NIST120c$d.18O.16O)
 
