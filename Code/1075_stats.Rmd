@@ -19,7 +19,7 @@ Here I will demonstrate how sample size affects temperature estimates for a sing
 
 ## Effect of intra-taxon d18Op sample size on temperature estimates
 
-```{r}
+```{r, results='hide', message=FALSE, warning=FALSE}
 # Ultimately this code will source data from Github. For now it is local
 
 # Here I will include a code chunk that will:
@@ -27,6 +27,58 @@ Here I will demonstrate how sample size affects temperature estimates for a sing
   # source the data (V1075_BySpec.csv)
   # plot a histogram for each eco_type to visualize the d18Op distributions
  
+# Packages, Data, Objects -------------------------------------------------
+  
+  # Packages
+    # Vector of package names
+    packages <- c("dplyr", "ggplot2", "readr", "magrittr", "tidyr", "purrr")
+    
+    # Function to check and install packages
+    check_and_install_packages <- function(packages) {
+      # Check if each package is installed
+      missing_packages <- setdiff(packages, installed.packages()[,"Package"])
+      
+      # Install missing packages
+      if (length(missing_packages) > 0) {
+        install.packages(missing_packages, dependencies = TRUE)
+      }
+      
+      # Load all packages
+      loaded_packages <- sapply(packages, function(pkg) {
+        if (!requireNamespace(pkg, quietly = TRUE)) {
+          message(paste("Installing and loading", pkg))
+          install.packages(pkg, dependencies = TRUE)
+        }
+        library(pkg, character.only = TRUE)
+      })  
+      
+      # Return a logical vector indicating whether each package is successfully loaded
+      return(loaded_packages)
+    }
+    
+    check_and_install_packages(packages)
+
+  # Data
+    # GitHub raw URL for the CSV file
+    github_url <- "https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_BySpec.csv"
+    
+    # Read the CSV file into a data frame
+    V1075_BySpec <- read_csv(github_url)
+    str(V1075_BySpec)
+    
+    # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
+      # NEED NIST120C STD d18Op from Run 3!!!!!
+      # ultimately want this to source from GitHub
+      # the subsetting/cleaning done here should be done elsewhere and then saved as cleaned csv that can be sourced here directly from Github
+        setwd("/Users/allen/Documents/Data Analysis/Data/Geochem")
+        NIST120c <- read.csv("V1075_NIST120c_Run1&2.csv")
+        
+        hist(NIST120c$d.18O.16O)
+        # identified a single outlier. Why just this one bust? Anyways, omit it.
+        NIST120c <- subset(NIST120c, NIST120c$d.18O.16O > 20)
+        sd(NIST120c$d.18O.16O)
+        NIST120c_mean <- mean(NIST120c$d.18O.16O)
+
 ```
 
 ## Histograms of d18Op for each eco_type (taxon)
