@@ -118,24 +118,34 @@
 
 
     # Function to generate resamples for a given eco_type
-
-    generate_resamples <- function(subset_data, sample_sizes = c(3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30), n_resamples = 1000) {
+    generate_resamples <- function(subset_data, sample_sizes = c(5, 10, 15, 20), n_resamples = 1000) {
       resampled_data <- lapply(sample_sizes, function(sample_size) {
-        replicate(n_resamples, mean(sample(subset_data$d18O, size = sample_size, replace = TRUE)))
+        resamples <- replicate(n_resamples, sample(subset_data$d18O, size = sample_size, replace = TRUE))
+        means <- colMeans(resamples)
+        variances <- apply(resamples, 2, var)
+        standard_errors <- apply(resamples, 2, function(x) sd(x) / sqrt(length(x)))
+        standard_deviations <- apply(resamples, 2, sd)
+        
+        data.frame(
+          sample_size = rep(sample_size, each = n_resamples),
+          resampled_d18O_mean = means,
+          resampled_d18O_variance = variances,
+          resampled_d18O_standard_error = standard_errors,
+          resampled_d18O_standard_deviation = standard_deviations
+        )
       })
       
-      return(data.frame(
-        sample_size = rep(sample_sizes, each = n_resamples),
-        resampled_d18O = unlist(resampled_data)
-      ))
+      return(do.call(rbind, resampled_data))
     }
+
     
     # Generate resamples for each eco_type
     resampled_data <- grouped_data %>%
       group_modify(~ generate_resamples(.x, n_resamples = 1000))
     
-    # Check the structure of the resampled_data
-    str(resampled_data)
+
+    
+    
     
   # Simulated resampling of NIST120c d18O data
     
@@ -143,40 +153,7 @@
     # NEED TO RUN MONTE CARLO ON NIST120c
     
     
-# Gather Stats on Resamples -----------------------------------------------
 
-    # Assuming "resampled_data" is your previously generated resampled data frame
-    # Replace "resampled_d18O" and "sample_size" with the actual column names in your data frame
-    
-    # Function to calculate mean, standard error, and gather results
-    calculate_summary_stats <- function(resampled_data) {
-      eco_type <- unique(resampled_data$eco_type)[1]  # Assuming eco_type is the same for all rows
-      summary_stats <- resampled_data %>%
-        group_by(sample_size) %>%
-        summarise(
-          mean_d18Op = mean(resampled_d18O),
-          se_d18Op = sd(resampled_d18O) / sqrt(length(resampled_d18O)),
-          eco_type = eco_type
-        )
-      return(summary_stats)
-    }
-    
-    # Apply the function to each group in resampled_data
-    sim_stats <- resampled_data %>%
-      group_split(eco_type) %>%
-      map_dfr(~ calculate_summary_stats(.x))
-    
-    # Check the structure of the sim_stats
-    str(sim_stats)
-    
-    # Plot se_d18Op against sample_size 
-    #ggplot(sim_stats, aes(x = sample_size, y = se_d18Op)) +
-      geom_point() +
-      geom_line() +
-      labs(title = "Plot of se_d18Op against sample_size", x = "Sample Size", y = "se_d18Op")
-    
-
-    
 
 # Proxy Distributions -----------------------------------------------------
   
@@ -195,6 +172,8 @@
         eco_type == "Croc G" & is.na(d18Omw) ~ 0.82 * mean_d18Op - 19.93,
         TRUE ~ d18Omw  # Keep existing values for other cases
       ))
+      
+      
     
     # Check if only rows with eco_type = "Croc G" have non-missing d18Omw values
       only_croc_g_rows <- sim_stats %>%
@@ -243,8 +222,157 @@
     
 # Sand Box ----------------------------------------------------------------
 
-    # Assuming you have the necessary data frames croc_g_data, gar_data, and NIST120c_mean
-    # Replace data frame and column names as needed
+    generate_resamples <- function(subset_data, sample_sizes = c(5, 10, 15, 20), n_resamples = 1000) {
+      resampled_data <- lapply(sample_sizes, function(sample_size) {
+        resamples <- replicate(n_resamples, sample(subset_data$d18O, size = sample_size, replace = TRUE))
+        means <- colMeans(resamples)
+        variances <- apply(resamples, 2, var)
+        standard_errors <- apply(resamples, 2, function(x) sd(x) / sqrt(length(x)))
+        standard_deviations <- apply(resamples, 2, sd)
+        
+        data.frame(
+          sample_size = rep(sample_size, each = n_resamples),
+          resampled_d18O_mean = means,
+          resampled_d18O_variance = variances,
+          resampled_d18O_standard_error = standard_errors,
+          resampled_d18O_standard_deviation = standard_deviations
+        )
+      })
+      
+      return(do.call(rbind, resampled_data))
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    # Subset the data for each eco_type
+    aquatic_turtle_data <- sim_stats %>% filter(eco_type == "Aquatic Turtle")
+    croc_g_data <- sim_stats %>% filter(eco_type == "Croc G")
+    
+    # Create a function to calculate variance for each sample size
+    calculate_variance <- function(data) {
+      data %>%
+        group_by(sample_size) %>%
+        summarize(variance = var(d18Omw, na.rm = TRUE))
+    }
+    
+    # Apply the function to each eco_type
+    aquatic_turtle_variance <- calculate_variance(aquatic_turtle_data)
+    croc_g_variance <- calculate_variance(croc_g_data)
+    
+    # Plot variance vs sample size for each eco type using ggplot
+    ggplot(aquatic_turtle_variance, aes(x = sample_size, y = variance)) +
+      geom_point() +
+      geom_line() +
+      labs(title = "Variance vs Sample Size (Aquatic Turtle)",
+           x = "Sample Size",
+           y = "Variance")
+    
+    ggplot(croc_g_variance, aes(x = sample_size, y = variance)) +
+      geom_point() +
+      geom_line() +
+      labs(title = "Variance vs Sample Size (Croc G)",
+           x = "Sample Size",
+           y = "Variance")
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+# Recycling Bin -----------------------------------------------------------
+
+    # create function to generate resamples
+    generate_resamples <- function(subset_data, sample_sizes = c(5, 10, 15, 20), n_resamples = 1000) {
+      resampled_data <- lapply(sample_sizes, function(sample_size) {
+        replicate(n_resamples, mean(sample(subset_data$d18O, size = sample_size, replace = TRUE)))
+      })
+      
+      return(data.frame(
+        sample_size = rep(sample_sizes, each = n_resamples),
+        resampled_d18O = unlist(resampled_data)
+      ))
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+  # Gather stats on resampled data
+    
+    # Function to calculate mean, standard error, and gather results
+    calculate_summary_stats <- function(resampled_data) {
+      eco_type <- unique(resampled_data$eco_type)[1]  # Assuming eco_type is the same for all rows
+      summary_stats <- resampled_data %>%
+        group_by(sample_size) %>%
+        summarise(
+          mean_d18Op = mean(resampled_d18O),
+          se_d18Op = sd(resampled_d18O) / sqrt(length(resampled_d18O)),
+          eco_type = eco_type
+        )
+      return(summary_stats)
+    }
+    
+    # Apply the function to each group in resampled_data
+    sim_stats <- resampled_data %>%
+      group_split(eco_type) %>%
+      map_dfr(~ calculate_summary_stats(.x))
+    
+    # Check the structure of the sim_stats
+    str(sim_stats)
+    
+    # Plot se_d18Op against sample_size 
+    #ggplot(sim_stats, aes(x = sample_size, y = se_d18Op)) +
+    geom_point() +
+      geom_line() +
+      labs(title = "Plot of se_d18Op against sample_size", x = "Sample Size", y = "se_d18Op")
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    #Attempt at calculating temperature distribution
     
     # Set seed for reproducibility
     set.seed(123)
@@ -258,7 +386,7 @@
     }
     
     your_sample_sizes_vector <- unique(sim_stats$sample_size)
-      
+    
     # Loop over each sample size
     for (sample_size in your_sample_sizes_vector) {
       # Generate combinations of data
@@ -283,9 +411,6 @@
     head(croc_temps)
     
     
-    
-# Recycling Bin -----------------------------------------------------------
-
 # proxy calculations
     
     # Calculate Croc G d18Omw from formula in Amiot et al.(2007) and store d18Omw values in a new column
