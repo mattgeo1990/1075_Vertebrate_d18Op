@@ -128,10 +128,10 @@
         
         data.frame(
           sample_size = rep(sample_size, each = n_resamples),
-          resampled_d18O_mean = means,
-          resampled_d18O_variance = variances,
-          resampled_d18O_standard_error = standard_errors,
-          resampled_d18O_standard_deviation = standard_deviations
+          sim_d18Op_mean = means,
+          sim_d18Op_var = variances,
+          sim_d18Op_SE = standard_errors,
+          sim_d18Op_SD = standard_deviations
         )
       })
       
@@ -143,7 +143,18 @@
     resampled_data <- grouped_data %>%
       group_modify(~ generate_resamples(.x, n_resamples = 1000))
     
-
+    # Assuming resampled_data is the output from generate_resamples function
+    resamples <- list()
+    
+    sample_sizes <- unique(resampled_data$sample_size)
+    
+    for (size in sample_sizes) {
+      resamples[[paste0("sample_size_", size)]] <- subset(resampled_data, sample_size == size)
+    }
+    
+    # Now, each subset is stored in resamples list
+    # Access them using resamples$sample_size_5, subsetted_data$sample_size_10, etc.
+    
     
     
     
@@ -155,14 +166,83 @@
     
 
 
-# Proxy Distributions -----------------------------------------------------
+# d18Omw calculations -----------------------------------------------------
   
-  # Here are the proxy equations
-    # crocwater <- 0.82*(AquaCroc_d18Op_mean) - 19.93 #Amiot et al.(2007)
-    # turtwater <- 1.01 *(AquaTurt_d18Op_mean) - 22.3 #Barrick et al. (1999)
+  # Define d18Omw functions
+    
+    # d18Omw from croc d18Op (Amiot et al., 2007)
+      crocwater <- function(mean_d18Op) {
+        result <- 0.82 * mean_d18Op - 19.93
+        return(data.frame(d18Omw = result))
+      }
+
+    # d18Omw from turtle d18Op (Barrick et al., 1999)
+      turtlewater <- function(mean_d18Op) {
+        result <- 1.01 * mean_d18Op - 22.3
+        return(data.frame(d18Omw = result))
+      }
+    
+    
+
     # meanCrocFish_temp <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - crocwater ) #Puceat et al. (2010)
   
-  # Calculate d18Omw estimates
+  # # Function to process Croc G data
+    process_croc_data <- function(sim_d18Op_mean) {
+      crocwater_result <- crocwater(sim_d18Op_mean)
+      return(crocwater_result$d18Omw)
+    }
+    
+    # Function to process Aquatic Turtle data
+    process_turtle_data <- function(sim_d18Op_mean) {
+      turtlewater_result <- turtlewater(sim_d18Op_mean)
+      return(turtlewater_result$d18Omw)
+    }
+    
+    # Iterate over each data frame in the resamples list
+    for (size in sample_sizes) {
+      current_df <- resamples[[paste0("sample_size_", size)]]
+      
+      # Process Croc G data and add d18Omw column
+      current_df$d18Omw <- ifelse(current_df$eco_type == "Croc G", process_croc_data(current_df$resampled_d18O_mean), NA)
+      
+      # Process Aquatic Turtle data and add d18Omw column
+      current_df$d18Omw <- ifelse(current_df$eco_type == "Aquatic Turtle", process_turtle_data(current_df$resampled_d18O_mean), current_df$d18Omw)
+      
+      # If needed, replace NAs with values from the other condition
+      # current_df$d18Omw <- ifelse(is.na(current_df$d18Omw), process_turtle_data(current_df$resampled_d18O_mean), current_df$d18Omw)
+      
+      # Update the modified data frame in the list
+      resamples[[paste0("sample_size_", size)]] <- current_df
+    }
+    
+    
+    # Check to make sure only specificed taxa have d18Omw values
+    for (size in sample_sizes) {
+      current_df <- resamples[[paste0("sample_size_", size)]]
+      
+      # Check for rows where eco_type is "Croc G" or "Aquatic Turtle" and d18Omw is not missing
+      check_rows <- current_df$eco_type %in% c("Croc G", "Aquatic Turtle") & !is.na(current_df$d18Omw)
+      
+      # If there are rows violating the condition, print a message or take necessary action
+      if (any(!check_rows)) {
+        cat("Warning: In sample_size_", size, "data frame, there are rows with invalid d18Omw values.\n")
+        # You may take additional actions here, such as printing problematic rows or fixing the issue
+        # print(current_df[!check_rows, ])
+      }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    # Calculate d18Omw estimates
     #create d18Omw column
       sim_stats$d18Omw <- NA
     # calculate d18Omw
