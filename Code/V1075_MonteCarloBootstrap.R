@@ -166,7 +166,7 @@
     
 
 
-# d18Omw calculations -----------------------------------------------------
+# Dual-taxon Temperature Estimates -----------------------------------------------------
   
   # Define d18Omw functions
     
@@ -175,127 +175,148 @@
         result <- 0.82 * mean_d18Op - 19.93
         return(data.frame(d18Omw = result))
       }
-
+    
     # d18Omw from turtle d18Op (Barrick et al., 1999)
       turtlewater <- function(mean_d18Op) {
         result <- 1.01 * mean_d18Op - 22.3
         return(data.frame(d18Omw = result))
       }
-    
-    
-
-    # meanCrocFish_temp <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - crocwater ) #Puceat et al. (2010)
   
-  # # Function to process Croc G data
-    process_croc_data <- function(sim_d18Op_mean) {
-      crocwater_result <- crocwater(sim_d18Op_mean)
-      return(crocwater_result$d18Omw)
-    }
+  # Subset sim data by eco_type
     
-    # Function to process Aquatic Turtle data
-    process_turtle_data <- function(sim_d18Op_mean) {
-      turtlewater_result <- turtlewater(sim_d18Op_mean)
-      return(turtlewater_result$d18Omw)
-    }
+    # Croc G
+      # Subset resamples and extract Croc G rows
+        croc_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Croc G"))
+      # Combine the Croc G subsets into a single data frame
+        sim_croc <- do.call(rbind, croc_subsets)
+      # Add d18Omw column to sim_croc
+        sim_croc$d18Omw <- mapply(process_croc_data, sim_croc$sim_d18Op_mean, sim_croc$eco_type)
+      
+    # Aquatic Turtle
+      # Subset resamples and extract Aquatic Turtle rows
+        turtle_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Aquatic Turtle"))
+      # Combine the Aquatic Turtle subsets into a single data frame
+        sim_turtle <- do.call(rbind, turtle_subsets)
+      # Add d18Omw column to sim_turtle
+        sim_turtle$d18Omw <- mapply(process_turtle_data, sim_turtle$sim_d18Op_mean, sim_turtle$eco_type)
+      
+    # Fish
+      # Subset resamples and extract Fish rows
+        fish_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Fish"))
+      # Combine the Fish subsets into a single data frame
+        sim_fish <- do.call(rbind, fish_subsets)
+      
+  # Compute d18Omw from croc and from turtle
     
-    # Iterate over each data frame in the resamples list
-    for (size in sample_sizes) {
-      current_df <- resamples[[paste0("sample_size_", size)]]
-      
-      # Process Croc G data and add d18Omw column
-      current_df$d18Omw <- ifelse(current_df$eco_type == "Croc G", process_croc_data(current_df$resampled_d18O_mean), NA)
-      
-      # Process Aquatic Turtle data and add d18Omw column
-      current_df$d18Omw <- ifelse(current_df$eco_type == "Aquatic Turtle", process_turtle_data(current_df$resampled_d18O_mean), current_df$d18Omw)
-      
-      # If needed, replace NAs with values from the other condition
-      # current_df$d18Omw <- ifelse(is.na(current_df$d18Omw), process_turtle_data(current_df$resampled_d18O_mean), current_df$d18Omw)
-      
-      # Update the modified data frame in the list
-      resamples[[paste0("sample_size_", size)]] <- current_df
-    }
+    # Compute d18Omw from turtle d18Op
+      sim_turtle$d18Omw <- turtlewater(sim_turtle$sim_d18Op_mean)$d18Omw
+    # Compute d18Omw from croc d18Op
+      sim_croc$d18Omw <- crocwater(sim_croc$sim_d18Op_mean)$d18Omw
     
-    
-    # Check to make sure only specificed taxa have d18Omw values
-    for (size in sample_sizes) {
-      current_df <- resamples[[paste0("sample_size_", size)]]
       
-      # Check for rows where eco_type is "Croc G" or "Aquatic Turtle" and d18Omw is not missing
-      check_rows <- current_df$eco_type %in% c("Croc G", "Aquatic Turtle") & !is.na(current_df$d18Omw)
+  # Run t-test between croc and turtle d18Omw
+      # List to store t-test results for each sample_size
+      t_test_results <- list()
       
-      # If there are rows violating the condition, print a message or take necessary action
-      if (any(!check_rows)) {
-        cat("Warning: In sample_size_", size, "data frame, there are rows with invalid d18Omw values.\n")
-        # You may take additional actions here, such as printing problematic rows or fixing the issue
-        # print(current_df[!check_rows, ])
+      # Iterate over each sample_size
+      for (size in sample_sizes) {
+        # Subset sim_croc and sim_turtle for the current sample_size
+        croc_subset <- subset(sim_croc, sample_size == size)
+        turtle_subset <- subset(sim_turtle, sample_size == size)
+        
+        # Perform t-test
+        t_test_result <- t.test(croc_subset$d18Omw, turtle_subset$d18Omw)
+        
+        # Store the t-test result in the list
+        t_test_results[[paste0("sample_size_", size)]] <- t_test_result
       }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # Calculate d18Omw estimates
-    #create d18Omw column
-      sim_stats$d18Omw <- NA
-    # calculate d18Omw
-      sim_stats <- sim_stats %>%
-      mutate(d18Omw = case_when(
-        eco_type == "Aquatic Turtle" & is.na(d18Omw) ~ 1.01 * mean_d18Op - 22.3,
-        eco_type == "Croc G" & is.na(d18Omw) ~ 0.82 * mean_d18Op - 19.93,
-        TRUE ~ d18Omw  # Keep existing values for other cases
-      ))
       
+      # Check if all p-values are less than 0.05
+      all_p_values_less_than_05 <- all(sapply(t_test_results, function(result) result$p.value < 0.05))
       
-    
-    # Check if only rows with eco_type = "Croc G" have non-missing d18Omw values
-      only_croc_g_rows <- sim_stats %>%
-        filter(eco_type == "Croc G") %>%
-        pull(d18Omw) %>%
-        complete.cases()
-    
-    # Find unique eco_types with non-missing d18Omw values
-      eco_types_with_d18Omw <- sim_stats %>%
-        filter(!is.na(d18Omw)) %>%
-        distinct(eco_type)
-    
-    # Print the results
-      if (all(only_croc_g_rows)) {
-        cat("All rows with eco_type = 'Croc G' have non-missing d18Omw values.\n")
+      # Print message based on the result
+      if (all_p_values_less_than_05) {
+        cat("d18Omw distributions do not differ (p-values < 0.05)\n")
       } else {
-        cat("There are rows with eco_type = 'Croc G' that have missing d18Omw values.\n")
+        cat("At least one pair of d18Omw distributions differs (at least one p-value >= 0.05)\n")
+      }
+    
+    # Plot histograms to look at d18Omw distributions 
+      
+      # Combine sim_croc and sim_turtle into a single data frame for easier plotting
+      combined_data <- rbind(cbind(sim_croc, species = "Croc"), cbind(sim_turtle, species = "Turtle"))
+      
+      # Plot histograms for each combination of eco_type and sample_size
+      plot_panel <- ggplot(combined_data, aes(x = d18Omw, fill = species)) +
+        geom_histogram(binwidth = 1, position = "dodge", alpha = 0.7) +
+        facet_grid(eco_type ~ sample_size, scales = "free") +
+        labs(title = "Histogram of d18Omw for Simulated Croc and Turtle Data",
+             x = "d18Omw", y = "Frequency") +
+        theme_minimal()
+      
+      # Display the plot
+      print(plot_panel)
+      
+  # Compute temperature distribution from turtle d18Omw
+      
+    # Create fishtemp function (Puceat et al., 2010)
+      fishtemp <- function(fish_d18Op, NIST120c_mean, d18Omw) {
+      temp <- 118.7 - 4.22 * ((fish_d18Op + (22.6 - NIST120c_mean)) - d18Omw)
+      return(temp)
+      }
+
+      # Create a data frame to hold dual-taxon temperature values
+      dual_taxon_temps <- data.frame()
+      
+      # Iterate over each sample size
+      for (size in sample_sizes) {
+        # Subset sim_croc and sim_fish for the current sample size
+        croc_subset <- subset(sim_croc, sample_size == size)
+        fish_subset <- subset(sim_fish, sample_size == size)
+        
+        # Iterate over each combination of sim_fish$sim_d18Op_mean and sim_croc$d18Omw
+        for (i in seq_along(fish_subset$sim_d18Op_mean)) {
+          for (j in seq_along(croc_subset$d18Omw)) {
+            # Run fishtemp function for each combination
+            temp_value <- fishtemp(fish_subset$sim_d18Op_mean[i], NIST120c_mean, croc_subset$d18Omw[j])
+            
+            # Create a data frame with the results
+            temp_df <- data.frame(
+              Sample_Size = size,
+              Eco_Type_d18Omw = croc_subset$eco_type[j],
+              d18Omw_Value = croc_subset$d18Omw[j],
+              d18Op_Value = fish_subset$sim_d18Op_mean[i],
+              Dual_Taxon_Temp = temp_value
+            )
+            
+            # Append the results to the dual_taxon_temps data frame
+            dual_taxon_temps <- rbind(dual_taxon_temps, temp_df)
+          }
+        }
       }
       
-      cat("Eco_types with non-missing d18Omw values:", unique(eco_types_with_d18Omw$eco_type), "\n")
-   
-    # Subset data for "Croc G"
-      croc_g_data <- sim_stats %>%
-        filter(eco_type == "Croc G")
+unique(dual_taxon_temps$Sample_Size)
+      # Plot histograms for each sample_size
+      plot_temps <- ggplot(dual_taxon_temps, aes(x = Dual_Taxon_Temp, fill = Eco_Type_d18Omw)) +
+        geom_histogram(binwidth = 1, position = "dodge", alpha = 0.7) +
+        facet_wrap(~Sample_Size, scales = "free") +
+        labs(title = "Distribution of Dual-Taxon Temperature Values",
+             x = "Temperature", y = "Frequency") +
+        theme_minimal()
       
-    # Calculate simulated values
-      croc_g_data$sim_crocwater <- 0.82 * croc_g_data$mean_d18Op - 19.93
-    
-    # Plot the distribution of sim_crocwater for "Croc G"
-      hist(croc_g_data$d18Omw, main = "Distribution of d18Omw estimates (simulated Croc G)", xlab = "sim_crocwater", col = "skyblue", border = "black")
-   
-      
-    # Subset data for "Fish"
-    gar_data <- sim_stats %>%
-        filter(eco_type == "Fish")
-    
-    # Subset data for "Aquatic Turtle"
-    aquaturtle_data <- sim_stats %>%
-      filter(eco_type == "Aquatic Turtle")
+      # Display the plot
+      print(plot_temps)
     
       
-    
+      plot_temps <- ggplot(dual_taxon_temps, aes(x = Dual_Taxon_Temp, fill = Eco_Type_d18Omw)) +
+        geom_histogram(binwidth = 1, position = "dodge", alpha = 0.7) +
+        facet_grid(Eco_Type_d18Omw ~ Sample_Size, scales = "free_y") +
+        labs(title = "Distribution of Dual-Taxon Temperature Values",
+             x = "Temperature", y = "Frequency") +
+        theme_minimal()
+      
+      # Display the plot
+      print(plot_temps)
 # Sim Means and CI --------------------------------------------------------
 
 
