@@ -297,7 +297,7 @@
       
 unique(dual_taxon_temps$Sample_Size)
       # Plot histograms for each sample_size
-      plot_temps <- ggplot(dual_taxon_temps, aes(x = Dual_Taxon_Temp, fill = Eco_Type_d18Omw)) +
+     # plot_temps <- ggplot(dual_taxon_temps, aes(x = Dual_Taxon_Temp, fill = Eco_Type_d18Omw)) +
         geom_histogram(binwidth = 1, position = "dodge", alpha = 0.7) +
         facet_wrap(~Sample_Size, scales = "free") +
         labs(title = "Distribution of Dual-Taxon Temperature Values",
@@ -317,101 +317,144 @@ unique(dual_taxon_temps$Sample_Size)
       
       # Display the plot
       print(plot_temps)
-# Sim Means and CI --------------------------------------------------------
-
-
-    
-# Sand Box ----------------------------------------------------------------
-
-    generate_resamples <- function(subset_data, sample_sizes = c(5, 10, 15, 20), n_resamples = 1000) {
-      resampled_data <- lapply(sample_sizes, function(sample_size) {
-        resamples <- replicate(n_resamples, sample(subset_data$d18O, size = sample_size, replace = TRUE))
-        means <- colMeans(resamples)
-        variances <- apply(resamples, 2, var)
-        standard_errors <- apply(resamples, 2, function(x) sd(x) / sqrt(length(x)))
-        standard_deviations <- apply(resamples, 2, sd)
-        
-        data.frame(
-          sample_size = rep(sample_size, each = n_resamples),
-          resampled_d18O_mean = means,
-          resampled_d18O_variance = variances,
-          resampled_d18O_standard_error = standard_errors,
-          resampled_d18O_standard_deviation = standard_deviations
-        )
+# EECM --------------------------------------------------------
+  
+  # Set up: need to add thermophysiology as variable in simulated dataset
+  # In the future, perhaps preserve thermophysiology data when simulating data from empirical dataset
+    # Define the conditions for thermophysiology
+      ectotherm_conditions <- c("Fish", "Aquatic Turtle", "Terrestrial Turtle", "Croc G", "Croc B", "Croc A")
+      endotherm_conditions <- c("Small Theropod", "Sauropoda", "Ornithischian")
+      
+    # Add the 'thermophysiology' column to each data frame
+      resamples <- lapply(resamples, function(df) {
+        df$thermophysiology <- ifelse(df$eco_type %in% ectotherm_conditions, "ectotherm",
+                                      ifelse(df$eco_type %in% endotherm_conditions, "endotherm", NA))
+        return(df)
       })
       
-      return(do.call(rbind, resampled_data))
-    }
+      # Subset into two separate lists
+      resamples_ectotherm <- lapply(resamples, function(df) {
+        df[df$thermophysiology == "ectotherm", ]
+      })
+      
+      resamples_endotherm <- lapply(resamples, function(df) {
+        df[df$thermophysiology == "endotherm", ]
+      })
+      
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # Subset the data for each eco_type
-    aquatic_turtle_data <- sim_stats %>% filter(eco_type == "Aquatic Turtle")
-    croc_g_data <- sim_stats %>% filter(eco_type == "Croc G")
-    
-    # Create a function to calculate variance for each sample size
-    calculate_variance <- function(data) {
-      data %>%
-        group_by(sample_size) %>%
-        summarize(variance = var(d18Omw, na.rm = TRUE))
-    }
-    
-    # Apply the function to each eco_type
-    aquatic_turtle_variance <- calculate_variance(aquatic_turtle_data)
-    croc_g_variance <- calculate_variance(croc_g_data)
-    
-    # Plot variance vs sample size for each eco type using ggplot
-    ggplot(aquatic_turtle_variance, aes(x = sample_size, y = variance)) +
-      geom_point() +
-      geom_line() +
-      labs(title = "Variance vs Sample Size (Aquatic Turtle)",
-           x = "Sample Size",
-           y = "Variance")
-    
-    ggplot(croc_g_variance, aes(x = sample_size, y = variance)) +
-      geom_point() +
-      geom_line() +
-      labs(title = "Variance vs Sample Size (Croc G)",
-           x = "Sample Size",
-           y = "Variance")
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+      
+
+
+# Sand Box ----------------------------------------------------------------
+
+      # use Tim Cullen's ectotherm-endotherm combined mean approach to estimate temp (modified from Fricke and Wing, 2005)
+      
+      # calc d18O of body water from each endothermic taxon
+      # d18Op <- (0.76) * (d18Obw) + 19.94
+      # d18Obw <- (d18Op - 19.94)/(0.76)
+      
+      # Compute mean d18Obw for endotherms 
+      mean_d18Omw <- V1075_cl %>%
+        group_by(thermophysiology) %>%
+        summarize(mean_d18Omw = mean((d18O..VSMOW. - 19.94) / 0.76, na.rm = TRUE))
+      
+      d18Ow_endo <- mean_d18Omw[mean_d18Omw$thermophysiology == "endotherm", ]
+      d18Ow_endo <- d18Ow_endo$mean_d18Omw
+      
+      # Calculate mean d18Op of ectotherms
+      d18Op_ecto <- V1075_cl %>%
+        filter(thermophysiology == "ectotherm") %>%
+        summarize(mean_d18Op = mean(d18O..VSMOW., na.rm = TRUE))
+      d18Op_ecto <- d18Op_ecto$mean_d18Op
+      
+      # Compute Endotherm-Ectotherm Combined Mean temperature estimate
+      EECM <- 111.4 - ( 4.3 * ( (d18Op_ecto) - (d18Ow_endo) ))
+      paste("EECM Temp estimate:", sprintf("%.2f", EECM), "degrees C")
+      
+      
+      
+      
+      
+      
+      
+      
+      
     
     
 # Recycling Bin -----------------------------------------------------------
 
-    # create function to generate resamples
+      generate_resamples <- function(subset_data, sample_sizes = c(5, 10, 15, 20), n_resamples = 1000) {
+        resampled_data <- lapply(sample_sizes, function(sample_size) {
+          resamples <- replicate(n_resamples, sample(subset_data$d18O, size = sample_size, replace = TRUE))
+          means <- colMeans(resamples)
+          variances <- apply(resamples, 2, var)
+          standard_errors <- apply(resamples, 2, function(x) sd(x) / sqrt(length(x)))
+          standard_deviations <- apply(resamples, 2, sd)
+          
+          data.frame(
+            sample_size = rep(sample_size, each = n_resamples),
+            resampled_d18O_mean = means,
+            resampled_d18O_variance = variances,
+            resampled_d18O_standard_error = standard_errors,
+            resampled_d18O_standard_deviation = standard_deviations
+          )
+        })
+        
+        return(do.call(rbind, resampled_data))
+      }
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      # Subset the data for each eco_type
+      aquatic_turtle_data <- sim_stats %>% filter(eco_type == "Aquatic Turtle")
+      croc_g_data <- sim_stats %>% filter(eco_type == "Croc G")
+      
+      # Create a function to calculate variance for each sample size
+      calculate_variance <- function(data) {
+        data %>%
+          group_by(sample_size) %>%
+          summarize(variance = var(d18Omw, na.rm = TRUE))
+      }
+      
+      # Apply the function to each eco_type
+      aquatic_turtle_variance <- calculate_variance(aquatic_turtle_data)
+      croc_g_variance <- calculate_variance(croc_g_data)
+      
+      # Plot variance vs sample size for each eco type using ggplot
+      ggplot(aquatic_turtle_variance, aes(x = sample_size, y = variance)) +
+        geom_point() +
+        geom_line() +
+        labs(title = "Variance vs Sample Size (Aquatic Turtle)",
+             x = "Sample Size",
+             y = "Variance")
+      
+      ggplot(croc_g_variance, aes(x = sample_size, y = variance)) +
+        geom_point() +
+        geom_line() +
+        labs(title = "Variance vs Sample Size (Croc G)",
+             x = "Sample Size",
+             y = "Variance")
+      
+
+      # create function to generate resamples
     generate_resamples <- function(subset_data, sample_sizes = c(5, 10, 15, 20), n_resamples = 1000) {
       resampled_data <- lapply(sample_sizes, function(sample_size) {
         replicate(n_resamples, mean(sample(subset_data$d18O, size = sample_size, replace = TRUE)))
@@ -423,18 +466,6 @@ unique(dual_taxon_temps$Sample_Size)
       ))
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     
   # Gather stats on resampled data
     
