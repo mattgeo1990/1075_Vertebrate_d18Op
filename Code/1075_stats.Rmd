@@ -19,7 +19,7 @@ First, I will demonstrate how sample size might affect temperature estimates usi
 
 I will also run resampling simulations on the empirical data and construct confidence intervals on the temperature estimate.
 
-## Procedure 1: Monte Carlo on simulated data, dual-taxon temperature reconstruction
+## Demonstration 1: Monte Carlo on simulated data, dual-taxon temperature reconstruction
 - Summary:
   1. Simulate large $\delta$^18^O~phosphate~ dataset with for each eco-type based on distribution of empirical data
   2. Generate random resamples of varying sample size from simulated data, gather summary statistics for each resample
@@ -27,7 +27,7 @@ I will also run resampling simulations on the empirical data and construct confi
   4. Compute temperature distribution from $\delta$^18^O~ambient_water~ and $\delta$^18^O~phosphate_fish~
   5. Construct 95% confidence interval around mean of temperature distribution
   
-## Demonstration 2: Monte Carlo on empirical Data, dual-taxon temperature reconstruction
+## Demonstration 2: Monte Carlo on empirical data, dual-taxon temperature reconstruction
 - Summary:
   1. Generate random resamples of varying sample from empirical data, gather summary statistics for each resample
   2. Compute $\delta$^18^O~ambient_water~ distribution
@@ -221,7 +221,7 @@ $$$\delta$^18^O~ambient_water~ = 1.01$\delta$^18^O~phosphate~ -23$$
       # Combine the Croc G subsets into a single data frame
         sim_croc <- do.call(rbind, croc_subsets)
       # Add d18Omw column to sim_croc
-        # sim_croc$d18Omw <- mapply(process_croc_data, sim_croc$sim_d18Op_mean, sim_croc$eco_type)
+        sim_croc$d18Omw <- NA
       
     # Aquatic Turtle
       # Subset resamples and extract Aquatic Turtle rows
@@ -229,13 +229,31 @@ $$$\delta$^18^O~ambient_water~ = 1.01$\delta$^18^O~phosphate~ -23$$
       # Combine the Aquatic Turtle subsets into a single data frame
         sim_turtle <- do.call(rbind, turtle_subsets)
       # Add d18Omw column to sim_turtle
-        # sim_turtle$d18Omw <- mapply(process_turtle_data, sim_turtle$sim_d18Op_mean, sim_turtle$eco_type)
+        sim_turtle$d18Omw <- NA
 
     
     # Compute d18Omw from turtle d18Op
-      # sim_turtle$d18Omw <- turtlewater(sim_turtle$sim_d18Op_mean)$d18Omw
+      sim_turtle$d18Omw <- turtlewater(sim_turtle$sim_d18Op_mean)$d18Omw
     # Compute d18Omw from croc d18Op
-      # sim_croc$d18Omw <- crocwater(sim_croc$sim_d18Op_mean)$d18Omw
+      sim_croc$d18Omw <- crocwater(sim_croc$sim_d18Op_mean)$d18Omw
+      
+      
+      
+  # Plot histograms to look at d18Omw distributions 
+      
+    # Combine sim_croc and sim_turtle into a single data frame for easier plotting
+      combined_data <- rbind(cbind(sim_croc, species = "Croc"), cbind(sim_turtle, species = "Turtle"))
+      
+    # Plot histograms for each combination of eco_type and sample_size
+      plot_panel <- ggplot(combined_data, aes(x = d18Omw, fill = species)) +
+        geom_histogram(binwidth = 0.25, position = "dodge", alpha = 0.7) +
+        facet_grid(eco_type ~ sample_size, scales = "free") +
+        labs(title = "Histograms of d18Ow for Simulated Croc and Turtle Data",
+             x = "d18Omw", y = "Frequency") +
+        theme_minimal()
+      
+    # Display the plot
+      print(plot_panel)
 ```
 
 
@@ -248,10 +266,48 @@ A t-test shows that the croc and turtle $\delta$^18^O~ambient_water~ distributio
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 
+# Compute temperature distribution from turtle d18Omw
 
+    # Subset resamples and extract Fish rows
+      fish_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Fish"))
+      # Combine the Fish subsets into a single data frame
+      sim_fish <- do.call(rbind, fish_subsets)
+      
+    # Create fishtemp function (Puceat et al., 2010)
+      fishtemp <- function(fish_d18Op, NIST120c_mean, d18Omw) {
+      temp <- 118.7 - 4.22 * ((fish_d18Op + (22.6 - NIST120c_mean)) - d18Omw)
+      return(temp)
+      }
 
-# see
-
+      # Create a data frame to hold dual-taxon temperature values
+      dual_taxon_temps <- data.frame()
+      
+      # Generate all combinations of sim_d18Op_mean and d18Omw
+      combinations <- expand.grid(sim_d18Op_mean = fish_subset$sim_d18Op_mean,
+                                  d18Omw = croc_subset$d18Omw)
+      
+      # Run fishtemp function for each combination
+      temp_values <- mapply(fishtemp, combinations$sim_d18Op_mean, NIST120c_mean, combinations$d18Omw)
+      
+      # Create a data frame with the results
+      temp_df <- data.frame(
+        Sample_Size = size,
+        Eco_Type_d18Omw = croc_subset$eco_type,
+        d18Omw_Value = combinations$d18Omw,
+        d18Op_Value = combinations$sim_d18Op_mean,
+        Dual_Taxon_Temp = temp_values
+      )
+      
+      # Append the results to the dual_taxon_temps data frame
+      dual_taxon_temps <- rbind(dual_taxon_temps, temp_df)
+      
+      # Plot histogram
+      ggplot(dual_taxon_temps, aes(x = Dual_Taxon_Temp)) +
+        geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7) +
+        labs(title = "Distribution of Dual Taxon Temperature Values",
+             x = "Dual Taxon Temperature",
+             y = "Frequency") +
+        theme_minimal()
 ```
 
 ### Step 5: Construct confidence intervals

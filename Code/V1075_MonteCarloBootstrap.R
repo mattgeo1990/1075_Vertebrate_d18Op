@@ -35,8 +35,9 @@ check_and_install_packages(packages)
     NIST120c <- read_csv(standards_githubURL)
     # check for outliers
     hist(NIST120c$d.18O.16O)
-    # gather mean
-    NIST120c_mean <- mean(NIST120c$d.18O.16O)
+    # gather stats
+      sd(NIST120c$d.18O.16O)
+      NIST120c_mean <- mean(NIST120c$d.18O.16O)
     
 
 # Setup
@@ -158,50 +159,43 @@ check_and_install_packages(packages)
 
 # Dual-taxon Temperature Estimates -----------------------------------------------------
   
-  # Define d18Omw functions
+    # Define d18Omw functions
     
     # d18Omw from croc d18Op (Amiot et al., 2007)
-      crocwater <- function(mean_d18Op) {
-        result <- 0.82 * mean_d18Op - 19.93
-        return(data.frame(d18Omw = result))
-      }
+    crocwater <- function(mean_d18Op) {
+      result <- 0.82 * mean_d18Op - 19.93
+      return(data.frame(d18Omw = result))
+    }
     
     # d18Omw from turtle d18Op (Barrick et al., 1999)
-      turtlewater <- function(mean_d18Op) {
-        result <- 1.01 * mean_d18Op - 22.3
-        return(data.frame(d18Omw = result))
-      }
-  
-  # Subset sim data by eco_type
+    turtlewater <- function(mean_d18Op) {
+      result <- 1.01 * mean_d18Op - 22.3
+      return(data.frame(d18Omw = result))
+    }
+    
+    # Subset sim data by eco_type
     
     # Croc G
-      # Subset resamples and extract Croc G rows
-        croc_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Croc G"))
-      # Combine the Croc G subsets into a single data frame
-        sim_croc <- do.call(rbind, croc_subsets)
-      # Add d18Omw column to sim_croc
-        sim_croc$d18Omw <- mapply(process_croc_data, sim_croc$sim_d18Op_mean, sim_croc$eco_type)
-      
+    # Subset resamples and extract Croc G rows
+    croc_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Croc G"))
+    # Combine the Croc G subsets into a single data frame
+    sim_croc <- do.call(rbind, croc_subsets)
+    # Add d18Omw column to sim_croc
+    sim_croc$d18Omw <- NA
+    
     # Aquatic Turtle
-      # Subset resamples and extract Aquatic Turtle rows
-        turtle_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Aquatic Turtle"))
-      # Combine the Aquatic Turtle subsets into a single data frame
-        sim_turtle <- do.call(rbind, turtle_subsets)
-      # Add d18Omw column to sim_turtle
-        sim_turtle$d18Omw <- mapply(process_turtle_data, sim_turtle$sim_d18Op_mean, sim_turtle$eco_type)
-      
-    # Fish
-      # Subset resamples and extract Fish rows
-        fish_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Fish"))
-      # Combine the Fish subsets into a single data frame
-        sim_fish <- do.call(rbind, fish_subsets)
-      
-  # Compute d18Omw from croc and from turtle
+    # Subset resamples and extract Aquatic Turtle rows
+    turtle_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Aquatic Turtle"))
+    # Combine the Aquatic Turtle subsets into a single data frame
+    sim_turtle <- do.call(rbind, turtle_subsets)
+    # Add d18Omw column to sim_turtle
+    sim_turtle$d18Omw <- NA
+    
     
     # Compute d18Omw from turtle d18Op
-      sim_turtle$d18Omw <- turtlewater(sim_turtle$sim_d18Op_mean)$d18Omw
+    sim_turtle$d18Omw <- turtlewater(sim_turtle$sim_d18Op_mean)$d18Omw
     # Compute d18Omw from croc d18Op
-      sim_croc$d18Omw <- crocwater(sim_croc$sim_d18Op_mean)$d18Omw
+    sim_croc$d18Omw <- crocwater(sim_croc$sim_d18Op_mean)$d18Omw
     
       
   # Run t-test between croc and turtle d18Omw
@@ -248,6 +242,11 @@ check_and_install_packages(packages)
       print(plot_panel)
       
   # Compute temperature distribution from turtle d18Omw
+
+    # Subset resamples and extract Fish rows
+      fish_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Fish"))
+      # Combine the Fish subsets into a single data frame
+      sim_fish <- do.call(rbind, fish_subsets)
       
     # Create fishtemp function (Puceat et al., 2010)
       fishtemp <- function(fish_d18Op, NIST120c_mean, d18Omw) {
@@ -337,6 +336,129 @@ unique(dual_taxon_temps$Sample_Size)
 
 # Sand Box ----------------------------------------------------------------
 
+      # Generate all combinations of sim_d18Op_mean and d18Omw
+      combinations <- expand.grid(sim_d18Op_mean = fish_subset$sim_d18Op_mean,
+                                  d18Omw = croc_subset$d18Omw)
+      
+      # Run fishtemp function for each combination
+      temp_values <- mapply(fishtemp, combinations$sim_d18Op_mean, NIST120c_mean, combinations$d18Omw)
+      
+      # Create a data frame with the results
+      temp_df <- data.frame(
+        Sample_Size = size,
+        Eco_Type_d18Omw = croc_subset$eco_type,
+        d18Omw_Value = combinations$d18Omw,
+        d18Op_Value = combinations$sim_d18Op_mean,
+        Dual_Taxon_Temp = temp_values
+      )
+      
+      # Append the results to the dual_taxon_temps data frame
+      dual_taxon_temps <- rbind(dual_taxon_temps, temp_df)
+      
+      # Plot histogram
+      ggplot(dual_taxon_temps, aes(x = Dual_Taxon_Temp)) +
+        geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7) +
+        labs(title = "Distribution of Dual Taxon Temperature Values",
+             x = "Dual Taxon Temperature",
+             y = "Frequency") +
+        theme_minimal()
+      
+
+      # Plot histogram for each sample size on one panel
+      ggplot(dual_taxon_temps, aes(x = Dual_Taxon_Temp)) +
+        geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7) +
+        facet_wrap(~Sample_Size, scales = "free") +
+        labs(title = "Distribution of Dual Taxon Temperature Values by Sample Size",
+             x = "Dual Taxon Temperature",
+             y = "Frequency") +
+        theme_minimal()
+      
+      
+      
+      
+      
+      
+      # Initialize an empty data frame to store results
+      dual_taxon_temps <- data.frame()
+      
+      # Loop over each sample size
+      for (i in (sample_sizes)) {
+        # Subset data for the current sample size
+        current_fish_subset <- subset(fish_subset, sample_size == current_size)
+        current_croc_subset <- subset(croc_subset, sample_size == current_size)
+        
+        # Generate all combinations of sim_d18Op_mean and d18Omw for the current sample size
+        combinations <- expand.grid(
+          sim_d18Op_mean = current_fish_subset$sim_d18Op_mean,
+          d18Omw = current_croc_subset$d18Omw
+        )
+        
+        # Run fishtemp function for each combination
+        temp_values <- mapply(fishtemp, combinations$sim_d18Op_mean, NIST120c_mean, combinations$d18Omw)
+        
+        # Create a data frame with the results for the current sample size
+        temp_df <- data.frame(
+          Sample_Size = current_size,
+          Eco_Type_d18Omw = current_croc_subset$eco_type,
+          d18Omw_Value = combinations$d18Omw,
+          d18Op_Value = combinations$sim_d18Op_mean,
+          Dual_Taxon_Temp = temp_values
+        )
+        
+        # Append the results to the overall data frame
+        dual_taxon_temps <- rbind(dual_taxon_temps, temp_df)
+      }
+      
+# try again
+      
+      # Initialize an empty data frame to store results
+      dual_taxon_temps <- data.frame()
+      
+      # Loop over each unique sample size
+      for (current_size in unique(sample_sizes)) {
+        # Subset data for the current sample size in croc_subsets
+        current_croc_subset <- croc_subsets[[as.character(current_size)]]
+        
+        # Subset data for the current sample size in fish_subsets
+        current_fish_subset <- fish_subsets[[as.character(current_size)]]
+        
+        # Check if both subsets have data
+        if (!is.null(current_croc_subset) && !is.null(current_fish_subset)) {
+          # Generate all combinations of sim_d18Op_mean and d18Omw for the current sample size
+          combinations <- expand.grid(
+            sim_d18Op_mean = current_fish_subset$sim_d18Op_mean,
+            d18Omw = current_croc_subset$d18Omw
+          )
+          
+          # Run fishtemp function for each combination
+          temp_values <- mapply(fishtemp, combinations$sim_d18Op_mean, NIST120c_mean, combinations$d18Omw)
+          
+          # Create a data frame with the results for the current sample size
+          temp_df <- data.frame(
+            Sample_Size = current_size,
+            Eco_Type_d18Omw = current_croc_subset$eco_type,
+            d18Omw_Value = combinations$d18Omw,
+            d18Op_Value = combinations$sim_d18Op_mean,
+            Dual_Taxon_Temp = temp_values
+          )
+          
+          # Append the results to the overall data frame
+          dual_taxon_temps <- rbind(dual_taxon_temps, temp_df)
+        }
+      }
+      
+          
+      
+      
+      unique(dual_taxon_temps$Sample_Size)
+      unique(croc_subset$sample_size)
+# EECM for later ----------------------------------------------------------
+
+      
+      
+      
+      
+      
       # use Tim Cullen's ectotherm-endotherm combined mean approach to estimate temp (modified from Fricke and Wing, 2005)
       
       # calc d18O of body water from each endothermic taxon
