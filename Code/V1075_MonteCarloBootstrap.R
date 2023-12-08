@@ -232,7 +232,7 @@ check_and_install_packages(packages)
       
       # Plot histograms for each combination of eco_type and sample_size
       plot_panel <- ggplot(combined_data, aes(x = d18Omw, fill = species)) +
-        geom_histogram(binwidth = 1, position = "dodge", alpha = 0.7) +
+        geom_histogram(binwidth = 0.25, position = "dodge", alpha = 0.7) +
         facet_grid(eco_type ~ sample_size, scales = "free") +
         labs(title = "Histogram of d18Omw for Simulated Croc and Turtle Data",
              x = "d18Omw", y = "Frequency") +
@@ -306,33 +306,6 @@ unique(dual_taxon_temps$Sample_Size)
       
       # Display the plot
       print(plot_temps)
-# EECM --------------------------------------------------------
-  
-  # Set up: need to add thermophysiology as variable in simulated dataset
-  # In the future, perhaps preserve thermophysiology data when simulating data from empirical dataset
-    # Define the conditions for thermophysiology
-      ectotherm_conditions <- c("Fish", "Aquatic Turtle", "Terrestrial Turtle", "Croc G", "Croc B", "Croc A")
-      endotherm_conditions <- c("Small Theropod", "Sauropoda", "Ornithischian")
-      
-    # Add the 'thermophysiology' column to each data frame
-      resamples <- lapply(resamples, function(df) {
-        df$thermophysiology <- ifelse(df$eco_type %in% ectotherm_conditions, "ectotherm",
-                                      ifelse(df$eco_type %in% endotherm_conditions, "endotherm", NA))
-        return(df)
-      })
-      
-      # Subset into two separate lists
-      resamples_ectotherm <- lapply(resamples, function(df) {
-        df[df$thermophysiology == "ectotherm", ]
-      })
-      
-      resamples_endotherm <- lapply(resamples, function(df) {
-        df[df$thermophysiology == "endotherm", ]
-      })
-      
-    
-      
-
 
 # Sand Box ----------------------------------------------------------------
 
@@ -447,18 +420,54 @@ unique(dual_taxon_temps$Sample_Size)
         }
       }
       
+    # asked ChatGPT to make it more efficient
+      
+      # Initialize a list to store results
+      result_list <- list()
+      
+      # Loop over each unique sample size
+      for (current_size in unique(sample_sizes)) {
+        # Subset data for the current sample size in croc_subsets
+        current_croc_subset <- croc_subsets[[as.character(current_size)]]
+        
+        # Subset data for the current sample size in fish_subsets
+        current_fish_subset <- fish_subsets[[as.character(current_size)]]
+        
+        # Check if both subsets have data
+        if (!is.null(current_croc_subset) && !is.null(current_fish_subset)) {
+          # Generate all combinations of sim_d18Op_mean and d18Omw for the current sample size
+          combinations <- expand.grid(
+            sim_d18Op_mean = current_fish_subset$sim_d18Op_mean,
+            d18Omw = current_croc_subset$d18Omw
+          )
           
+          # Run fishtemp function for each combination
+          temp_values <- mapply(fishtemp, combinations$sim_d18Op_mean, NIST120c_mean, combinations$d18Omw)
+          
+          # Create a data frame with the results for the current sample size
+          temp_df <- data.frame(
+            Sample_Size = current_size,
+            Eco_Type_d18Omw = current_croc_subset$eco_type,
+            d18Omw_Value = combinations$d18Omw,
+            d18Op_Value = combinations$sim_d18Op_mean,
+            Dual_Taxon_Temp = temp_values
+          )
+          
+          # Store the data frame in the list
+          result_list[[as.character(current_size)]] <- temp_df
+        }
+      }
+      
+      # Combine all data frames into one
+      dual_taxon_temps <- do.call(rbind, result_list)
+      
       
       
       unique(dual_taxon_temps$Sample_Size)
       unique(croc_subset$sample_size)
 # EECM for later ----------------------------------------------------------
 
-      
-      
-      
-      
-      
+# one attempt
       # use Tim Cullen's ectotherm-endotherm combined mean approach to estimate temp (modified from Fricke and Wing, 2005)
       
       # calc d18O of body water from each endothermic taxon
@@ -482,6 +491,32 @@ unique(dual_taxon_temps$Sample_Size)
       # Compute Endotherm-Ectotherm Combined Mean temperature estimate
       EECM <- 111.4 - ( 4.3 * ( (d18Op_ecto) - (d18Ow_endo) ))
       paste("EECM Temp estimate:", sprintf("%.2f", EECM), "degrees C")
+      
+      
+# a different attempt
+      
+      # Set up: need to add thermophysiology as variable in simulated dataset
+      # In the future, perhaps preserve thermophysiology data when simulating data from empirical dataset
+      # Define the conditions for thermophysiology
+      ectotherm_conditions <- c("Fish", "Aquatic Turtle", "Terrestrial Turtle", "Croc G", "Croc B", "Croc A")
+      endotherm_conditions <- c("Small Theropod", "Sauropoda", "Ornithischian")
+      
+      # Add the 'thermophysiology' column to each data frame
+      resamples <- lapply(resamples, function(df) {
+        df$thermophysiology <- ifelse(df$eco_type %in% ectotherm_conditions, "ectotherm",
+                                      ifelse(df$eco_type %in% endotherm_conditions, "endotherm", NA))
+        return(df)
+      })
+      
+      # Subset into two separate lists
+      resamples_ectotherm <- lapply(resamples, function(df) {
+        df[df$thermophysiology == "ectotherm", ]
+      })
+      
+      resamples_endotherm <- lapply(resamples, function(df) {
+        df[df$thermophysiology == "endotherm", ]
+      })
+      
       
       
       
