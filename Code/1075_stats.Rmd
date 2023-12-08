@@ -1,7 +1,7 @@
 ---
-title: "1075 Stats"
+title: "Constructing Confidence Intervals around Proxy Parameters Derived from Vertebrate Isotopes"
 author: "Matthew Allen"
-date: "2023-11-28"
+date: "December 2023"
 output: html_document
 ---
 
@@ -9,55 +9,59 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Evaluating sample size for multi-taxon bioapatite isotope studies
+# Introduction
 
-Accuracy and precision of paleo-temperature estimates derived from d18O of vertebrate bioapatite depend on intra-taxon sample size. That is, for each taxon or eco-type included in such an analysis, an adequate number of individuals from that group must be sampled in order to adequately reduce uncertainty and improve confidence in accuracy.
+#### I will flesh this out in the coming week. I'll introduce what I'm doing and why I'm doing it. I might suggest how this document/procedure might be used on future analyses.
 
-Multiple biological and environmental factors introduce variability into d18O distributions within taxonomic groups within a single fossil assemblage (i.e. "site"). The influence of each of these factors is likely to vary across time and space. Thus, it is necessary to evaluate such intra-taxon d18O variability within a single assemblage to understand what is an adequate sample size for each taxon in assemblages where it is represented.
+Uncertainty of proxy estimates derived from vertebrate isotopes is influenced by sample size. It is important to test the sensitivity of a parameter to the number of specimens sampled for an analysis.
 
-Here I will demonstrate how sample size affects temperature estimates for a single assemblage in the Albian (mid-Cretaceous) of Montana. I will also demonstrate methods for determining target sample sizes for multi-taxon stable isotope analyses in general.
+First, I will demonstrate how sample size might affect temperature estimates using simulated data based on an empirical dataset from a single assemblage in the Albian (mid-Cretaceous) of Montana. 
 
-## Effect of intra-taxon d18Op sample size on temperature estimates
+I will also run resampling simulations on the empirical data and construct confidence intervals on the temperature estimate.
 
-### Don't forget to fix NIST120c data, include run 3
+## Procedure 1: Monte Carlo on simulated data, dual-taxon temperature reconstruction
+- Summary:
+  1. Simulate large $\delta$^18^O~phosphate~ dataset with for each eco-type based on distribution of empirical data
+  2. Generate random resamples of varying sample size from simulated data, gather summary statistics for each resample
+  3. Compute $\delta$^18^O~ambient_water~ distribution
+  4. Compute temperature distribution from $\delta$^18^O~ambient_water~ and $\delta$^18^O~phosphate_fish~
+  5. Construct 95% confidence interval around mean of temperature distribution
+  
+## Demonstration 2: Monte Carlo on empirical Data, dual-taxon temperature reconstruction
+- Summary:
+  1. Generate random resamples of varying sample from empirical data, gather summary statistics for each resample
+  2. Compute $\delta$^18^O~ambient_water~ distribution
+  3. Compute temperature distribution from $\delta$^18^O~ambient_water~ and $\delta$^18^O~phosphate_fish~
+  4. Construct 95% confidence interval around mean of temperature distribution
+
+#### Setup: Install/load packages, read data, clean and group data by eco-type 
+
+Before we begin the procedure, let's load everything and set up our data. We will also check for normality of the data, and visualize the distribution of each eco-type
+
+#### !!! Recompile NIST120c data, include run 3 !!!
+#### !!! Output Shapiro-Wilk test results in table plot so it is visible in Rmarkdown !!!
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 
-
-# Here I will include a code chunk that will:
-  # load the required packages
-  # source the data (V1075_BySpec.csv)
-  # plot a histogram for each eco_type to visualize the d18Op distributions
- 
 # Packages, Data, Objects -------------------------------------------------
   
-  # Packages
-    # Vector of package names
+  # Define required packages
     packages <- c("dplyr", "ggplot2", "readr", "magrittr", "tidyr", "purrr")
-    
-    # Function to check and install packages
+
+  # Create function to check, install, and load packages
     check_and_install_packages <- function(packages) {
-      # Check if each package is installed
       missing_packages <- setdiff(packages, installed.packages()[,"Package"])
-      
-      # Install missing packages
-      if (length(missing_packages) > 0) {
-        install.packages(missing_packages, dependencies = TRUE)
-      }
-      
-      # Load all packages
-      loaded_packages <- sapply(packages, function(pkg) {
+      if (length(missing_packages) > 0) install.packages(missing_packages, dependencies = TRUE)
+      sapply(packages, function(pkg) {
         if (!requireNamespace(pkg, quietly = TRUE)) {
           message(paste("Installing and loading", pkg))
           install.packages(pkg, dependencies = TRUE)
         }
         library(pkg, character.only = TRUE)
-      })  
-      
-      # Return a logical vector indicating whether each package is successfully loaded
-      return(loaded_packages)
+      })
     }
-    
+
+  # Run the package function
     check_and_install_packages(packages)
 
   # Data
@@ -108,7 +112,7 @@ Here I will demonstrate how sample size affects temperature estimates for a sing
 ```
 
 
-## Simulate data for each eco_type based on distributions of emperical data. Assume normality.
+### Step 1: Simulate d18Ophosphate data for each eco_type based on distributions of emperical data.
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 # Simulate dataset ------------------------------------------------------
@@ -139,95 +143,135 @@ Here I will demonstrate how sample size affects temperature estimates for a sing
       theme_minimal()
 ```
 
-## Generate random subsamples from simulated data.
+### Step 2: Generate random subsamples from simulated data.
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 # Resampling simulated data--------------------------------------------------------------
 
-    # Function to generate resamples for a given eco_type
-
-    generate_resamples <- function(subset_data, sample_sizes = c(3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30), n_resamples = 1000) {
+     # Function to generate resamples for a given eco_type
+    generate_resamples <- function(subset_data, sample_sizes = c(5, 10, 15, 20), n_resamples = 1000) {
       resampled_data <- lapply(sample_sizes, function(sample_size) {
-        replicate(n_resamples, mean(sample(subset_data$d18O, size = sample_size, replace = TRUE)))
+        resamples <- replicate(n_resamples, sample(subset_data$d18O, size = sample_size, replace = TRUE))
+        means <- colMeans(resamples)
+        variances <- apply(resamples, 2, var)
+        standard_errors <- apply(resamples, 2, function(x) sd(x) / sqrt(length(x)))
+        standard_deviations <- apply(resamples, 2, sd)
+        
+        data.frame(
+          sample_size = rep(sample_size, each = n_resamples),
+          sim_d18Op_mean = means,
+          sim_d18Op_var = variances,
+          sim_d18Op_SE = standard_errors,
+          sim_d18Op_SD = standard_deviations
+        )
       })
       
-      return(data.frame(
-        sample_size = rep(sample_sizes, each = n_resamples),
-        resampled_d18O = unlist(resampled_data)
-      ))
+      return(do.call(rbind, resampled_data))
     }
+
     
     # Generate resamples for each eco_type
     resampled_data <- grouped_data %>%
       group_modify(~ generate_resamples(.x, n_resamples = 1000))
     
-  # Simulated resampling of NIST120c d18O data
+    # Assuming resampled_data is the output from generate_resamples function
+    resamples <- list()
     
+    sample_sizes <- unique(resampled_data$sample_size)
     
-    # NEED TO RUN SIMULATION ON NIST120c ???
-
-
-```
-
-## Gather summary stats on subsamples.
-
-```{r, results='hide', message=FALSE, warning=FALSE}
-# Gather Stats on Resamples -----------------------------------------------
-
-    # Assuming "resampled_data" is your previously generated resampled data frame
-    # Replace "resampled_d18O" and "sample_size" with the actual column names in your data frame
-    
-    # Function to calculate mean, standard error, and gather results
-    calculate_summary_stats <- function(resampled_data) {
-      eco_type <- unique(resampled_data$eco_type)[1]  # Assuming eco_type is the same for all rows
-      summary_stats <- resampled_data %>%
-        group_by(sample_size) %>%
-        summarise(
-          mean_d18Op = mean(resampled_d18O),
-          se_d18Op = sd(resampled_d18O) / sqrt(length(resampled_d18O)),
-          eco_type = eco_type
-        )
-      return(summary_stats)
+    for (size in sample_sizes) {
+      resamples[[paste0("sample_size_", size)]] <- subset(resampled_data, sample_size == size)
     }
     
-    # Apply the function to each group in resampled_data
-    sim_stats <- resampled_data %>%
-      group_split(eco_type) %>%
-      map_dfr(~ calculate_summary_stats(.x))
-    
-    # Check the structure of the sim_stats
-    str(sim_stats)
-    
-    # Plot se_d18Op against sample_size 
-    ggplot(sim_stats, aes(x = sample_size, y = se_d18Op)) +
-      geom_point() +
-      geom_line() +
-      labs(title = "Plot of se_d18Op against sample_size", x = "Sample Size", y = "se_d18Op")
-    
+    # Now, each subset is stored in resamples list
+    # Access them using resamples$sample_size_5, subsetted_data$sample_size_10, etc.
+
 
 ```
 
+### Step 3: Compute $\delta$^18^O~ambient_water~ 
 
-## Compute d18Omw and water temperature proxies.
+Here we are calculating $\delta$^18^O~ambient_water~ from $\delta$^18^O~phosphate~ of the aquatic turtle *Glyptops sp.* and a aquatic/semi-aquatic crocodylomorph morphotype referred to as "Croc G". These equations are from Barrick et al. (1999) and Amiot et al. (2007), respectively.
 
-### Here are the proxy equations
-   crocwater <- 0.82*(AquaCroc_d18Op_mean) - 19.93 #Amiot et al.(2007)
-    turtwater <- 1.01 *(AquaTurt_d18Op_mean) - 22.3 #Barrick et al. (1999)
-    meanCrocFish_temp <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - crocwater ) #Puceat et al. (2010)
+Barrick et al. (1999) equation for ambient water:
+
+$$$\delta$^18^O~ambient_water~ = 1.01$\delta$^18^O~phosphate~ -23$$
+!!! Toubleshoot lines 215, 223, then generate d18Oaw !!!
+```{r, results='hide', message=FALSE, warning=FALSE}
+
+  # Define d18Omw functions
+    
+    # d18Omw from croc d18Op (Amiot et al., 2007)
+      crocwater <- function(mean_d18Op) {
+        result <- 0.82 * mean_d18Op - 19.93
+        return(data.frame(d18Omw = result))
+      }
+    
+    # d18Omw from turtle d18Op (Barrick et al., 1999)
+      turtlewater <- function(mean_d18Op) {
+        result <- 1.01 * mean_d18Op - 22.3
+        return(data.frame(d18Omw = result))
+      }
+  
+  # Subset sim data by eco_type
+    
+    # Croc G
+      # Subset resamples and extract Croc G rows
+        croc_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Croc G"))
+      # Combine the Croc G subsets into a single data frame
+        sim_croc <- do.call(rbind, croc_subsets)
+      # Add d18Omw column to sim_croc
+        # sim_croc$d18Omw <- mapply(process_croc_data, sim_croc$sim_d18Op_mean, sim_croc$eco_type)
+      
+    # Aquatic Turtle
+      # Subset resamples and extract Aquatic Turtle rows
+        turtle_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Aquatic Turtle"))
+      # Combine the Aquatic Turtle subsets into a single data frame
+        sim_turtle <- do.call(rbind, turtle_subsets)
+      # Add d18Omw column to sim_turtle
+        # sim_turtle$d18Omw <- mapply(process_turtle_data, sim_turtle$sim_d18Op_mean, sim_turtle$eco_type)
+
+    
+    # Compute d18Omw from turtle d18Op
+      # sim_turtle$d18Omw <- turtlewater(sim_turtle$sim_d18Op_mean)$d18Omw
+    # Compute d18Omw from croc d18Op
+      # sim_croc$d18Omw <- crocwater(sim_croc$sim_d18Op_mean)$d18Omw
+```
+
+
+### Step 4: Compute dual-taxon temperature estimates
+
+##### This is bricking my computer. I have not yet been able to successfully compute a temperature distribution. See "Dual-taxon Temperature Estimates" in "V1075_MonteCarloBootstrap.R"
+
+##### Note about which taxon to use as proxy for $\delta$^18^O~ambient_water~
+A t-test shows that the croc and turtle $\delta$^18^O~ambient_water~ distributions do not differ in this case. This suggests that 
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 
-  
-  # Calculate d18Omw estimates
-    #create d18Omw column
-      sim_stats$d18Omw <- NA
-    # calculate d18Omw
-      sim_stats <- sim_stats %>%
-      mutate(d18Omw = case_when(
-        eco_type == "Aquatic Turtle" & is.na(d18Omw) ~ 1.01 * mean_d18Op - 22.3,
-        eco_type == "Croc G" & is.na(d18Omw) ~ 0.82 * mean_d18Op - 19.93,
-        TRUE ~ d18Omw  # Keep existing values for other cases
-      ))
-    
+
+
+# see
+
+```
+
+### Step 5: Construct confidence intervals
+
+```{r}
+
+# Assuming "data" is your distribution
+# Replace "data" with your actual data
+
+# Calculate mean and standard deviation
+  # mean_value <- mean(data)
+  # sd_value <- sd(data)
+
+# Calculate 95% confidence limits
+  # lower_limit <- mean_value + qnorm(0.025) * sd_value
+  # upper_limit <- mean_value + qnorm(0.975) * sd_value
+
+# Print the confidence limits
+  # cat("95% Confidence Interval: (", lower_limit, ", ", upper_limit, ")\n")
+
+
 ```
 

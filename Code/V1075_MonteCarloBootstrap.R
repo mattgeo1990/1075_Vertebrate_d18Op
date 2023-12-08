@@ -2,34 +2,24 @@
 
 # Packages, Data, Objects -------------------------------------------------
   
-  # Packages
-    # Vector of package names
-    packages <- c("dplyr", "ggplot2", "readr", "magrittr", "tidyr", "purrr")
-    
-    # Function to check and install packages
-    check_and_install_packages <- function(packages) {
-      # Check if each package is installed
-      missing_packages <- setdiff(packages, installed.packages()[,"Package"])
-      
-      # Install missing packages
-      if (length(missing_packages) > 0) {
-        install.packages(missing_packages, dependencies = TRUE)
-      }
-      
-      # Load all packages
-      loaded_packages <- sapply(packages, function(pkg) {
-        if (!requireNamespace(pkg, quietly = TRUE)) {
-          message(paste("Installing and loading", pkg))
-          install.packages(pkg, dependencies = TRUE)
-        }
-        library(pkg, character.only = TRUE)
-      })  
-      
-      # Return a logical vector indicating whether each package is successfully loaded
-      return(loaded_packages)
+# Define required packages
+packages <- c("dplyr", "ggplot2", "readr", "magrittr", "tidyr", "purrr")
+
+# Create function to check, install, and load packages
+check_and_install_packages <- function(packages) {
+  missing_packages <- setdiff(packages, installed.packages()[,"Package"])
+  if (length(missing_packages) > 0) install.packages(missing_packages, dependencies = TRUE)
+  sapply(packages, function(pkg) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      message(paste("Installing and loading", pkg))
+      install.packages(pkg, dependencies = TRUE)
     }
-    
-    check_and_install_packages(packages)
+    library(pkg, character.only = TRUE)
+  })
+}
+
+# Run the package function
+check_and_install_packages(packages)
 
   # Data
     # GitHub raw URL for the CSV file
