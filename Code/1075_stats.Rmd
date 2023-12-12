@@ -196,7 +196,10 @@ Here we are calculating $\delta$^18^O~ambient_water~ from $\delta$^18^O~phosphat
 Barrick et al. (1999) equation for ambient water:
 
 $$$\delta$^18^O~ambient_water~ = 1.01$\delta$^18^O~phosphate~ -23$$
-!!! Toubleshoot lines 215, 223, then generate d18Oaw !!!
+Amiot et al. (2007) equation for ambient water:
+
+$$ equation $$
+
 ```{r, results='hide', message=FALSE, warning=FALSE}
 
   # Define d18Omw functions
@@ -231,7 +234,7 @@ $$$\delta$^18^O~ambient_water~ = 1.01$\delta$^18^O~phosphate~ -23$$
       # Add d18Omw column to sim_turtle
         sim_turtle$d18Omw <- NA
 
-    
+  # Compute d18O water values
     # Compute d18Omw from turtle d18Op
       sim_turtle$d18Omw <- turtlewater(sim_turtle$sim_d18Op_mean)$d18Omw
     # Compute d18Omw from croc d18Op
@@ -264,50 +267,63 @@ $$$\delta$^18^O~ambient_water~ = 1.01$\delta$^18^O~phosphate~ -23$$
 ##### Note about which taxon to use as proxy for $\delta$^18^O~ambient_water~
 A t-test shows that the croc and turtle $\delta$^18^O~ambient_water~ distributions do not differ in this case. This suggests that 
 
-```{r, results='hide', message=FALSE, warning=FALSE}
+```{r}
 
-# Compute temperature distribution from turtle d18Omw
-
+  # Setup
+      
     # Subset resamples and extract Fish rows
       fish_subsets <- lapply(resamples, function(df) subset(df, eco_type == "Fish"))
       # Combine the Fish subsets into a single data frame
       sim_fish <- do.call(rbind, fish_subsets)
       
+      str(sim_fish)
+    
     # Create fishtemp function (Puceat et al., 2010)
       fishtemp <- function(fish_d18Op, NIST120c_mean, d18Omw) {
       temp <- 118.7 - 4.22 * ((fish_d18Op + (22.6 - NIST120c_mean)) - d18Omw)
       return(temp)
       }
-
-      # Create a data frame to hold dual-taxon temperature values
-      dual_taxon_temps <- data.frame()
       
-      # Generate all combinations of sim_d18Op_mean and d18Omw
-      combinations <- expand.grid(sim_d18Op_mean = fish_subset$sim_d18Op_mean,
-                                  d18Omw = croc_subset$d18Omw)
+  # Compute temps
+      # Get distinct sample sizes
+      distinct_sample_sizes <- unique(sim_turtle$sample_size)
       
-      # Run fishtemp function for each combination
-      temp_values <- mapply(fishtemp, combinations$sim_d18Op_mean, NIST120c_mean, combinations$d18Omw)
+      # Function to calculate temperature
+      fishtemp <- function(fish_d18Op, NIST120c_mean, d18Omw) {
+        temp <- 118.7 - 4.22 * ((fish_d18Op + (22.6 - NIST120c_mean)) - d18Omw)
+        return(temp)
+      }
       
-      # Create a data frame with the results
-      temp_df <- data.frame(
-        Sample_Size = size,
-        Eco_Type_d18Omw = croc_subset$eco_type,
-        d18Omw_Value = combinations$d18Omw,
-        d18Op_Value = combinations$sim_d18Op_mean,
-        Dual_Taxon_Temp = temp_values
-      )
+      # Create an empty data frame to store results
+      result_df <- data.frame(Sample_Size = numeric(),
+                              Temperature = numeric())
+     
+      # This is where the loop will go which will compute the temps. It is commented out here because the run time is enormous. I'm working on that.
       
-      # Append the results to the dual_taxon_temps data frame
-      dual_taxon_temps <- rbind(dual_taxon_temps, temp_df)
+      # Iterate over distinct sample sizes
+      #for (sample_size in distinct_sample_sizes) {
+        # Subset sim_fish and sim_turtle for the current sample_size
+        #subset_sim_fish <- subset(sim_fish, sample_size == sample_size)
+        #subset_sim_turtle <- subset(sim_turtle, sample_size == sample_size)
+        
+        # Iterate over each combination of sim_fish$sim_d18Op_mean and sim_turtle$d18Omw
+        #for (fish_d18Op_mean in subset_sim_fish$sim_d18Op_mean) {
+          #for (turtle_d18Omw in subset_sim_turtle$d18Omw) {
+            # Call fishtemp for the current combination
+           # temperature <- fishtemp(fish_d18Op_mean, 22.6, turtle_d18Omw)
+            
+            # Store the result in the data frame
+            #result_df <- rbind(result_df, data.frame(Sample_Size = sample_size, Temperature = temperature))
+         # }
+       # }
+     # }
       
-      # Plot histogram
-      ggplot(dual_taxon_temps, aes(x = Dual_Taxon_Temp)) +
-        geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7) +
-        labs(title = "Distribution of Dual Taxon Temperature Values",
-             x = "Dual Taxon Temperature",
-             y = "Frequency") +
-        theme_minimal()
+  # Plot temp distributions
+      #ggplot(result_df, aes(x = Temperature, fill = as.factor(Sample_Size))) +
+        #geom_histogram(position = "identity", alpha = 0.7, bins = 20) +
+        #facet_wrap(~Sample_Size, scales = "free") +
+        #labs(title = "Histogram of Temperature for Each Sample Size", x = "Temperature", y = "Frequency") +
+        #theme_minimal()
 ```
 
 ### Step 5: Construct confidence intervals
