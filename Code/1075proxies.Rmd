@@ -1,0 +1,54 @@
+---
+title: "1075_proxies"
+author: "Matthew Allen"
+date: "2023-12-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## V1075 Proxy Calculations
+
+*Here I will compute:
+1. dual-taxon temperature estimates from both Glyptops (aquatic turtle) and croc G (c.f. Goniopholididae)
+2. EECM
+
+
+- Procedure Summary:
+  1. Dependencies, Data, Objects
+  2. Compute d18Omw and dual-taxon temperatures
+  3. Compute EECM
+
+## Load Dependencies, Read Data, Create Objects
+```{r, results='hide', message=FALSE, warning=FALSE}
+# Install/load required packages
+# Source 1075_cl from Github
+# Source NIST data
+# subset fish scales
+# subset Croc G
+# subset Aquatic Turtle
+```
+
+## Compute Dual-Taxon Temps
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+# take mean d18Omw from turtle
+# take mean d18Omw from fish
+# compute turtlewater
+# compute crocwater
+# Compute Temp from croc.fish
+# Compute Temp from turtle.fish
+# Confidence Intervals / Uncertainty?
+```
+
+## Compute EECM
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+# Compute d18O body water for endotherms
+  # use Kohn 1996 Mammal equations for dinosaurs
+    # See Cullen's supplementary materials to see which equations they used
+# Compute EECM
+```
+

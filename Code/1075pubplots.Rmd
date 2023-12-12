@@ -1,0 +1,44 @@
+---
+title: "1075 Publication Plots"
+author: "Matthew Allen"
+date: "2023-12-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load Dependencies, Read Data, Create Objects
+```{r, results='hide', message=FALSE, warning=FALSE}
+# Load packages
+# Read in raw data
+# Read in cleaned data (include link to script that cleans the data?)
+# What objects are necessary?
+```
+
+## Clean Data
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+## Plot stripchart
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+
+ggplot(V1075_cl, aes(x=reorder(Eco, d18O..VSMOW., na.rm = TRUE), y=d18O..VSMOW.))+
+  theme(panel.background = element_rect(color = "black", size = 2, fill = NA)) +
+  geom_jitter(position=position_jitter(0), shape = 1, size = 3, stroke = 1) +
+  theme(panel.grid.major.x = element_line(color = "black", size = 0.1)) +
+  theme(axis.text.x = element_text(size = 15, angle = -45, hjust = 0, face = "bold")) +
+  theme(axis.text.y = element_text(size = 15, hjust = 0, color = "black")) +
+  theme(axis.ticks.x = element_line())+
+  theme(panel.grid.major.y = element_blank())+
+  theme(panel.grid.minor.y = element_blank())+
+  theme(plot.margin = margin(20, 40, 20, 20, "pt")) +
+  theme(axis.title=element_text(size=20,face="bold")) +
+  scale_y_continuous(breaks = seq(10, 25, by = 2)) +
+  labs(x="", y = oxydelt)
+```
+
