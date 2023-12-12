@@ -359,7 +359,7 @@ display: none;
 
 <div id="v1075-proxy-calculations" class="section level2">
 <h2>V1075 Proxy Calculations</h2>
-<p>*Here I will compute: 1. dual-taxon temperature estimates from both
+<p>Here I will compute: 1. dual-taxon temperature estimates from both
 Glyptops (aquatic turtle) and croc G (c.f. Goniopholididae) 2. EECM</p>
 <ul>
 <li>Procedure Summary:
@@ -373,8 +373,21 @@ Glyptops (aquatic turtle) and croc G (c.f. Goniopholididae) 2. EECM</p>
 <div id="load-dependencies-read-data-create-objects" class="section level2">
 <h2>Load Dependencies, Read Data, Create Objects</h2>
 <pre class="r"><code># Install/load required packages
-# Source 1075_cl from Github
+
+# Read in cleaned data (include link to script that cleans the data?)
+  # Call V1075_cl from GitHub 
+  # cleaning script is here: https://github.com/mattgeo1990/1075_Vertebrate_d18Op/blob/main/Code/V1075_d18O.R
+      V1075cl_githubURL &lt;- &quot;https://github.com/mattgeo1990/1075_Vertebrate_d18Op/blob/main/Data/V1075_cl.csv&quot;
+      V1075_cl &lt;- read.csv(V1075cl_githubURL)
+
 # Source NIST data
+    # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
+    # NEED NIST120C STD d18Op from Run 3!!!!!
+      standards_githubURL &lt;-&quot;https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv&quot;
+      NIST120c &lt;- read.csv(standards_githubURL)
+    # gather stats
+      NIST120c_mean &lt;- mean(NIST120c$d.18O.16O)
+    
 # subset fish scales
 # subset Croc G
 # subset Aquatic Turtle</code></pre>

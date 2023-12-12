@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## V1075 Proxy Calculations
 
-*Here I will compute:
+Here I will compute:
 1. dual-taxon temperature estimates from both Glyptops (aquatic turtle) and croc G (c.f. Goniopholididae)
 2. EECM
 
@@ -24,22 +24,43 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Load Dependencies, Read Data, Create Objects
 ```{r, results='hide', message=FALSE, warning=FALSE}
 # Install/load required packages
-# Source 1075_cl from Github
+
+# Read in cleaned data (include link to script that cleans the data?)
+  # Call V1075_cl from GitHub 
+  # cleaning script is here: https://github.com/mattgeo1990/1075_Vertebrate_d18Op/blob/main/Code/V1075_d18O.R
+      V1075cl_githubURL <- "https://github.com/mattgeo1990/1075_Vertebrate_d18Op/blob/main/Data/V1075_cl.csv"
+      V1075_cl <- read.csv(V1075cl_githubURL)
 # Source NIST data
+    # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
+    # NEED NIST120C STD d18Op from Run 3!!!!!
+      standards_githubURL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
+      NIST120c <- read.csv(standards_githubURL)
+    # gather stats
+      NIST120c_mean <- mean(NIST120c$d.18O.16O)
+    
 # subset fish scales
+      Gar <- subset(V1075_cl, Taxon == "Lepisosteidae")
+      GarScales <- subset(V1075_cl, Element.type = "ganoid scale")
 # subset Croc G
+      CrocG <- subset(V1075_cl, Taxon == "Goniopholidae")
 # subset Aquatic Turtle
+      AquaTurt <- subset(V1075_cl, Taxon == "Glyptops sp.")
 ```
 
 ## Compute Dual-Taxon Temps
 
-```{r, results='hide', message=FALSE, warning=FALSE}
-# take mean d18Omw from turtle
-# take mean d18Omw from fish
-# compute turtlewater
+```{r, message=FALSE, warning=FALSE}
 # compute crocwater
+  crocwater <- 0.82*(mean(Goni$d18O..VSMOW.)) - 19.93 #Amiot et al.(2007)
+# compute turtlewater
+  turtwater <- 1.01 *(mean(Glyp$d18O..VSMOW.)) - 22.3 #Barrick et al. (1999)
+
+# take mean d18Omw from fish
+
 # Compute Temp from croc.fish
+  croc.fish.temp <- 118.7 - 4.22*((mean(GarScales$d18O..VSMOW.)  +(22.6 - NIST120c_mean)) - crocwater )
 # Compute Temp from turtle.fish
+  turtle.fish.temp<- 118.7 - 4.22*((mean(GarScales$d18O..VSMOW.)  +(22.6 - NIST120c_mean)) - turtlewater )
 # Confidence Intervals / Uncertainty?
 ```
 
@@ -50,5 +71,31 @@ knitr::opts_chunk$set(echo = TRUE)
   # use Kohn 1996 Mammal equations for dinosaurs
     # See Cullen's supplementary materials to see which equations they used
 # Compute EECM
+
+# one attempt
+      # use Tom Cullen's ectotherm-endotherm combined mean approach to estimate temp (modified from Fricke and Wing, 2005)
+      
+      # calc d18O of body water from each endothermic taxon
+      # d18Op <- (0.76) * (d18Obw) + 19.94
+      # d18Obw <- (d18Op - 19.94)/(0.76)
+      
+      # Compute mean d18Obw for endotherms 
+      mean_d18Omw <- V1075_cl %>%
+        group_by(thermophysiology) %>%
+        summarize(mean_d18Omw = mean((d18O..VSMOW. - 19.94) / 0.76, na.rm = TRUE))
+      
+      d18Ow_endo <- mean_d18Omw[mean_d18Omw$thermophysiology == "endotherm", ]
+      d18Ow_endo <- d18Ow_endo$mean_d18Omw
+      
+      # Calculate mean d18Op of ectotherms
+      d18Op_ecto <- V1075_cl %>%
+        filter(thermophysiology == "ectotherm") %>%
+        summarize(mean_d18Op = mean(d18O..VSMOW., na.rm = TRUE))
+      d18Op_ecto <- d18Op_ecto$mean_d18Op
+      
+      # Compute Endotherm-Ectotherm Combined Mean temperature estimate
+      EECM <- 111.4 - ( 4.3 * ( (d18Op_ecto) - (d18Ow_endo) ))
+      paste("EECM Temp estimate:", sprintf("%.2f", EECM), "degrees C")
+      
 ```
 

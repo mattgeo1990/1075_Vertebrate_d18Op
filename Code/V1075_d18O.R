@@ -187,6 +187,14 @@ for (category in eco_categories) {
   summary(raw$Amount)
   
   
+# export data
+  
+  # Specify the file path where you want to save the CSV file
+  file_path <- "/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/V1075_cl.csv"
+  
+  # Use write.table to export the data frame to a CSV file with a different delimiter (e.g., tab-separated)
+  write.table(V1075_cl, file = file_path, sep = "\t", row.names = FALSE)
+  
   
 # ANOVA -------------------------------------------------------------------
 
@@ -479,8 +487,9 @@ t.test(FredsCloverlyDeinos$δ18O_SMOW, FredsAntlersDeinos$δ18O_SMOW)
 
 
 # take a look at distribution of d18Omw and temp estimates
-crocwater <- 0.82*(Goni$d18O..VSMOW.) - 19.93 #Amiot et al.(2007)
-turtwater <- 1.01 *(Glyp$d18O..VSMOW.) - 22.3 #Barrick et al. (1999)
+GarScales <- scales
+crocwater <- 0.82*(mean(Goni$d18O..VSMOW.)) - 19.93 #Amiot et al.(2007)
+turtwater <- 1.01 *(mean(Glyp$d18O..VSMOW.)) - 22.3 #Barrick et al. (1999)
 plot(118.7 - 4.22*((Gar$d18O..VSMOW.  +(22.6 - NIST120c_mean)) - crocwater )) #Puceat et al. (2010)
 
 
@@ -529,11 +538,12 @@ print(table)
 
 crocwater <- 0.82*(Goni$d18O..VSMOW.) - 19.93 #Amiot et al.(2007)
 
+d18Op_fish <- mean(GarScales$d18O..VSMOW.)
 
-118.7 - 4.22*((d18Op_fish  + (22.6 - NIST120c_mean)) - d18Omw_crocG)
+118.7 - 4.22*((GarScales$d18O..VSMOW.  + (22.6 - NIST120c_mean)) - d18Omw_crocG)
 
-118.7 - 4.22*((d18Op_fish  + (22.6 - NIST120c_mean)) - d18Omw_turt)
-
+118.7 - 4.22*((d18Op_fish  + (22.6 - NIST120c_mean)) - turtwater)
+118.7 - 4.22*((d18Op_fish  + (22.6 - NIST120c_mean)) - crocwater)
 
 SE_turt <- sd(Glyp$d18O..VSMOW.)/sqrt(nrow(Glyp))
 SE_croc <- sd(Goni$d18O..VSMOW.)/sqrt(nrow(Goni))
