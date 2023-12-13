@@ -1,17 +1,31 @@
 
-# READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
 
-# NEED NIST120C STD d18Op from Run 3!!!!!
-  #ultimately want this to source from GitHub
-    setwd("/Users/allen/Documents/Data Analysis/Data/Geochem")
-    NIST120c <- read.csv("V1075_NIST120c_Run1&2.csv")
+# Install/load required packages ------------------------------------------
 
-    NIST120c_mean <- mean(NIST120c$d.18O.16O)
+  # Read in cleaned data (include link to script that cleans the data?)
+    # Call V1075_cl from GitHub 
+    # cleaning script is here: https://github.com/mattgeo1990/1075_Vertebrate_d18Op/blob/main/Code/V1075_d18O.R
+      setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+      V1075_cl <- read.csv("V1075_cl.csv")
+    # Source NIST data
+      # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
+      # NEED NIST120C STD d18Op from Run 3!!!!!
+        standards_githubURL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
+        NIST120c <- read_csv(standards_githubURL)
+      # gather stats
+        NIST120c_mean <- mean(NIST120c$d.18O.16O)
+
+  # subset fish scales
+    Gar <- subset(V1075_cl, Taxon == "Lepisosteidae")
+    GarScales <- subset(V1075_cl, Element.type = "ganoid scale")
+  # subset Croc G
+    CrocG <- subset(V1075_cl, Taxon == "Goniopholidae")
+  # subset Aquatic Turtle
+    AquaTurt <- subset(V1075_cl, Taxon == "Glyptops sp.")
 
 
 # Gather Statistics
   
-  AquaCroc <- subset(grouped_data, eco_type == "Croc G")
   AquaCroc_d18Op_mean <- mean(AquaCroc$d18O)
   AquaCroc_d18Op_SD <- sd(AquaCroc$d18O)
   
