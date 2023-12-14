@@ -1,0 +1,126 @@
+---
+title: "V1075_MonteCarlo"
+author: "Matthew Allen"
+date: "2023-12-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+I'll demonstrate how to run a Monte Carlo on d18Obioapatite derived temperature proxies. We'll do this on dual-taxon temp proxy sensu Fricke and Wing (2007).
+
+Replace with your data. You'll need to format the csv with mean d18Op for each specimen, eco_type/taxon for each specimen.
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+# Packages
+library(dplyr)
+library(purrr)
+library(ggplot2)
+# Data
+    # Call d18Op data from GitHub, cleaned and averaged per specimen (V1075_BySpec.csv)
+      samples_githubURL <- "https://github.com/mattgeo1990/1075_Vertebrate_d18Op/blob/main/Data/V1075_GarTurtle"
+      V1075_GarTurtle <- read.csv(samples_githubURL)
+      
+    # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
+      # NEED NIST120C STD d18Op from Run 3!!!!!
+        standards_githubURL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
+        NIST120c <- read.csv(standards_githubURL)
+
+```
+
+## Resampling d18Op
+
+Here we are resampling with replacement, and taking the mean of each resample.
+
+Let's plot a histo to look at our resample means.
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+
+# Set number of Monte Carlo repetitions 
+nMCrepetitions <- 1e5
+
+# Subset V1075_GarTurtle into gar and turtle matrices
+gar <- subset(V1075_GarTurtle, eco_type = "Fish")
+turtle <- subset(V1075_GarTurtle, eco_type = "Aquatic Turtle")
+
+# resample
+
+  synth_gar <- data_frame(num = 1:nMCrepetitions) %>% 
+  group_by(num) %>% 
+  mutate(means = mean(sample(gar$d18O, replace = TRUE))) 
+
+  synth_turtle <- data_frame(num = 1:nMCrepetitions) %>% 
+    group_by(num) %>% 
+    mutate(means = mean(sample(turtle$d18O, replace = TRUE))) 
+
+  synth_NIST <- data_frame(num = 1:nMCrepetitions) %>% 
+    group_by(num) %>% 
+    mutate(means = mean(sample(NIST120c$d.18O.16O, replace = TRUE))) 
+
+
+```
+
+## Calculate water oxygen isotope values
+
+```{r}
+# calculate water
+
+  # create function
+    turtlewater <- function(synthmeans_turtle){
+      1.01 *(synthmeans_turtle) - 22.3 #Barrick et al. (1999)
+    }
+
+  # run turtlewater on synth_turtle
+    synth_turtle <- synth_turtle %>%
+      mutate(d18Owater = turtlewater(means))
+
+
+```
+
+## Calculate Temperatures
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+# calculate temps
+    # define temp function
+    TempFun <- function(d18Ofish, NISTmean, d18Owater) {
+      temp <- 118.7 - 4.22*((d18Ofish  +(22.6 - NISTmean)) - d18Owater) 
+    }
+
+    # run TempFun over all the synthetic means
+    synth_temps <- TempFun(d18Ofish = synth_gar$means, 
+                           NISTmean = synth_NIST$means,
+                           d18Owater = synth_turtle$d18Owater)
+    
+    # plot temps
+    hist(synth_temps, breaks = 100)
+
+```
+ 
+## Confidence Interval
+
+```{r, message=FALSE, warning=FALSE}
+# Calculate the confidence interval
+    
+    sample.mean <- mean(synth_temps)
+    
+    sample.n <- length(synth_temps)
+    sample.sd <- sd(synth_temps)
+    sample.se <- sample.sd/sqrt(sample.n)
+    print(sample.se)
+        
+    alpha = 0.05
+    degrees.freedom = sample.n - 1
+    t.score = qt(p=alpha/2, df=degrees.freedom,lower.tail=F)
+    print(t.score)
+    
+    margin.error <- t.score * sample.se
+    
+    lower.bound <- sample.mean - margin.error
+    upper.bound <- sample.mean + margin.error
+    print(c(lower.bound,upper.bound))
+```
+
