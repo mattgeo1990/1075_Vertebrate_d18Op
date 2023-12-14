@@ -193,12 +193,13 @@ Before we begin the procedure, let's load everything and set up our data. We wil
 
 Here we are calculating $\delta$^18^O~ambient_water~ from $\delta$^18^O~phosphate~ of the aquatic turtle *Glyptops sp.* and a aquatic/semi-aquatic crocodylomorph morphotype referred to as "Croc G". These equations are from Barrick et al. (1999) and Amiot et al. (2007), respectively.
 
-Barrick et al. (1999) equation for ambient water:
+Barrick et al. (1999) turtle equation for ambient water:
 
-$$$\delta$^18^O~ambient_water~ = 1.01$\delta$^18^O~phosphate~ -23$$
-Amiot et al. (2007) equation for ambient water:
+$\delta$^18^O~ambient_water~ = 1.01 ($\delta$^18^O~phosphate~) -23
 
-$$ equation $$
+Amiot et al. (2007) croc equation for ambient water:
+
+$\delta$^18^O~ambient_water~ = 0.82 ($\delta$^18^O~phosphate~) -22.3
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 

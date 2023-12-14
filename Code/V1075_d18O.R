@@ -24,7 +24,7 @@ library(dplyr)
 # raw <- read.csv("vertd180/V1075_Run1_Results.csv")
 # raw <- read.csv("V1075Results2.0.csv")
 
-setwd("/Users/allen/Documents/Data Analysis/Data/")
+setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/")
 raw <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
 
 
@@ -63,6 +63,8 @@ eco_categories <- unique(raw$Eco)
 
 # Create an empty list to store the test results
 test_results <- list()
+
+
 
 # Perform Grubbs' test for each category
 for (category in eco_categories) {
@@ -161,7 +163,7 @@ for (category in eco_categories) {
   
   scales <- V1075_cl[which(V1075_cl$Element.type %in% "ganoid scale"), ]
   nrow(scales) 
-  Gar <- subset(Gar, Element.type = "ganoid scale")
+  GarScales <- subset(Gar, Element.type = "ganoid scale")
   
   Hybo <- subset(V1075_cl, Taxon == "Hybodontiformes")
   allfish <- rbind(scales, Hybo)
@@ -193,7 +195,7 @@ for (category in eco_categories) {
   file_path <- "/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/V1075_cl.csv"
   
   # Use write.table to export the data frame to a CSV file with a different delimiter (e.g., tab-separated)
-  write.table(V1075_cl, file = file_path, sep = "\t", row.names = FALSE)
+  write.table(V1075_cl, sep = ",", file = file_path, row.names = FALSE, quote = FALSE)
   
   
 # ANOVA -------------------------------------------------------------------
@@ -484,6 +486,15 @@ t.test(FredsCloverlyDeinos$δ18O_SMOW, FredsAntlersDeinos$δ18O_SMOW)
 
 
 # BODY TEMPS and δ18Omw ------------------------------
+GarScales <- scales
+crocwater <- 0.82*(mean(Goni$d18O..VSMOW.)) - 19.93 #Amiot et al.(2007)
+turtwater <- 1.01 *(mean(Glyp$d18O..VSMOW.)) - 22.3 #Barrick et al. (1999)
+118.7 - 4.22*((Gar$d18O..VSMOW.  +(22.6 - NIST120c_mean)) - crocwater ) #Puceat et al. (2010)
+
+
+
+
+
 
 
 # take a look at distribution of d18Omw and temp estimates

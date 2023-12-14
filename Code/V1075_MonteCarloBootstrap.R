@@ -326,6 +326,23 @@ check_and_install_packages(packages)
       # Print the summary statistics
       print(summary_stats)
       
+      
+      # Calculate confidence intervals for the mean of Temperature for each Sample_Size
+      confidence_intervals <- tapply(result_df$Temperature, result_df$Sample_Size, function(x) {
+        mean_value <- mean(x, na.rm = TRUE)
+        se_value <- sd(x, na.rm = TRUE) / sqrt(length(x))
+        conf_int <- confint(lm(Temperature ~ 1, data = data.frame(Temperature = x)))
+        c(Mean_Temperature = mean_value, 
+          Lower_CI = mean_value - conf_int[2], 
+          Upper_CI = mean_value - conf_int[1])
+      })
+      
+      # Convert the result to a data frame
+      confidence_intervals_df <- as.data.frame(do.call(rbind, confidence_intervals))
+      
+      # Print the confidence intervals
+      print(confidence_intervals_df)
+      
 # EECM for later ----------------------------------------------------------
 
 # one attempt
