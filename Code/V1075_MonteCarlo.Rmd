@@ -1,5 +1,5 @@
 ---
-title: "V1075 MonteCarlo"
+title: "V1075 Monte Carlo"
 author: "Matthew Allen"
 date: "December 2023"
 output: html_document
@@ -9,13 +9,24 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ## Introduction
 
-### Here I demonstrate how one might run a Monte Carlo on $\delta$^18^O~bioapatite~-derived temperature proxies in order to estimate uncertainty. 
+
+### Here I demonstrate how one might run a Monte Carlo on $\delta$^18^O-derived temperature proxies in order to estimate uncertainty. 
+
 
 In this example we apply a dual-taxon temperature proxy sensu Fricke and Wing (2007). We'll use $\delta$^18^O data that I generated from the Albian (mid-Cretaceous) Oklahoma Museum of Natural History V1075 vertebrate microfossil assemblage from the Cloverly Formation of Montana. 
 
+
 You can replace this input data with your data of interest. You'll need $\delta$^18^O data from an aquatic turtle and a freshwater fish, both from the same assemblage. You will also need the $\delta$^18^O of the NIST120c standards that were run with your samples. The turtle and fish .csv file will need to be formatted with mean $\delta$^18^O for each specimen, as well as the eco_type/taxon of each specimen.
+
+
+
+## Step 1: Load packages and data
+
+## !!! I want to source the data directly from GitHub, but Rmarkdown is giving me trouble !!!
+
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 # Packages
@@ -26,22 +37,30 @@ packages <- c("dplyr", "purrr", "ggplot2", "Rcurl")
 library(dplyr)
 library(purrr)
 library(ggplot2)
-library(Rcurl)
+# library(Rcurl)
 
 # Data
     # Call d18Op data from GitHub, cleaned and averaged per specimen (V1075_BySpec.csv)
-      samples_URL <- getURL("https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_GarTurtle")
-      V1075_GarTurtle <- read.csv(text = samples_URL)
+      # samples_URL <- getURL("https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_GarTurtle")
+      # V1075_GarTurtle <- read.csv(text = samples_URL)
 
     # Call NIST120c data from Github, compiled from 2 TC-EA runs
-      standards_URL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
-        NIST120c <- read.csv(standards_URL)
+      # standards_URL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
+        # NIST120c <- read.csv(standards_URL)
+
+# 
+setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+V1075_GarTurtle <- read.csv("V1075_GarTurtle.csv")
+NIST120c <- read.csv("V1075_NIST120c.csv")
 
 ```
 
-## Resampling $\delta$^18^O~phosphate~
 
-Here we are resampling with replacement, and taking the mean of each resample.
+## Step 2: Resampling the isotope data
+
+
+Here we are resampling with replacement and taking the mean of each resample.
+
 
 Let's plot a histogram to look at our resample means.
 
@@ -90,7 +109,7 @@ Let's plot a histogram to look at our resample means.
 
 ```
 
-## Calculate water oxygen isotope values from simulated turtle samples. 
+## Step 3: Calculate water oxygen isotope values from simulated turtle samples 
 
 Note that we are only using data from an aquatic turtle genus Glyptops spp. It is important to choose a turtle taxon that is thought to have been mostly or entirely aquatic in habit.
 
@@ -108,10 +127,18 @@ We'll do this using the relationship between environmental water and turtle bone
     synth_turtle <- synth_turtle %>%
       mutate(d18Owater = turtlewater(means))
 
+# Plot histogram of d18Owater
+  ggplot(synth_turtle, aes(x = d18Owater, fill = "Turtle")) +
+    geom_histogram(position = "identity", alpha = 0.7, bins = 30, color = "black") +
+    labs(title = "Histogram of d18Owater",
+         x = "d18Owater",
+         y = "Frequency") +
+    theme_minimal() +
+    scale_fill_manual(values = c("#1f78b4"))
 
 ```
 
-## Calculate Temperatures
+## Step 4: Calculate temperatures
 
 We'll use the relationship between $\delta$^18^O~phosphate~ and temperature defined originally by Longinelli & Nuti (1973) and refined by Puc\'eat et al. (2010)
 
@@ -127,31 +154,36 @@ We'll use the relationship between $\delta$^18^O~phosphate~ and temperature defi
                            NISTmean = synth_NIST$means,
                            d18Owater = synth_turtle$d18Owater)
     
-    # plot temps
-    # hist(synth_temps, breaks = 100)
-
+# Plot the temperatures
+  ggplot(data = data.frame(temperature = synth_temps), aes(x = temperature)) +
+        geom_histogram(binwidth = 1, fill = c("#ff0000"), color = "black", alpha = 0.7) +
+        labs(title = "Histogram of Temperatures",
+             x = "Temperature (degrees C)",
+             y = "Frequency")
 ```
 
-## Confidence Interval
+
+## Step 5: Confidence Intervals
+
+Finally, we'll construct confidence intervals around the mean of our temperature estimates. 
 
 ```{r, message=FALSE, warning=FALSE}
 # Calculate the confidence interval
     
-    sample.mean <- mean(synth_temps)
+    CIfun <- function(data) {
+      sample.mean <- mean(data)
+      sample.n <- length(data)
+      sample.sd <- sd(data)
+      sample.se <- sample.sd/sqrt(sample.n)
+      alpha = 0.05
+      degrees.freedom = sample.n - 1
+      t.score = qt(p=alpha/2, df=degrees.freedom,lower.tail=F)
+      margin.error <- t.score * sample.se
+      lower.bound <- sample.mean - margin.error
+      upper.bound <- sample.mean + margin.error
+      cat("Mean:", mean(data), "\n")
+      cat("95% Confidence Interval:", lower.bound,",", upper.bound,"\n")
+    }
     
-    sample.n <- length(synth_temps)
-    sample.sd <- sd(synth_temps)
-    sample.se <- sample.sd/sqrt(sample.n)
-    print(sample.se)
-        
-    alpha = 0.05
-    degrees.freedom = sample.n - 1
-    t.score = qt(p=alpha/2, df=degrees.freedom,lower.tail=F)
-    print(t.score)
-    
-    margin.error <- t.score * sample.se
-    
-    lower.bound <- sample.mean - margin.error
-    upper.bound <- sample.mean + margin.error
-    print(c(lower.bound,upper.bound))
+    CIfun(synth_temps)
 ```
