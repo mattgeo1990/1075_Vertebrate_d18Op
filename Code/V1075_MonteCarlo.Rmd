@@ -1,7 +1,7 @@
 ---
-title: "V1075_MonteCarlo"
+title: "V1075 MonteCarlo"
 author: "Matthew Allen"
-date: "2023-12-14"
+date: "December 2023"
 output: html_document
 ---
 
@@ -9,43 +9,50 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Introduction
 
-I'll demonstrate how to run a Monte Carlo on d18Obioapatite derived temperature proxies. We'll do this on dual-taxon temp proxy sensu Fricke and Wing (2007).
+### Here I demonstrate how one might run a Monte Carlo on $\delta$^18^O~bioapatite~-derived temperature proxies in order to estimate uncertainty. 
 
-Replace with your data. You'll need to format the csv with mean d18Op for each specimen, eco_type/taxon for each specimen.
+In this example we apply a dual-taxon temperature proxy sensu Fricke and Wing (2007). We'll use $\delta$^18^O data that I generated from the Albian (mid-Cretaceous) Oklahoma Museum of Natural History V1075 vertebrate microfossil assemblage from the Cloverly Formation of Montana. 
+
+You can replace this input data with your data of interest. You'll need $\delta$^18^O data from an aquatic turtle and a freshwater fish, both from the same assemblage. You will also need the $\delta$^18^O of the NIST120c standards that were run with your samples. The turtle and fish .csv file will need to be formatted with mean $\delta$^18^O for each specimen, as well as the eco_type/taxon of each specimen.
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 # Packages
+packages <- c("dplyr", "purrr", "ggplot2", "Rcurl")
+
+# install.packages(packages)
+
 library(dplyr)
 library(purrr)
 library(ggplot2)
+library(Rcurl)
+
 # Data
     # Call d18Op data from GitHub, cleaned and averaged per specimen (V1075_BySpec.csv)
-      samples_githubURL <- "https://github.com/mattgeo1990/1075_Vertebrate_d18Op/blob/main/Data/V1075_GarTurtle"
-      V1075_GarTurtle <- read.csv(samples_githubURL)
-      
-    # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
-      # NEED NIST120C STD d18Op from Run 3!!!!!
-        standards_githubURL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
-        NIST120c <- read.csv(standards_githubURL)
+      samples_URL <- getURL("https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_GarTurtle")
+      V1075_GarTurtle <- read.csv(text = samples_URL)
+
+    # Call NIST120c data from Github, compiled from 2 TC-EA runs
+      standards_URL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
+        NIST120c <- read.csv(standards_URL)
 
 ```
 
-## Resampling d18Op
+## Resampling $\delta$^18^O~phosphate~
 
 Here we are resampling with replacement, and taking the mean of each resample.
 
-Let's plot a histo to look at our resample means.
+Let's plot a histogram to look at our resample means.
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 
 # Set number of Monte Carlo repetitions 
-nMCrepetitions <- 1e5
+  nMCrepetitions <- 1e5
 
 # Subset V1075_GarTurtle into gar and turtle matrices
-gar <- subset(V1075_GarTurtle, eco_type = "Fish")
-turtle <- subset(V1075_GarTurtle, eco_type = "Aquatic Turtle")
+  gar <- subset(V1075_GarTurtle, eco_type = "Fish")
+  turtle <- subset(V1075_GarTurtle, eco_type = "Aquatic Turtle")
 
 # resample
 
@@ -61,10 +68,33 @@ turtle <- subset(V1075_GarTurtle, eco_type = "Aquatic Turtle")
     group_by(num) %>% 
     mutate(means = mean(sample(NIST120c$d.18O.16O, replace = TRUE))) 
 
+  # Plot histograms of each distribution
+    # Combine data frames into one
+      combined_data <- rbind(
+        data.frame(group = "Gar", values = synth_gar$means),
+        data.frame(group = "Turtle", values = synth_turtle$means),
+        data.frame(group = "NIST", values = synth_NIST$means)
+      )
+
+    # Set order of facets
+      combined_data$group <- factor(combined_data$group, levels = c("Gar", "Turtle", "NIST"))
+
+    # Plotting with ggplot2 using facet_wrap
+      ggplot(combined_data, aes(x = values, fill = group)) +
+        geom_histogram(position = "identity", alpha = 0.7, bins = 30, color = "black") +
+        labs(title = "Histogram of Means",
+             x = "Means",
+             y = "Frequency") +
+        theme_minimal() +
+        facet_wrap(~group, scales = "free")
 
 ```
 
-## Calculate water oxygen isotope values
+## Calculate water oxygen isotope values from simulated turtle samples. 
+
+Note that we are only using data from an aquatic turtle genus Glyptops spp. It is important to choose a turtle taxon that is thought to have been mostly or entirely aquatic in habit.
+
+We'll do this using the relationship between environmental water and turtle bone defined by Barrick et al. (1999).
 
 ```{r}
 # calculate water
@@ -83,6 +113,8 @@ turtle <- subset(V1075_GarTurtle, eco_type = "Aquatic Turtle")
 
 ## Calculate Temperatures
 
+We'll use the relationship between $\delta$^18^O~phosphate~ and temperature defined originally by Longinelli & Nuti (1973) and refined by Puc\'eat et al. (2010)
+
 ```{r, results='hide', message=FALSE, warning=FALSE}
 # calculate temps
     # define temp function
@@ -96,10 +128,10 @@ turtle <- subset(V1075_GarTurtle, eco_type = "Aquatic Turtle")
                            d18Owater = synth_turtle$d18Owater)
     
     # plot temps
-    hist(synth_temps, breaks = 100)
+    # hist(synth_temps, breaks = 100)
 
 ```
- 
+
 ## Confidence Interval
 
 ```{r, message=FALSE, warning=FALSE}
@@ -123,4 +155,3 @@ turtle <- subset(V1075_GarTurtle, eco_type = "Aquatic Turtle")
     upper.bound <- sample.mean + margin.error
     print(c(lower.bound,upper.bound))
 ```
-
