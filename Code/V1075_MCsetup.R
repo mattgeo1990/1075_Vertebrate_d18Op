@@ -115,7 +115,7 @@ library(dplyr)
     # check that it worked
     table(V1075_GarTurtle$eco_type)
     # export
-    write.csv(V1075_GarTurtle, "V1075_GarTurtle", row.names = FALSE)
+    write.csv(V1075_GarTurtle, "V1075_GarTurtle.csv", row.names = FALSE)
     
 
     

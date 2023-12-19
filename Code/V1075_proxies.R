@@ -16,12 +16,19 @@
       # gather stats
         NIST120c_mean <- mean(NIST120c$d.18O.16O)
 
+ # For now, just source from local 
+        setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+        V1075_BySpec <- read.csv("V1075_BySpec.csv")
+        NIST120c <- read.csv("V1075_NIST120c.csv")
+        
+        
+        
   # subset fish scales
-    GarScales <- subset(V1075_BySpec, Element.type = "ganoid scale")
+    GarScales <- subset(V1075_BySpec, Element.type == "ganoid scale")
   # subset Croc G
-    CrocG <- subset(V1075_BySpec, Taxon == "Goniopholidae")
+    CrocG <- subset(V1075_BySpec, eco_type == "Croc G")
   # subset Aquatic Turtle
-    AquaTurt <- subset(V1075_BySpec, Taxon == "Glyptops sp.")
+    AquaTurt <- subset(V1075_BySpec, eco_type == "Aquatic Turtle")
 
 
 # Gather Means
@@ -38,8 +45,8 @@
     crocwater <- 0.82*(AquaCroc_d18Op_mean) - 19.93 #Amiot et al.(2007)
     turtwater <- 1.01 *(AquaTurt_d18Op_mean) - 22.3 #Barrick et al. (1999)
   # Calculate Temps (Puceat et al., 2010)
-    CrocFish_temp <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - crocwater ) 
-    TurtleFish_temp <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - turtwater ) 
+    temp_CrocFish <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - crocwater ) 
+    temp_TurtleFish <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - turtwater ) 
 
 # Compute Endotherm-Ectotherm Combined Mean (EECM, Cullen et al., 2019)
   

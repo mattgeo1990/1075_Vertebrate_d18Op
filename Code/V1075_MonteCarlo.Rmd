@@ -2,7 +2,10 @@
 title: "V1075 Monte Carlo"
 author: "Matthew Allen"
 date: "December 2023"
-output: html_document
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -136,6 +139,23 @@ We'll do this using the relationship between environmental water and turtle bone
     theme_minimal() +
     scale_fill_manual(values = c("#1f78b4"))
 
+ 
+  # CI, mean of turtle d18Owater
+    CIsetup_water <- sort(synth_turtle$d18Owater)
+    
+    # Calculate the lower and upper percentiles for the middle 95%
+    lower_percentile_water <- quantile(CIsetup_water, 0.025)
+    upper_percentile_water <- quantile(CIsetup_water, 0.975)
+    
+    # Subset the middle 95% of the data
+    subset_CIsetup_water <- CIsetup_water[CIsetup_water >= lower_percentile_water & CIsetup_water <= upper_percentile_water]
+    
+    # Take mean
+    mean_turtlewater <- round(mean(subset_CIsetup_water), 1)
+    lowCI_water <- round(abs(mean_turtlewater - lower_percentile_water), 1)
+    highCI_water <- round(abs(mean_turtlewater - upper_percentile_water), 1)
+    cat(mean_turtlewater, "+", highCI_water, "/", "-", lowCI_water)
+    
 ```
 
 ## Step 4: Calculate temperatures
@@ -168,22 +188,20 @@ We'll use the relationship between $\delta$^18^O~phosphate~ and temperature defi
 Finally, we'll construct confidence intervals around the mean of our temperature estimates. 
 
 ```{r, message=FALSE, warning=FALSE}
-# Calculate the confidence interval
+# Construct confidence intervals
+    CIsetup <- sort(synth_temps)
     
-    CIfun <- function(data) {
-      sample.mean <- mean(data)
-      sample.n <- length(data)
-      sample.sd <- sd(data)
-      sample.se <- sample.sd/sqrt(sample.n)
-      alpha = 0.05
-      degrees.freedom = sample.n - 1
-      t.score = qt(p=alpha/2, df=degrees.freedom,lower.tail=F)
-      margin.error <- t.score * sample.se
-      lower.bound <- sample.mean - margin.error
-      upper.bound <- sample.mean + margin.error
-      cat("Mean:", mean(data), "\n")
-      cat("95% Confidence Interval:", lower.bound,",", upper.bound,"\n")
-    }
+# Calculate the lower and upper percentiles for the middle 95%
+    lower_percentile <- quantile(CIsetup, 0.025)
+    upper_percentile <- quantile(CIsetup, 0.975)
     
-    CIfun(synth_temps)
+# Subset the middle 95% of the data
+    subset_CIsetup <- CIsetup[CIsetup >= lower_percentile & CIsetup <= upper_percentile]
+    
+# Take mean
+    mean_temp <- round(mean(subset_CIsetup), 1)
+    lowCI <- round(abs(mean_temp - lower_percentile), 1)
+    highCI <- round(abs(mean_temp - upper_percentile), 1)
+    cat(mean_temp, "+", highCI, "/", "-", lowCI)
+
 ```
