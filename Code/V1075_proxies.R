@@ -5,16 +5,16 @@
   # Read in cleaned data (include link to script that cleans the data?)
     # Call V1075_cl from GitHub 
     # cleaning script is here: https://github.com/mattgeo1990/1075_Vertebrate_d18Op/blob/main/Code/V1075_d18O.R
-      setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
-      V1075_BySpec <- read.csv("V1075_BySpec.csv")
+      #setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+      #V1075_BySpec <- read.csv("V1075_BySpec.csv")
     # Source NIST data
       # READ IN NIST120c STD d18Op VALUES FROM RUN 1 and RUN 2
       # NEED NIST120C STD d18Op from Run 3!!!!!
-        standards_githubURL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
-        NIST120c <- read_csv(standards_githubURL)
-        sd(NIST120c$d.18O.16O)
+        #standards_githubURL <-"https://raw.githubusercontent.com/mattgeo1990/1075_Vertebrate_d18Op/main/Data/V1075_NIST120c.csv"
+        #NIST120c <- read_csv(standards_githubURL)
+        #sd(NIST120c$d.18O.16O)
       # gather stats
-        NIST120c_mean <- mean(NIST120c$d.18O.16O)
+        #NIST120c_mean <- mean(NIST120c$d.18O.16O)
 
  # For now, just source from local 
         setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
@@ -38,6 +38,8 @@
     AquaTurt_d18Op_mean <- mean(AquaTurt$d18O)
   # Gar scales
     GarScales_d18Op_mean <- mean(GarScales$d18O)
+  # NIST
+    NIST120c_mean <- mean(NIST120c$d.18O.16O)
 
 
 # Dual-Taxon Temperature Estimates
@@ -94,8 +96,6 @@
         EECM19 <- EECM2019(ecto_mean, endo_mean)
 
     
-
-
 
 
 # Print out temps

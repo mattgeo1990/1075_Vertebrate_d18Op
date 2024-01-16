@@ -3,8 +3,8 @@ title: "V1075 Monte Carlo"
 author: "Matthew Allen"
 date: "December 2023"
 output:
-  word_document: default
   html_document: default
+  word_document: default
   pdf_document: default
 ---
 
@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
+### !!! CAUTION !!! This script results in mean dual-taxon temperature estimate of ~25 degrees. This is incorrect. Non-markdown scripts using these same steps result in temp of ~22.25 degrees. This is corroborated by simply calculating temp using mean values and no resampling. See MCsandbox.R and V1075_proxies.R
 
 ### Here I demonstrate how one might run a Monte Carlo on $\delta$^18^O-derived temperature proxies in order to estimate uncertainty. 
 
