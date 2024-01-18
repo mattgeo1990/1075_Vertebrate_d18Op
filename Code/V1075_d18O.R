@@ -1017,7 +1017,7 @@ points(40, d18Omw_crocG, pch = 9, col="black", lwd = 2, cex = 1.5)
 #points(RRCelinaTurts$Palaeolatitude, RRCelinaTurts$d18Ow, pch = 1, lwd = 2, cex = 1.5)
 #points(HFCelinaTurts$Palaeolatitude, HFCelinaTurts$d18Ow, pch =2, lwd = 2, cex = 1.5)
 
-dev.off()
+
 
 #TempModels <- c(LatTempModern, LatTemp_CoolK, LatTemp_WarmK, LatTemp_GENESIS_MOM)
 #df <- data.frame(lat,TempModels, ModelID)

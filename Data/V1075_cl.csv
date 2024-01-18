@@ -1,15 +1,15 @@
 Serial..,OMNH.Item..,Specimen.ID,Sample.ID,Weight..µg.,Date.sampled,Taxon,thermophysiology,Eva_.Sens,Eco,Element.type,samp_type,Tissue,Xtal.Wt..ug.,Yield,X..elements.in.sample,Glue.,Analysis,Batch..,Crown.Ht..mm.,Identifier.1,Amount,Ampl.28..mV.,Area.28..Vs.,X.O,d18O..VSMOW.
-,27873,27873-a,27873-a.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-a.1,0.205,1331,18.208,16.28,14.47
-,27873,27873-a,27873-a.2,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-a.2,0.321,2085,27.877,14.98,14.78
-,27873,27873-a,27873-a.3,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-a.3,0.392,2630,35.354,15.3,15.01
-,27873,27873-b,27873-b.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-b.1,0.289,1977,26.406,15.88,14.93
-,27873,27873-b,27873-b.2,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-b.2,0.265,2227,28.453,18.64,16.23
-,27873,27873-b,27873-b.3,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-b.3,0.341,2090,28.271,14.4,10.15
-,27873,27873-c,27873-c.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-c.1,0.187,1339,17.751,17.65,12.99
-,27873,27873-d,27873-d.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-d.1,0.156,1011,13.78,17.11,15.57
-,27873,27873-e,27873-e.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-e.1,0.234,1769,22.737,17.24,15.12
-,27873,27873-e,27873-e.3,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-e.3,0.223,1301,17.32,14.43,15.72
-,27873,27873-j,27873-j.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-j.1,0.167,1179,15.798,17.92,15.65
+NA,27873,27873-a,27873-a.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-a.1,0.205,1331,18.208,16.28,14.47
+NA,27873,27873-a,27873-a.2,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-a.2,0.321,2085,27.877,14.98,14.78
+NA,27873,27873-a,27873-a.3,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-a.3,0.392,2630,35.354,15.3,15.01
+NA,27873,27873-b,27873-b.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-b.1,0.289,1977,26.406,15.88,14.93
+NA,27873,27873-b,27873-b.2,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-b.2,0.265,2227,28.453,18.64,16.23
+NA,27873,27873-b,27873-b.3,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-b.3,0.341,2090,28.271,14.4,10.15
+NA,27873,27873-c,27873-c.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-c.1,0.187,1339,17.751,17.65,12.99
+NA,27873,27873-d,27873-d.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-d.1,0.156,1011,13.78,17.11,15.57
+NA,27873,27873-e,27873-e.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-e.1,0.234,1769,22.737,17.24,15.12
+NA,27873,27873-e,27873-e.3,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-e.3,0.223,1301,17.32,14.43,15.72
+NA,27873,27873-j,27873-j.1,NA,4/5/23,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,NA,NA,NA,NA,NA,NA,NA,27873-j.1,0.167,1179,15.798,17.92,15.65
 6,60378,60378-a,60378-a.1,563.5,1/21/22,Glyptops sp.,ectotherm,EI,Aquatic Turtle,osteoscute fragment,,bone,202.4,0.359183673,NA,NA,1,1.2,NA,60378-a1,0.2024,1458,17.044,16.1002796,14.84541451
 24,60379,60379-a,60379-a.1,511.5,1/26/22,Naomichelys sp.,ectotherm,ES,Terrestrial Turtle,osteoscute fragment,,bone,348.6,0.681524927,NA,NA,1,1.2,NA,60379-a1,0.3486,2479,29.507,15.91656146,13.29354208
 27,60379,60379-b,60379-b.1,534.5,2/3/22,Naomichelys sp.,ectotherm,ES,Terrestrial Turtle,osteoscute fragment,,bone,371.1,0.694293732,NA,NA,1,1.2,NA,60379-b1,0.3711,2513,31.516,15.67930696,13.77083135
@@ -46,15 +46,15 @@ Serial..,OMNH.Item..,Specimen.ID,Sample.ID,Weight..µg.,Date.sampled,Taxon,therm
 41,60442,60442-a,60442-a.3,536.2,2/6/22,Goniopholidae,ectotherm,EI,Croc G,tooth,serial,enamel,380,0.708690787,NA,NA,1,1.3,NA,60442-a3,0.38,2596,31.151,15.38594822,13.06630438
 133,60444,60444-a,60444-a.1,591.1,9/1/22,Glyptops sp.,ectotherm,EI,Aquatic Turtle,osteoscute fragment,,enamel,462,0.781593639,NA,NA,2,2.1,NA,60444-a1,0.462,3072,37.994,15.14090761,14.16793479
 18,60447,60447-a,60447-a.1,375.2,1/24/22,Glyptops sp.,ectotherm,EI,Aquatic Turtle,osteoscute fragment,,enamel,291.3,0.776385928,NA,NA,1,1.2,NA,60447-a1,0.2913,2014,25.103,15.69256729,14.42850063
-,60482,60482-a,60482-a-1,NA,,Sauropoda,endotherm,ES,Sauropoda,,,,NA,NA,NA,NA,NA,NA,NA,60482-a4,0.248,1744,22.983,16.42,21.1
+NA,60482,60482-a,60482-a-1,NA,,Sauropoda,endotherm,ES,Sauropoda,tooth,,enamel,NA,NA,NA,NA,NA,NA,NA,60482-a4,0.248,1744,22.983,16.42,21.1
 145,60484,60484-a,60484-a.1,571.4,9/2/22,Sauropoda,endotherm,ES,Sauropoda,tooth,,enamel,NA,0,NA,NA,2,2.1,NA,60484-a1,0.3223,2384,29.453,17.35302492,18.59571597
 140,61220,61220-a,61220-a.1,597.4,9/1/22,Sauropoda,endotherm,ES,Sauropoda,tooth,,enamel,NA,0,NA,NA,2,2.1,NA,61220-a1,0.4717,3146,37.904,14.82523227,19.1076203
 34,61221,61221-a,61221-a.1,491.7,2/5/22,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,330.5,0.67215782,NA,NA,1,1.2,NA,61221-a1,0.3305,2259,28.181,15.97009856,14.21929209
 35,61221,61221-b,61221-b.1,508.2,2/5/22,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,292.1,0.574773711,NA,NA,1,1.2,NA,61221-b1,0.2921,1975,24.521,15.27213754,12.60158682
 36,61221,61221-c,61221-c.1,580.6,2/5/22,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,551.9,0.950568378,NA,NA,1,1.2,NA,61221-c1,0.5519,3640,46.72,15.87308735,14.76139967
 38,61221,61221-e,61221-e.1,513.2,2/6/22,Lepisosteidae,ectotherm,EI,Fish,ganoid scale,bulk,ganoine,327.8,0.638737334,NA,NA,1,1.2,NA,61221-e1,0.3278,2162,27.206,15.17688316,14.87163958
-124,61224,61224-a,61224-a.2,520.6,9/1/22,"Atoposauridae" (croc. indet.),ectotherm,,Croc A,tooth,,enamel,355.5,0.682865924,NA,1,2,2.1,NA,61224-a2,0.3555,1991,24.837,13.6005758,15.33293958
-125,61224,61224-b,61224-b.2,347.6,9/1/22,"Atoposauridae" (croc. indet.),ectotherm,,Croc A,tooth,,enamel,NA,0,NA,1,2,2.1,NA,61224-b2,0.5875,3874,48.737,14.95369562,15.09904066
+124,61224,61224-a,61224-a.2,520.6,9/1/22,"Atoposauridae" (croc. indet.),ectotherm,EI,Croc A,tooth,,enamel,355.5,0.682865924,NA,1,2,2.1,NA,61224-a2,0.3555,1991,24.837,13.6005758,15.33293958
+125,61224,61224-b,61224-b.2,347.6,9/1/22,"Atoposauridae" (croc. indet.),ectotherm,EI,Croc A,tooth,,enamel,NA,0,NA,1,2,2.1,NA,61224-b2,0.5875,3874,48.737,14.95369562,15.09904066
 78,61283,61283-a,61283-a.1,371.2,4/12/22,"Atoposauridae" (croc. indet.),ectotherm,EI,Croc A,tooth,,enamel,433.3,1.167295259,NA,1,1,1.1,NA,61283-a1,0.4333,2985,36.001,15.56437274,17.24106161
 79,61283,61283-b,61283-b.1,391.3,4/12/22,"Atoposauridae" (croc. indet.),ectotherm,EI,Croc A,tooth,,enamel,360.5,0.921288014,NA,1,1,1.1,NA,61283-b1,0.3605,2505,30.037,15.65754239,16.86220959
 77,61284,61284-a,61284-a.1,497.8,3/5/22,"Atoposauridae" (croc. indet.),ectotherm,EI,Croc A,tooth,,enamel,599,1.203294496,NA,1,1,1.1,NA,61284-a1,0.599,3973,50.709,15.91524373,15.58637508
@@ -74,7 +74,7 @@ Serial..,OMNH.Item..,Specimen.ID,Sample.ID,Weight..µg.,Date.sampled,Taxon,therm
 66,61289,61289-j,61289-j.1,545,2/16/22,Bernissartia sp.,ectotherm,EI,Croc B,tooth,,enamel,657.2,1.20587156,NA,1,1,1.1,NA,61289-j1,0.6572,4245,54.851,15.53370012,14.96614076
 50,61309,61309-a,61309-a.1,532.5,2/8/22,Goniopholidae,ectotherm,EI,Croc G,tooth,,enamel,708.8,1.331079812,NA,1,1,1.1,4,61309-a1,0.7088,4752,62.746,16.14069041,17.24457823
 51,61309,61309-b,61309-b.1,538.4,2/8/22,Goniopholidae,ectotherm,EI,Croc G,tooth,,enamel,581.4,1.07986627,NA,1,1,1.1,5,61309-b1,0.5814,3812,46.844,15.03416384,17.11409049
-151,61327,61327-a,61327-a.1,459.9,9/3/22,Bernissartia sp.,ectotherm,,Croc B,tooth,,enamel,404.5,0.87953903,NA,1,2,2.1,NA,61327-a1,0.4045,2320,28.992,13.66496631,15.48203693
+151,61327,61327-a,61327-a.1,459.9,9/3/22,Bernissartia sp.,ectotherm,EI,Croc B,tooth,,enamel,404.5,0.87953903,NA,1,2,2.1,NA,61327-a1,0.4045,2320,28.992,13.66496631,15.48203693
 117,61341,61341-a,61341-a.1,375.5,5/24/22,Sauropelta edwardsi,endotherm,ES,Ornithischian,tooth,,enamel,381.3,1.015446072,NA,NA,1,1.3,NA,61341-a1,0.3813,2608,32.955,15.98362286,17.02903048
 129,61348,61348-a,61348-a.1,345.7,9/2/22,Deinonychus antirrhopus,endotherm,,Small Theropod,tooth,,enamel,352.2,1.01880243,NA,1,2,2.1,NA,61348-a1,0.3522,2250,27.557,14.98825272,13.65553388
 112,61351,61351-a,61351-a.1a,450.4,5/24/22,Deinonychus antirrhopus,endotherm,ES,Small Theropod,tooth,,enamel,365.6,0.811722913,NA,NA,1,1.3,NA,61351-a1a,0.3566,2502,31.605,16.40962198,12.72700545
@@ -88,14 +88,14 @@ Serial..,OMNH.Item..,Specimen.ID,Sample.ID,Weight..µg.,Date.sampled,Taxon,therm
 5,61401,61401-a,61401-a.3,489,1/21/22,Glyptops sp.,ectotherm,EI,Aquatic Turtle,osteoscute fragment,,bone,NA,0,NA,NA,2,2.1,NA,61401-a3,0.3083,2363,29.238,18.03726705,11.14313235
 9,61402,61402-a,61402-a.1,503.4,1/22/22,Glyptops sp.,ectotherm,EI,Aquatic Turtle,osteoscute fragment,,bone,223.9,0.444775526,NA,NA,1,1.2,NA,61402-a1,0.2239,1640,19.083,16.22735567,15.12359459
 10,61402,61402-a,61402-a.2,584.6,1/22/22,Glyptops sp.,ectotherm,EI,Aquatic Turtle,osteoscute fragment,,bone,320.7,0.548580226,NA,NA,1,1.2,NA,61402-a2,0.3207,4218,54.509,31.04121886,17.12832694
-,80794,80794-a,80794-a.1,NA,,Tenontosaurus sp.,endotherm,,Ornithischian,tooth fragment,bulk,enamel,NA,NA,NA,NA,NA,NA,NA,80794-a.1,0.208,1365,18.188,16.17,13.82
-,80794,80794-a,80794-a.2,NA,,Tenontosaurus sp.,endotherm,,Ornithischian,tooth fragment,nulk,enamel,NA,NA,NA,NA,NA,NA,NA,80794-a.2,0.239,1898,24.317,17.94,13.77
-,80795,80795-c,80795-c.1,NA,,Ornithischia,endotherm,,Ornithischian,,,enamel,NA,NA,NA,NA,NA,NA,NA,80795-c.1,0.46,2961,39.456,14.29,13.53
-,80795,80795-d,80795-d.1,NA,,Ornithischia,endotherm,,Ornithischian,,,enamel,NA,NA,NA,NA,NA,NA,NA,80795-d.1,0.303,2190,29.038,16.63,15.74
-,80795,80795-d,80795-d.2,NA,,Ornithischia,endotherm,,Ornithischian,,,enamel,NA,NA,NA,NA,NA,NA,NA,80795-d.2,0.118,745,10.048,17.95,16.04
-,80859,80859-a,80859-a.1,NA,,Hybodontiformes,ectotherm,,Shark,,,enamel,NA,NA,NA,NA,NA,NA,NA,80859-a.1,0.116,611,9.133,17.05,10.8
-,80859,80859-b,80859-b.1,NA,,Hybodontiformes,ectotherm,,Shark,,,enamel,NA,NA,NA,NA,NA,NA,NA,80859-b.1,0.266,1803,23.807,15.91,15.27
-,80859,80859-c,80859-c.1,NA,,Hybodontiformes,ectotherm,,Shark,,,enamel,NA,NA,NA,NA,NA,NA,NA,80859-c.1,0.269,1792,25.012,16.28,9.77
+NA,80794,80794-a,80794-a.1,NA,,Tenontosaurus sp.,endotherm,,Ornithischian,tooth fragment,bulk,enamel,NA,NA,NA,NA,NA,NA,NA,80794-a.1,0.208,1365,18.188,16.17,13.82
+NA,80794,80794-a,80794-a.2,NA,,Tenontosaurus sp.,endotherm,,Ornithischian,tooth fragment,nulk,enamel,NA,NA,NA,NA,NA,NA,NA,80794-a.2,0.239,1898,24.317,17.94,13.77
+NA,80795,80795-c,80795-c.1,NA,,Ornithischia,endotherm,,Ornithischian,,,enamel,NA,NA,NA,NA,NA,NA,NA,80795-c.1,0.46,2961,39.456,14.29,13.53
+NA,80795,80795-d,80795-d.1,NA,,Ornithischia,endotherm,,Ornithischian,,,enamel,NA,NA,NA,NA,NA,NA,NA,80795-d.1,0.303,2190,29.038,16.63,15.74
+NA,80795,80795-d,80795-d.2,NA,,Ornithischia,endotherm,,Ornithischian,,,enamel,NA,NA,NA,NA,NA,NA,NA,80795-d.2,0.118,745,10.048,17.95,16.04
+NA,80859,80859-a,80859-a.1,NA,,Hybodontiformes,ectotherm,,Shark,,,enamel,NA,NA,NA,NA,NA,NA,NA,80859-a.1,0.116,611,9.133,17.05,10.8
+NA,80859,80859-b,80859-b.1,NA,,Hybodontiformes,ectotherm,,Shark,,,enamel,NA,NA,NA,NA,NA,NA,NA,80859-b.1,0.266,1803,23.807,15.91,15.27
+NA,80859,80859-c,80859-c.1,NA,,Hybodontiformes,ectotherm,,Shark,,,enamel,NA,NA,NA,NA,NA,NA,NA,80859-c.1,0.269,1792,25.012,16.28,9.77
 143,UNCAT001,UNCAT001-a,UNCAT001-a.1,501.6,9/2/22,Sauropoda,endotherm,,Sauropoda,tooth,,enamel,565.2,1.126794258,NA,1,2,2.1,NA,UC001-a1,0.5652,2807,35.065,11.56900597,15.13298883
 154,UNCAT002,UNCAT002-a,UNCAT002-a.1,475.5,9/3/22,"Atoposauridae" (croc. indet.),ectotherm,,Croc A,tooth,,enamel,NA,0,NA,NA,2,2.1,NA,UC002-a1,0.4225,2776,34.57,15.25423557,16.16911066
 155,UNCAT003,UNCAT003-a,UNCAT003-a.1,366.8,9/3/22,"Atoposauridae" (croc. indet.),ectotherm,,Croc A,tooth,,enamel,NA,0,NA,NA,2,2.1,NA,UC003-a1,0.3487,2263,28.121,15.40835283,17.96348348

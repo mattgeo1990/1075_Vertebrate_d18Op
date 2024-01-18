@@ -30,7 +30,15 @@
   # subset Aquatic Turtle
     AquaTurt <- subset(V1075_BySpec, eco_type == "Aquatic Turtle")
 
-
+# plot histograms of d18Op
+    ggplot(GarScales, aes(x = d18O)) +
+      geom_histogram(binwidth = 1, fill = c("#ff0000"), color = "black", alpha = 0.7) +
+      labs(title = "Histogram of Gar Scale d18Op",
+           x = "d18Op",
+           y = "Frequency")
+    
+    
+    
 # Gather Means
   # Croc G
     AquaCroc_d18Op_mean <- mean(CrocG$d18O)
@@ -42,7 +50,9 @@
     NIST120c_mean <- mean(NIST120c$d.18O.16O)
 
 
-# Dual-Taxon Temperature Estimates
+
+# Dual-Taxon Temperatures -------------------------------------------------
+
   # Calculate d18Osurface_water
     crocwater <- 0.82*(AquaCroc_d18Op_mean) - 19.93 #Amiot et al.(2007)
     turtwater <- 1.01 *(AquaTurt_d18Op_mean) - 22.3 #Barrick et al. (1999)
@@ -50,7 +60,9 @@
     temp_CrocFish <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - crocwater ) 
     temp_TurtleFish <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - turtwater ) 
 
-# Compute Endotherm-Ectotherm Combined Mean (EECM, Cullen et al., 2019)
+
+# Endotherm-Ectotherm Combined Mean (EECM, Cullen et al., 2019) -----------
+
   
   # Gather mean for each eco_type
     V1075_summary <- V1075_BySpec %>%
