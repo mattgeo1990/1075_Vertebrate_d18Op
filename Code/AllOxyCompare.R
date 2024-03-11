@@ -805,3 +805,15 @@ summary(V1075$d18O..VSMOW.)
 V1075_ByEco
 
 
+  # Subset data for site = LSM
+  subset_data <- subset(lit_data, site == "LSM")
+  
+  # Make stripchart of d18O by taxon
+  stripchart(d18O_phosphate ~ taxon, data = subset_data, 
+             xlab = "Taxon", ylab = "d18O", 
+             main = "d18O by Taxon at Site LSM",
+             method = "stack")
+
+  ggplot(subset_data, aes(x = d18O_phosphate, y = taxon)) +
+    geom_point() +
+    labs(x = "d18O", y = "Taxon", title = "Taxon by d18O at Site LSM")  
