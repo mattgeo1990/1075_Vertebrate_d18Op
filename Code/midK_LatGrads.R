@@ -104,6 +104,18 @@ points(RRtempLat$RRlat, RRtempLat$RRtemps, pch =3, lwd = 2, cex = 1.5)
 
 # Water Isotopes ----------------------------------------------------------
 
+# Aptian-Albian turtles (Suarez et al., 2020)
+
+    setwd("/Users/allen/Documents/Data Analysis/Data/Geochem")
+    CelinaTurtles <- read.csv("SuarezEtAl2020_AptianAlbianTurtleDATA.csv")
+    
+    table(CelinaTurtles$Formation)
+    table(CelinaTurtles$Member)
+    
+    RRCelinaTurts <- CelinaTurtles[which(CelinaTurtles$Member %in% c("Ruby Ranch")), ]
+    LSCelinaTurts <- CelinaTurtles[which(CelinaTurtles$Member %in% c("Little Sheep")), ]
+    HFCelinaTurts <- CelinaTurtles[which(CelinaTurtles$Member %in% c("")), ]
+
 
 
 # Latitude vs Meteoric water d180 (see Table 1, Suarez et al. 2011)
@@ -126,8 +138,8 @@ box(lwd =3)
 legend("bottomleft", 
        box.lwd = 0,
        bg = "transparent",
-       legend = c("Modern", "Cool K", "Warm K", "K Climate Model"), 
-       lty = c(1,2,3,5), 
+       legend = c("Modern", "GEN-MOM"), 
+       lty = c(1,3), 
        lwd = 2 )
 legend("topright",
        box.lwd = 0,
@@ -135,9 +147,9 @@ legend("topright",
        legend = c("Turtles (Suarez et al., 2020)", "Glyptops sp.", "'Croc A'", "'Croc B'", "'Croc G'"), 
        pch = c(4, 7, 12, 10, 9),
        pt.cex = 1.5)
-lines(LatMeteoric_CoolK, lty = 2, lwd = 2 )
-lines(LatMeteoric_WarmK, lty = 3, lwd = 2)
-lines(LatMeteoric_GENESIS_MOM, lty = 5, lwd = 2)
+#lines(LatMeteoric_CoolK, lty = 2, lwd = 2 )
+#lines(LatMeteoric_WarmK, lty = 3, lwd = 2)
+lines(LatMeteoric_GENESIS_MOM, lty = 3, lwd = 2)
 points(median(LSCelinaTurts$Palaeolatitude), median(LSCelinaTurts$d18Ow), pch = 4, col="black", lwd = 2, cex = 1.5)
 points(median(HFCelinaTurts$Palaeolatitude), median(HFCelinaTurts$d18Ow), pch = 4, col="black", lwd = 2, cex = 1.5)
 points(median(RRCelinaTurts$Palaeolatitude), median(RRCelinaTurts$d18Ow), pch = 4, col="black", lwd = 2, cex = 1.5)
@@ -148,7 +160,7 @@ points(c(40), turtle_1075, pch = 7, col="black", lwd = 2, cex = 1.5)
 #points(RRCelinaTurts$Palaeolatitude, RRCelinaTurts$d18Ow, pch = 1, lwd = 2, cex = 1.5)
 #points(HFCelinaTurts$Palaeolatitude, HFCelinaTurts$d18Ow, pch =2, lwd = 2, cex = 1.5)
 
-dev.off()
+# dev.off()
 
 #TempModels <- c(LatTempModern, LatTemp_CoolK, LatTemp_WarmK, LatTemp_GENESIS_MOM)
 #df <- data.frame(lat,TempModels, ModelID)
@@ -158,4 +170,3 @@ dev.off()
 #points(37, 31)
 
 #points(37, 27)
-

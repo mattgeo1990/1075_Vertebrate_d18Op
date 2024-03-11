@@ -35,40 +35,42 @@ library(dplyr)
 
 # Clean data --------------------------------------------------------------
 
+  # DO NOT REMOVE OUTLIERS! YOU ARGUE THAT ALL OF YOUR DATA IS VALID
+  
   # Test for and remove outliers
 
     # Define a vector of unique categories in the "Eco" column
-      eco_categories <- unique(raw$Eco)
+      #eco_categories <- unique(raw$Eco)
 
     # Create an empty list to store the test results
-      test_results <- list()
+      #test_results <- list()
 
     # Perform Grubbs' test for each category
-      for (category in eco_categories) {
-        subset_data <- raw$d18O..VSMOW.[which(raw$Eco %in% category)]
-        test <- grubbs.test(subset_data)
-        test_results[[category]] <- test
-      }
+      #for (category in eco_categories) {
+        #subset_data <- raw$d18O..VSMOW.[which(raw$Eco %in% category)]
+        #test <- grubbs.test(subset_data)
+        #test_results[[category]] <- test
+      #}
 
     # Print the results
-      for (category in eco_categories) {
-        cat("Grubbs' Test for", category, ":\n")
-        print(test_results[[category]])
-        cat("\n")
-      }
+      #for (category in eco_categories) {
+        #cat("Grubbs' Test for", category, ":\n")
+        #print(test_results[[category]])
+        #cat("\n")
+      #}
 
     # outliers identified in Croc A, Small Theropod
-      V1075_cl <- subset(raw, raw$d18O..VSMOW. < 22.47)
+      #V1075_cl <- subset(raw, raw$d18O..VSMOW. < 22.47)
         # 2 outliers removed
 
   # Remove dentine samples
-    V1075_cl <- subset(V1075_cl, V1075_cl$Tissue != "dentine")
+    #V1075_cl <- subset(V1075_cl, V1075_cl$Tissue != "dentine")
   # Remove gar teeth
-    V1075_cl <- subset(V1075_cl, !(Eco == "Fish" & Element.type == "tooth"))
+    #V1075_cl <- subset(V1075_cl, !(Eco == "Fish" & Element.type == "tooth"))
 
-  # Remove groups with n < 5
+  # Remove groups with n < 3
     table(V1075_cl$Eco)
-    V1075_cl <- V1075_cl[!(V1075_cl$Eco %in% c("Large Theropod", "Shark")), ]
+    V1075_cl <- V1075_cl[!(V1075_cl$Eco %in% c("Large Theropod")), ]
     
 # Group by Specimen -------------------------------------------------------
 
@@ -107,15 +109,15 @@ library(dplyr)
     V1075MC_data <- V1075_BySpec[, c("Specimen.ID", "eco_type", "d18O")]
   
   # Export V1075MC_data
-    write.csv(V1075MC_data, "V1075MC_data", row.names = FALSE)
+    write.csv(V1075MC_data, "V1075MC_data.csv", row.names = FALSE)
   
-  # Export just Gar and Turtle for dual-taxon temps
-    # subset gar and aquatic turtle
-    V1075_GarTurtle <- V1075MC_data[(V1075MC_data$eco_type %in% c("Fish", "Aquatic Turtle")), ]
+  # Export just Gar, Turtle, and Croc G for dual-taxon temps
+    # subset gar, aquatic turtle, and Croc G
+    V1075_GarTurtleCroc <- V1075MC_data[(V1075MC_data$eco_type %in% c("Fish", "Aquatic Turtle", "Croc G")), ]
     # check that it worked
-    table(V1075_GarTurtle$eco_type)
+    table(V1075_GarTurtleCroc$eco_type)
     # export
-    write.csv(V1075_GarTurtle, "V1075_GarTurtle.csv", row.names = FALSE)
+    write.csv(V1075_GarTurtleCroc, "V1075_GarTurtleCroc.csv", row.names = FALSE)
     
 
     

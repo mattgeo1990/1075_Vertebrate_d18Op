@@ -159,7 +159,7 @@ for (category in eco_categories) {
   Goni <- subset(V1075_cl, Taxon == "Goniopholidae")
   Berni <- subset(V1075_cl, Taxon == "Bernissartia sp.")
   Deino <- subset(V1075_cl, Taxon == "Deinonychus antirrhopus")
-  Orni <- subset(V1075_cl, Taxon == "Ornithischian")
+  Orni <- subset(V1075_cl, Taxon == "Ornithischia")
   
   scales <- V1075_cl[which(V1075_cl$Element.type %in% "ganoid scale"), ]
   nrow(scales) 
@@ -444,7 +444,7 @@ CelinaPhosphateTemp <- 111.37 - (4.3 * (  - CelinaturtleWater_d18O)) #Barrick et
 
 # Frederickson's V1075 Goniopholid crocs (d18Oco3)
 
-setwd("/Users/allen/Library/CloudStorage/OneDrive-UniversityofKansas/M. Allen Dissertation/Vertebrate Geochemistry/vertd180")
+setwd("/Users/allen/Documents/Data Analysis/Data")
 FredsCrocs <- read.csv("Frederickson_CloverlyCrocs_d18Oco3.csv")
 
 FredsCrocs$δ18O_SMOW <- (FredsCrocs$δ18O)*(1.03091)+30.91
@@ -453,6 +453,20 @@ boxplot(FredsCrocs$δ18O_SMOW, ylim = c(8, 24), ylab = oxydelt, main = "Freds Cl
 boxplot(Goni$d18O..VSMOW., ylim = c(8, 24), ylab = oxydelt, main = "Matt's Cloverly(V1075) Goniopholids (n=14)")
 
 t.test(FredsCrocs$δ18O_SMOW, Goni$d18O..VSMOW.)
+
+
+# Combine data
+combined_data <- list(FredsCrocs$δ18O_SMOW, Goni$d18O..VSMOW.)
+
+# Create boxplot
+boxplot(combined_data, ylim = c(8, 24), ylab = "oxydelt", 
+        main = "Comparison of Cloverly (V1075) Goniopholids", 
+        names = c("FredsCrocs (n=16)", "Matt's (n=14)"))
+
+# Add legend
+legend("topright", legend = c("FredsCrocs", "Matt's"), fill = c("black", "red"))
+
+
 
 # Frederickson's V1075 Deinonychus (d18Oco3)
 
@@ -490,6 +504,7 @@ GarScales <- scales
 crocwater <- 0.82*(mean(Goni$d18O..VSMOW.)) - 19.93 #Amiot et al.(2007)
 turtwater <- 1.01 *(mean(Glyp$d18O..VSMOW.)) - 22.3 #Barrick et al. (1999)
 118.7 - 4.22*((Gar$d18O..VSMOW.  +(22.6 - NIST120c_mean)) - crocwater ) #Puceat et al. (2010)
+
 
 
 
@@ -541,71 +556,30 @@ table <- kable(table_data, format = "html", row.names = TRUE, align = "c") %>%
 print(table)
 
 
+# body water from terrestrial taxa
+      # faunivorous mammal (δ18Osurface water = (δ18Ophosphate − 21.3 + 3h)/0.74),
+      # omnivorous mammal (δ18Osurface water = (δ18Ophosphate − 22.7 + 3.9h)/0.64),
+      # herbivorous mammal (δ18Osurface water = (δ18Ophosphate − 26.8 + 8.9h)/0.76),
 
+        # We'll assume 50% mean annual humidity
+            h <- 0.5
+        # Small Theropods
+            TheroSmall <- subset(V1075_cl, Eco == "Small Theropod")
+          d18Owater_smThero = ((mean(TheroSmall$d18O..VSMOW.)) - 21.3 + 3*(h))/0.74
+          
+        # Large Theropod
+          d18Owater_LaThero = ((mean(TheroLarge$d18O..VSMOW.)) - 21.3 + 3*(h))/0.74
+          
+        # Sauropod
+          d18Owater_Sauropod = ((mean(Sauropoda$d18O..VSMOW.)) - 26.8 + 8.9*(h))/0.76
 
+        # Ornithischian
+          Orni <- subset(V1075_cl, Eco == "Ornithischian")
+          d18Owater_Orni = ((mean(Orni$d18O..VSMOW.)) - 26.8 + 8.9*(h))/0.76
+          
+        # Croc A
+          d18Owater_CrocA <- crocwater <- 0.82*(mean(CrocA$d18O..VSMOW.)) - 19.93 #Amiot et al.(2007)
 
-
-# T calcs with proper error analysis
-
-crocwater <- 0.82*(Goni$d18O..VSMOW.) - 19.93 #Amiot et al.(2007)
-
-d18Op_fish <- mean(GarScales$d18O..VSMOW.)
-
-118.7 - 4.22*((GarScales$d18O..VSMOW.  + (22.6 - NIST120c_mean)) - d18Omw_crocG)
-
-118.7 - 4.22*((d18Op_fish  + (22.6 - NIST120c_mean)) - turtwater)
-118.7 - 4.22*((d18Op_fish  + (22.6 - NIST120c_mean)) - crocwater)
-
-SE_turt <- sd(Glyp$d18O..VSMOW.)/sqrt(nrow(Glyp))
-SE_croc <- sd(Goni$d18O..VSMOW.)/sqrt(nrow(Goni))
-SE_NIST120c <- sd(NIST120c$d.18O.16O)/sqrt(nrow(NIST120c))
-SE_fish <- sd(scales$d18O..VSMOW.)/sqrt(nrow(scales))
-
-sqrt((64.437^2) + (36.514^2) + (-16.123^2))
-table(Gar$Element.type)
-GarScales <- Gar[which(Gar$Element.type %in% "ganoid scale"), ]
-d_stand <- deriv(mean(NIST120c$d.18O.16O))
-sig2T <- sig2turt(dT/d_d18Op_turt) + sig2crocG(dT/d_d18Op_crocG) sig2stand(dT/d_stand)
-
-
-
-
-length(Goni$d18O..VSMOW.)
-
-
-
-#temp est. per measurement
-Glyp$turtleWater_d18O <- 1.01 *(Glyp$d18O..VSMOW) - 22.3
-sd(Glyp$turtleWater_d18O)/sqrt(length((Glyp$turtleWater_d18O)))
-sd(Glyp$turtleWater_d18O)
-
-
-
-Gar$fishTemp <- 118.7 - 4.22*((Gar$d18O..VSMOW. +(22.6 - NIST120c_mean)) - turtleWater_d18O ) #Puceat et al. (2010) 
-summary(Gar$fishTemp)
-sd(Gar$fishTemp)/sqrt(length((Gar$fishTemp)))
-sd(Gar$fishTemp)
-boxplot(Gar$fishTemp)
-
-
-#d18Ow_ALL_crocA <- 0.82*(CrocA$d18O..VSMOW.) - 19.93 #Amiot et al.(2007)
-#TempFishCrocA_ALL <- 118.7 - 4.22*(fishd18Op - d18Ow_ALL_crocA ) #Puceat et al. (2010)
-
-#d18Op_crocB <- mean(Berni$d18O..VSMOW., na.rm = TRUE)
-#d18Ow_crocB <- 0.82*(d18Op_crocB) - 19.93 #Amiot et al.(2007)
-#TempFishCrocB <- 118.7 - 4.22*(fishd18Op - d18Ow_crocB ) #Puceat et al. (2010)
-
-#d18Op_crocG <- mean(Goni$d18O..VSMOW., na.rm = TRUE)
-#d18Ow_crocG <- 0.82*(d18Op_crocG) - 19.93 #Amiot et al.(2007)
-#TempFishCrocG <- 118.7 - 4.22*(fishd18Op - d18Ow_crocG ) #Puceat et al. (2010)
-  
-#Fishtmp_bxplt <- ggplot(Gar, aes(aes(y=fishTemp)))+
-  geom_boxplot(fishTemp)
-
-
-#calculate ingested water d18O of herbivorous dinosaurs
-herbDinod18Op <- mean(c(Sauropoda$d18O..VSMOW., Sauropelta$d18O..VSMOW., Teno$d18O..VSMOW.))
-herbDinoWater_d18O <- 1.41 * (herbDinod18Op) + 12.11 * (relHumidity_h) - 41.59
 
 
 
@@ -826,6 +800,46 @@ ggplot(V1075_cl, aes(x=reorder(Eco, d18O..VSMOW., na.rm = TRUE), y=d18O..VSMOW.)
   scale_y_continuous(breaks = seq(10, 25, by = 2)) +
   labs(x="", y = oxydelt)
 
+
+ggplot(raw, aes(x=reorder(Eco, d18O..VSMOW., na.rm = TRUE), y=d18O..VSMOW.))+
+  theme(panel.background = element_rect(color = "black", size = 2, fill = NA)) +
+  geom_jitter(position=position_jitter(0), shape = 1, size = 3, stroke = 1) +
+  theme(panel.grid.major.x = element_line(color = "black", size = 0.1)) +
+  theme(axis.text.x = element_text(size = 15, angle = -45, hjust = 0, face = "bold")) +
+  theme(axis.text.y = element_text(size = 15, hjust = 0, color = "black")) +
+  theme(axis.ticks.x = element_line())+
+  theme(panel.grid.major.y = element_blank())+
+  theme(panel.grid.minor.y = element_blank())+
+  theme(plot.margin = margin(20, 40, 20, 20, "pt")) +
+  theme(axis.title=element_text(size=20,face="bold")) +
+  scale_y_continuous(breaks = seq(10, 25, by = 2)) +
+  labs(x="", y = oxydelt)
+
+
+
+
+
+
+
+
+
+
+
+
+
+ggplot(V1075_cl, aes(x=reorder(Taxon, d18O..VSMOW., na.rm = TRUE), y=d18O..VSMOW.))+
+  theme(panel.background = element_rect(color = "black", size = 2, fill = NA)) +
+  geom_jitter(position=position_jitter(0), shape = 1, size = 3, stroke = 1) +
+  theme(panel.grid.major.x = element_line(color = "black", size = 0.1)) +
+  theme(axis.text.x = element_text(size = 5, angle = -45, hjust = 0, face = "bold")) +
+  theme(axis.text.y = element_text(size = 5, hjust = 0, color = "black")) +
+  theme(axis.ticks.x = element_line())+
+  theme(panel.grid.major.y = element_blank())+
+  theme(panel.grid.minor.y = element_blank())+
+  theme(plot.margin = margin(20, 40, 20, 20, "pt")) +
+  theme(axis.title=element_text(size=20,face="bold")) +
+  scale_y_continuous(breaks = seq(10, 25, by = 2)) +
+  labs(x="", y = oxydelt)
 
 
 taxatab <- table(V1075_cl$Taxon)

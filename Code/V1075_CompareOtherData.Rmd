@@ -1,0 +1,38 @@
+---
+title: "V1075_CompareOtherData"
+author: "Matthew Allen"
+date: "2024-03-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+## Let's think about exactly what you want to ask about how the V1075 data compares to other datasets.
+
+First, maybe look to see if 
+
+```{r, echo = FALSE}
+# Compare to other datasets -----------------------------------------------
+
+
+# taxon plots
+    # Bateun el Hmaima, Early Albian, Africa (Amiot, 2006)
+      ggplot(bateun, aes(x=d18O, y=eco_type)) + 
+        geom_point() +
+        ggtitle("Bateun el Hmaima, Early Albian, Africa (Amiot, 2006)")
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -1,5 +1,5 @@
-               Df Sum Sq Mean Sq F value  Pr(>F)    
-V1075_cl$Taxon 14    194   13.82    4.22 1.4e-05 ***
-Residuals      85    278    3.27                    
+               Df Sum Sq Mean Sq F value   Pr(>F)    
+V1075_cl$Taxon 14  193.5  13.819   4.222 1.39e-05 ***
+Residuals      85  278.2   3.273                     
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
