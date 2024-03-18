@@ -116,9 +116,19 @@ ggplot(combined_data, aes(x = values, fill = group)) +
   facet_wrap(~group, scales = "free")
 
 
-
 # calculate water
 
+# Create data frame to store MC results
+    
+    # Determine the number of unique values in V1075_MCdata$eco_type
+    num_unique <- length(unique(V1075_MCdata$eco_type))
+    
+    # Create data frame to store MC results with the correct number of rows
+    V1075_MCwater <- data.frame(Taxon = character(num_unique))
+    V1075_MCwater$Taxon <- unique(V1075_MCdata$eco_type)    
+    V1075_MCwater$MEAN <- NA
+    V1075_MCwater$hiCL <- NA
+    V1075_MCwater$loCL <- NA
 
 # Glyptops ------------------------------------------------------------------
 
@@ -149,6 +159,11 @@ ggplot(combined_data, aes(x = values, fill = group)) +
       highCI_water <- round(abs(mean_turtlewater - upper_percentile_water), 1)
       cat(mean_turtlewater, "+", highCI_water, "/", "-", lowCI_water)
     
+      # store results
+      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Aquatic Turtle")] <- mean_turtlewater
+      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Aquatic Turtle")] <- upper_percentile_water
+      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Aquatic Turtle")] <- lower_percentile_water
+      
 # Naomichelys ------------------------------------------------------------------
       
       
@@ -178,6 +193,10 @@ ggplot(combined_data, aes(x = values, fill = group)) +
       highCI_water <- round(abs(mean_naomichelys - upper_percentile_water), 1)
       cat(mean_naomichelys, "+", highCI_water, "/", "-", lowCI_water)
       
+      # store results
+      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Terrestrial Turtle")] <- mean_naomichelys
+      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Terrestrial Turtle")] <- upper_percentile_water
+      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Terrestrial Turtle")] <- lower_percentile_water
       
   
 # Croc G ------------------------------------------------------------------
@@ -209,13 +228,12 @@ ggplot(combined_data, aes(x = values, fill = group)) +
       highCI_water <- round(abs(mean_crocGwater - upper_percentile_water), 1)
       cat(mean_crocGwater, "+", highCI_water, "/", "-", lowCI_water)
    
-  # t-test on water distributions from turtle and croc
-      # Perform t-test
-      t_test_result <- t.test(synth_turtle$d18Owater, synth_croc$d18Owater)
-      
-      # Print the result
-      print(t_test_result)
     
+      # store results
+      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Croc G")] <- mean_crocGwater
+      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Croc G")] <- upper_percentile_water
+      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Croc G")] <- lower_percentile_water
+      
       
 
 # Croc B ------------------------------------------------------------------
@@ -242,8 +260,13 @@ ggplot(combined_data, aes(x = values, fill = group)) +
       highCI_water <- round(abs(mean_crocBwater - upper_percentile_water), 1)
       cat(mean_crocBwater, "+", highCI_water, "/", "-", lowCI_water)
       
-# Croc A ------------------------------------------------------------------
+      # store results
+      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Croc B")] <- mean_crocBwater
+      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Croc B")] <- upper_percentile_water
+      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Croc B")] <- lower_percentile_water
       
+      
+# Croc A ------------------------------------------------------------------
       
       # run crocwater on synth_croc
       synth_crocA <- synth_crocA %>%
@@ -262,14 +285,120 @@ ggplot(combined_data, aes(x = values, fill = group)) +
       
       # Take mean
       mean_crocAwater <- round(mean(subset_CIsetup_water), 1)
-      lowCI_water <- round(abs(mean_crocBwater - lower_percentile_water), 1)
-      highCI_water <- round(abs(mean_crocBwater - upper_percentile_water), 1)
+      lowCI_water <- round(abs(mean_crocAwater - lower_percentile_water), 1)
+      highCI_water <- round(abs(mean_crocAwater - upper_percentile_water), 1)
       cat(mean_crocAwater, "+", highCI_water, "/", "-", lowCI_water)
       
+      # store results
+      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Croc A")] <- mean_crocAwater
+      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Croc A")] <- upper_percentile_water
+      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Croc A")] <- lower_percentile_water
+      
+      
+      
+# Ornithischians --------------------------------------------------------------
       
 
+      # Create Function
+      Herbivore_Water <- function(synthmeans, h){
+        (synthmeans) - 26.8 + (8.9*(h))/0.76
+      }
+      
+      # run Herbivore_Water on synth_ornithischians. We'll assume 50% mean annual humidity
+      synth_ornithischians <- synth_ornithischians %>%
+        mutate(d18Owater = Herbivore_Water(means, h = 0.5))
+      
+      # CI, mean of ornithischian d18Owater
+      CIsetup_water <- sort(synth_ornithischians$d18Owater)
+      str(CIsetup_water)
+      
+      # Calculate the lower and upper percentiles for the middle 95%
+      lower_percentile_water <- quantile(CIsetup_water, 0.025)
+      upper_percentile_water <- quantile(CIsetup_water, 0.975)
+      
+      # Subset the middle 95% of the data
+      subset_CIsetup_water <- CIsetup_water[CIsetup_water >= lower_percentile_water & CIsetup_water <= upper_percentile_water]
+      
+      # Take mean
+      mean_OrniWater <- round(mean(subset_CIsetup_water), 1)
+      lowCI_water <- round(abs(mean_OrniWater - lower_percentile_water), 1)
+      highCI_water <- round(abs(mean_OrniWater - upper_percentile_water), 1)
+      cat(mean_OrniWater, "+", highCI_water, "/", "-", lowCI_water)
+      
+      # store results
+      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Ornithischian")] <- mean_OrniWater
+      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Ornithischian")] <- upper_percentile_water
+      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Ornithischian")] <- lower_percentile_water
+      
+# Sauropods --------------------------------------------------------------
+      
+      
+      # run Herbivore_Water on synth_sauropods. We'll assume 50% mean annual humidity
+      synth_sauropods <- synth_sauropods %>%
+        mutate(d18Owater = Herbivore_Water(means, h = 0.5))
+      
+      # CI, mean of sauropod d18Owater
+      CIsetup_water <- sort(synth_sauropods$d18Owater)
+      str(CIsetup_water)
+      
+      # Calculate the lower and upper percentiles for the middle 95%
+      lower_percentile_water <- quantile(CIsetup_water, 0.025)
+      upper_percentile_water <- quantile(CIsetup_water, 0.975)
+      
+      # Subset the middle 95% of the data
+      subset_CIsetup_water <- CIsetup_water[CIsetup_water >= lower_percentile_water & CIsetup_water <= upper_percentile_water]
+      
+      # Take mean
+      mean_SauropodWater <- round(mean(subset_CIsetup_water), 1)
+      lowCI_water <- round(abs(SauropodWater - lower_percentile_water), 1)
+      highCI_water <- round(abs(SauropodWater - upper_percentile_water), 1)
+      cat(mean_SauropodWater, "+", highCI_water, "/", "-", lowCI_water)
+      
+      # store results
+      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Sauropoda")] <- mean_SauropodWater
+      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Sauropoda")] <- upper_percentile_water
+      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Sauropoda")] <- lower_percentile_water
+      
+      
+# Small Theropods --------------------------------------------------------------
+      
+      
+      # Create Function
+      TheroWater <- function(synthmeans_thero, h){
+        (synthmeans_thero) - 21.3 + (3*(h))/0.74
+      }
+      
+      # run TheroWater on synth_thero. We'll assume 50% mean annual humidity
+      synth_theropods <- synth_theropods %>%
+        mutate(d18Owater = TheroWater(means, h = 0.5))
+      
+      # CI, mean of croc d18Owater
+      CIsetup_water <- sort(synth_theropods$d18Owater)
+      str(CIsetup_water)
+      
+      # Calculate the lower and upper percentiles for the middle 95%
+      lower_percentile_water <- quantile(CIsetup_water, 0.025)
+      upper_percentile_water <- quantile(CIsetup_water, 0.975)
+      
+      # Subset the middle 95% of the data
+      subset_CIsetup_water <- CIsetup_water[CIsetup_water >= lower_percentile_water & CIsetup_water <= upper_percentile_water]
+      
+      # Take mean
+      mean_TheroWater <- round(mean(subset_CIsetup_water), 1)
+      lowCI_water <- round(abs(mean_TheroWater - lower_percentile_water), 1)
+      highCI_water <- round(abs(mean_TheroWater - upper_percentile_water), 1)
+      cat(mean_TheroWater, "+", highCI_water, "/", "-", lowCI_water)
+      
+      # store results
+      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Small Theropod")] <- mean_TheroWater
+      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Small Theropod")] <- upper_percentile_water
+      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Small Theropod")] <- lower_percentile_water
 
-
+      unique(V1075_MCwater$Taxon)
+      
+  # export d18Owater estimates
+      setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+      write.csv(V1075_MCwater, "V1075_MCwater.csv", row.names = FALSE)
 #  calculate temps -------------------------------------------------------
 
 
@@ -330,16 +459,46 @@ ggplot(combined_data, aes(x = values, fill = group)) +
  # should I run temps based on crocwater?
 
     
-  # Theropods --------------------------------------------------------------
+
+# plots -------------------------------------------------------------------
+
+    # Remove rows corresponding to "Shark" and "Fish"
+    V1075_MCwater <- subset(V1075_MCwater, Taxon != "Shark" & Taxon != "Fish")
     
-    # We'll assume 50% mean annual humidity
-    h <- 0.5
-    # Small Theropods
-    TheroSmall <- subset(V1075_cl, Eco == "Small Theropod")
-    d18Owater_smThero = ((mean(TheroSmall$d18O..VSMOW.)) - 21.3 + 3*(h))/0.74
+    # Define the conditions for assigning values to the "Habitat" column
+    V1075_MCwater$Habitat <- ifelse(V1075_MCwater$Taxon %in% c("Aquatic Turtle", "Croc G", "Croc B"), "Aquatic or Semi-Aquatic", 
+                                    ifelse(V1075_MCwater$Taxon %in% c("Terrestrial Turtle", "Small Theropod", "Sauropoda", "Ornithischian", "Croc A"), "Terrestrial", NA))
     
-    # Large Theropod
-    d18Owater_LaThero = ((mean(TheroLarge$d18O..VSMOW.)) - 21.3 + 3*(h))/0.74
+    # Display the modified data frame
+    V1075_MCwater
+    
+    V1075_MCwater$PlotOrder <- 
     
 
+    # Reorder Taxon based on Habitat
+    V1075_MCwater$Taxon <- factor(V1075_MCwater$Taxon, levels = unique(V1075_MCwater$Taxon[order(V1075_MCwater$Habitat)]))
+    
+    # Plotting
+    ggplot(V1075_MCwater, aes(x = MEAN, y = Taxon)) +
+      geom_point() +  # Add points for mean
+      geom_errorbarh(aes(xmin = loCL, xmax = hiCL), height = 0.2) +  # Add horizontal error bars
+      labs(x = "d18Owater", y = "Taxon")  # Label x and y axes
+
+    # create delta notation for label
+    oxydeltphosphate <- expression(paste(delta^{18}, "O"[p], " (‰ V-SMOW)"))
+    oxydeltwater <- expression(paste(delta^{18}, "O"[ingested_water], " (‰ V-SMOW)"))
+    # Plotting
+    ggplot(V1075_MCwater, aes(x = MEAN, y = Taxon)) +
+      geom_point() +  # Add points for mean
+      geom_errorbarh(aes(xmin = loCL, xmax = hiCL), height = 0.2) +  # Add horizontal error bars
+      labs(x = oxydeltwater, y = element_blank()) +  # Label x and y axes
+      theme_minimal() +  # Set minimal theme
+      scale_x_continuous(breaks = seq(0, -10, by = -1)) +
+      theme(panel.grid.major = element_blank(),  # Remove major grid lines
+            panel.grid.minor = element_blank(),  # Remove minor grid lines
+            panel.background = element_blank(),
+            panel.border = element_rect(colour = "black", fill=NA, size=1),  # Remove background
+            axis.text.x = element_text(color= "black", size=8),
+            axis.text.y = element_text(color= "black", size=8),
+            axis.ticks = element_line())
     

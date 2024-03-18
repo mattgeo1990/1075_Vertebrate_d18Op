@@ -786,34 +786,49 @@ gt(TukCrocNoDF)
 
 # stripchart(V1075_cl$d18O..VSMOW.~V1075_cl$Eco, vertical = TRUE, pch=1, method="jitter")
 
-ggplot(V1075_cl, aes(x=reorder(Eco, d18O..VSMOW., na.rm = TRUE), y=d18O..VSMOW.))+
-  theme(panel.background = element_rect(color = "black", size = 2, fill = NA)) +
-  geom_jitter(position=position_jitter(0), shape = 1, size = 3, stroke = 1) +
-  theme(panel.grid.major.x = element_line(color = "black", size = 0.1)) +
-  theme(axis.text.x = element_text(size = 15, angle = -45, hjust = 0, face = "bold")) +
-  theme(axis.text.y = element_text(size = 15, hjust = 0, color = "black")) +
-  theme(axis.ticks.x = element_line())+
-  theme(panel.grid.major.y = element_blank())+
-  theme(panel.grid.minor.y = element_blank())+
-  theme(plot.margin = margin(20, 40, 20, 20, "pt")) +
-  theme(axis.title=element_text(size=20,face="bold")) +
-  scale_y_continuous(breaks = seq(10, 25, by = 2)) +
-  labs(x="", y = oxydelt)
+# stripchart
+  ggplot(raw, aes(x=d18O..VSMOW., y=reorder(Eco, d18O..VSMOW., na.rm = TRUE)))+
+    theme(panel.background = element_rect(color = "black", size = 1, fill = NA)) +
+    geom_point(shape = 1, size = 1, stroke = 0.75) +  # Use geom_point instead of geom_jitter
+    theme(axis.text.y = element_text(size = 8, angle = 0, hjust = 0, face = "bold", color = "black")) +
+    theme(axis.text.x = element_text(size = 8, hjust = 0, color = "black")) +
+    theme(axis.ticks.y = element_line())+
+    theme(panel.grid.major.x = element_blank())+
+    theme(panel.grid.minor.x = element_blank())+
+    theme(plot.margin = margin(20, 40, 20, 20, "pt")) +
+    theme(axis.title=element_text(face="bold")) +
+    scale_x_continuous(breaks = seq(10, 25, by = 2)) +
+    labs(x=oxydeltphosphate, y = "")
+
+# box and whisker plot (NOT WORKING)
+  ggplot(raw, aes(x=d18O..VSMOW., y=reorder(Eco, d18O..VSMOW., na.rm = TRUE)))+
+    theme(panel.background = element_rect(color = "black", size = 2, fill = NA),
+          panel.border = element_rect(color = "black", size = 1)) +
+    geom_boxplot() +  # Use geom_boxplot for box and whisker plot
+    theme(axis.text.y = element_text(size = 8, angle = 0, hjust = 0, face = "bold", color = "black")) +
+    theme(axis.text.x = element_text(size = 8, hjust = 0, color = "black")) +
+    theme(axis.ticks.y = element_line())+
+    theme(panel.grid.major.x = element_blank())+
+    theme(panel.grid.minor.x = element_blank())+
+    theme(plot.margin = margin(20, 40, 20, 20, "pt")) +
+    theme(axis.title=element_text(size=20,face="bold")) +
+    labs(x=oxydeltphosphate, y = "")
 
 
-ggplot(raw, aes(x=reorder(Eco, d18O..VSMOW., na.rm = TRUE), y=d18O..VSMOW.))+
-  theme(panel.background = element_rect(color = "black", size = 2, fill = NA)) +
-  geom_jitter(position=position_jitter(0), shape = 1, size = 3, stroke = 1) +
-  theme(panel.grid.major.x = element_line(color = "black", size = 0.1)) +
-  theme(axis.text.x = element_text(size = 15, angle = -45, hjust = 0, face = "bold")) +
-  theme(axis.text.y = element_text(size = 15, hjust = 0, color = "black")) +
-  theme(axis.ticks.x = element_line())+
-  theme(panel.grid.major.y = element_blank())+
-  theme(panel.grid.minor.y = element_blank())+
-  theme(plot.margin = margin(20, 40, 20, 20, "pt")) +
-  theme(axis.title=element_text(size=20,face="bold")) +
-  scale_y_continuous(breaks = seq(10, 25, by = 2)) +
-  labs(x="", y = oxydelt)
+# your old version of the stripchart
+  ggplot(raw, aes(x=reorder(Eco, d18O..VSMOW., na.rm = TRUE), y=d18O..VSMOW.))+
+    theme(panel.background = element_rect(color = "black", size = 2, fill = NA)) +
+    geom_jitter(position=position_jitter(0), shape = 1, size = 3, stroke = 1) +
+    theme(panel.grid.major.x = element_line(color = "black", size = 0.1)) +
+    theme(axis.text.x = element_text(size = 15, angle = -45, hjust = 0, face = "bold")) +
+    theme(axis.text.y = element_text(size = 15, hjust = 0, color = "black")) +
+    theme(axis.ticks.x = element_line())+
+    theme(panel.grid.major.y = element_blank())+
+    theme(panel.grid.minor.y = element_blank())+
+    theme(plot.margin = margin(20, 40, 20, 20, "pt")) +
+    theme(axis.title=element_text(size=20,face="bold")) +
+    scale_y_continuous(breaks = seq(10, 25, by = 2)) +
+    labs(x="", y = oxydelt)
 
 
 

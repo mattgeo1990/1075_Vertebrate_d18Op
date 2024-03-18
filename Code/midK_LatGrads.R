@@ -4,6 +4,10 @@
 library(tidyverse)
 library(dplyr)
 
+ # read in V1075_MCwater.csv (LOCAL)
+  setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+  V1075_MCwater <- read.csv("V1075_MCwater.csv")
+
 # MAT ---------------------------------------------------------------------
 
   # Latitude vs MAT (see Table 1, Suarez et al. 2011)
@@ -46,17 +50,89 @@ library(dplyr)
       LatTemp_WarmK <- -0.003 * (lat^2) + 0.0538 * lat + 28.534 #Barron (1983)
       LatTemp_GENESIS_MOM <- -0.003 * (lat^2) - 0.0321 * lat + 32.514 #Zhou et al. (2008) 
       
-      LatGrads <- data.frame(lat, LatTempModern, LatTemp_CoolK, LatTemp_WarmK)
+      LatGrads <- data.frame(lat, LatTempModern, LatTemp_GENESIS_MOM)
       head(LatGrads)
 
 
       df <- gather(LatGrads, key = ModelID, value = temp, 
-             c("LatTempModern", "LatTemp_CoolK", "LatTemp_WarmK"))
+             c("LatTempModern", "LatTemp_GENESIS_MOM"))
 
 #GGPLOT
+      
 
 ggplot(df, aes(lat,temp, group = ModelID, color = ModelID)) +
   geom_line(size =1)
+
+# Plot with line patterns and border
+ggplot(df, aes(lat, temp, group = ModelID, linetype = ModelID)) +
+  geom_line(size = 1) +
+  labs(x = "Latitude (°N)", y = "MAT (°C)") +  # Label x and y axes
+  theme_minimal() +
+  theme(
+    panel.border = element_rect(color = "black", fill = NA, size = 1),
+    panel.background = element_blank(),
+    panel.grid = element_blank(),
+    legend.position = "bottom"
+  ) 
+
+# SANDBOX
+
+# Define the point and its confidence intervals
+point_data <- data.frame(
+  lat = 40,
+  temp = 22.5,
+  lower = 22.5 - 5,
+  upper = 22.5 + 5
+)
+
+# Plot with line patterns and border
+gg_line <- ggplot(df, aes(lat, temp, group = ModelID, linetype = ModelID)) +
+  geom_line(size = 1) +
+  labs(x = "Latitude (°N)", y = "MAT (°C)") +  # Label x and y axes
+  theme_minimal() +
+  theme(
+    panel.border = element_rect(color = "black", fill = NA, size = 1),
+    panel.background = element_blank(),
+    panel.grid = element_blank(),
+    legend.position = "bottom"
+  ) 
+
+gg_modgrad <- ggplot(data.frame(lat = lat, temp = LatTempModern), aes(lat, temp)) +
+  geom_line(size = 1) +
+  labs(x = "Latitude (°N)", y = "MAT (°C)") +  # Label x and y axes
+  theme_minimal() +
+  theme(
+    panel.border = element_rect(color = "black", fill = NA, size = 1),
+    panel.background = element_blank(),
+    panel.grid = element_blank(),
+    legend.position = "bottom"
+  )
+
+gg_genmom <- geom_line(data = data.frame(lat = lat, temp = LatTemp_GENESIS_MOM), aes(lat, temp), size = 1) +
+
+
+gg_modgrad + gg_genmom
+
+gg_1075temp
+
+gg_line + geom_point(data = point_data, aes(x = lat, y = temp), color = "black", size = 3) +
+
+
+ggplot(df, aes(lat, temp, group = ModelID, linetype = ModelID)) +
+  geom_line(size = 1) +
+  geom_point(data = point_data, aes(x = lat, y = temp), color = "black", size = 3) +
+  #geom_errorbar(data = point_data, aes(x = lat, ymin = lower, ymax = upper), width = 0.1) +
+  labs(x = "Latitude (°N)", y = "MAT (°C)") +  # Label x and y axes
+  theme_minimal() +
+  theme(
+    panel.border = element_rect(color = "black", fill = NA, size = 1),
+    panel.background = element_blank(),
+    panel.grid = element_blank(),
+    legend.position = "bottom"
+  )
+
+
+# END SANDBOX
 
 
 df$ModelID <- as.factor(df$ModelID)
@@ -78,20 +154,35 @@ fishTempLat <- fishTempLat %>%
 
 garV1075 <- fishTempLat$temp
 
-y1 <- LatTempModern$temp
+#y1 <- LatTempModern$temp
 
-par(mar = c(5,6,1,1))
+par(mar = c(5,5,1,10))
 
-plot(lat, LatTempModern, las = 1, type = "l", lwd = 2, ylim = c(-10, 40), xlab = substitute(paste(bold("Latitude (°N)"))), ylab=substitute(paste(bold("T (°C)"))), font = 2, cex.lab = 2, cex.axis = 1.5) 
-box(lwd =3)
-legend(0,15, 
+plot(lat, LatTempModern, 
+     las = 1, type = "l", 
+     lwd = 1, 
+     ylim = c(-10, 40), 
+     xlim = c(30,50), 
+     xlab = substitute(paste("Latitude (°N)")), 
+     ylab=substitute(paste("T (°C)")), 
+     font = 1, 
+     cex.lab = 1, 
+     cex.axis = 1) 
+
+#box(lwd =3)
+legend("topright",
+       inset=c(-0.75, 0),
+       xpd = "TRUE",
+       box.lwd = 0,
        legend = c("Modern Gradient", "GENESIS-MOM"), 
        lty = c(1,2,3,5), lwd = 2,
-       box.lwd = 0,
        bg ="transparent")
-legend(0,0, 
-       legend = c("Fish Phosphates (This Study)", "Phyllosilicates (Andrzejewski and Tabor, 2020)"), 
-       pch = 1:2,
+legend("bottomright", 
+       inset=c(-0.75, 0),
+       xpd = "TRUE",
+       legend = c("Fossil Phosphate 
+(This Study)", "Phyllosilicates", "D47 CO3"), 
+       pch = 1:2:3,
        box.lwd = 0,
        pt.cex = 1.5)
 #lines(LatTemp_CoolK, lty = 2, lwd = 2 )
@@ -127,36 +218,58 @@ LatMeteoric_GENESIS_MOM <- -0.005* (lat^2) +0.0730* lat - 4.001 #Zhou et al. (20
 
 
 
-oxydeltmw <- expression("δ"^18 * "O‰ (VSMOW)")
+# create delta notation for label
+oxydeltwater <- expression(paste(delta^{18}, "O"[water], " (‰ V-SMOW)"))
 
-par(mar = c(5,6,1,1))
 
+par(mar = c(5,5,1,10))
 
 # plot d18Omw vs latitude with models overlain
-plot(lat, LatMeteoric_Modern, type = "l", las = 1, lwd = 2, xlim = c(20, 60), ylim = c(-10, -2), xlab = substitute(paste(bold("Latitude (°N)"))), ylab=substitute(paste(bold("d18Omw"))), font = 2, cex.lab = 2, cex.axis = 1.5) 
-box(lwd =3)
-legend("bottomleft", 
+plot(lat, 
+     LatMeteoric_Modern, 
+     type = "l",
+     las = 1,
+     lwd = 2,
+     xlim = c(30, 50),
+     ylim = c(-10, -4),
+     xlab = substitute(paste("Latitude (°N)")),
+     ylab=(oxydeltwater),
+     font = 1,
+     cex.lab = 1,
+     cex.axis = 1) 
+
+#box(lwd =3)
+legend("bottomright",
+       inset=c(-0.5, 0),
        box.lwd = 0,
        bg = "transparent",
        legend = c("Modern", "GEN-MOM"), 
-       lty = c(1,3), 
+       lty = c(1,3),
+       xpd = TRUE,
        lwd = 2 )
+
+
 legend("topright",
+       inset=c(-0.5, 0),
+       xpd = TRUE,
        box.lwd = 0,
        bg = "transparent",
-       legend = c("Turtles (Suarez et al., 2020)", "Glyptops sp.", "'Croc A'", "'Croc B'", "'Croc G'"), 
-       pch = c(4, 7, 12, 10, 9),
+       legend = c("Glyptops", "'Croc A'", "'Croc B'", "'Croc G'", "Naomichelys"), 
+       pch = c(7, 12, 10, 9, 8),
        pt.cex = 1.5)
 #lines(LatMeteoric_CoolK, lty = 2, lwd = 2 )
 #lines(LatMeteoric_WarmK, lty = 3, lwd = 2)
 lines(LatMeteoric_GENESIS_MOM, lty = 3, lwd = 2)
-points(median(LSCelinaTurts$Palaeolatitude), median(LSCelinaTurts$d18Ow), pch = 4, col="black", lwd = 2, cex = 1.5)
-points(median(HFCelinaTurts$Palaeolatitude), median(HFCelinaTurts$d18Ow), pch = 4, col="black", lwd = 2, cex = 1.5)
-points(median(RRCelinaTurts$Palaeolatitude), median(RRCelinaTurts$d18Ow), pch = 4, col="black", lwd = 2, cex = 1.5)
-points(c(40), turtle_1075, pch = 7, col="black", lwd = 2, cex = 1.5)
-#points(40, d18Ow_crocA, pch = 12, col="black", lwd = 2, cex = 1.5)
-#points(40, d18Omw_crocB, pch = 10, col="black", lwd = 2, cex = 1.5)
-#points(40, d18Omw_crocG, pch = 9, col="black", lwd = 2, cex = 1.5)
+#points(median(LSCelinaTurts$Palaeolatitude), median(LSCelinaTurts$d18Ow), pch = 4, col="black", lwd = 1, cex = 1)
+#points(median(HFCelinaTurts$Palaeolatitude), median(HFCelinaTurts$d18Ow), pch = 4, col="black", lwd = 1, cex = 1)
+#points(median(RRCelinaTurts$Palaeolatitude), median(RRCelinaTurts$d18Ow), pch = 4, col="black", lwd = 1, cex = 1)
+points(c(40), V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Aquatic Turtle")], pch = 7, col="black", lwd = 1, cex = 1)
+points(40, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Croc A")], pch = 12, col="black", lwd = 1, cex = 1)
+points(40, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Croc B")], pch = 10, col="black", lwd = 1, cex = 1)
+points(40, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Croc G")], pch = 9, col="black", lwd = 1, cex = 1)
+points(40, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Terrestrial Turtle")], pch = 8, col="black", lwd = 1, cex = 1)
+
+
 #points(RRCelinaTurts$Palaeolatitude, RRCelinaTurts$d18Ow, pch = 1, lwd = 2, cex = 1.5)
 #points(HFCelinaTurts$Palaeolatitude, HFCelinaTurts$d18Ow, pch =2, lwd = 2, cex = 1.5)
 
