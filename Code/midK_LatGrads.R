@@ -79,7 +79,7 @@ ggplot(df, aes(lat, temp, group = ModelID, linetype = ModelID)) +
 
 # Define the point and its confidence intervals
 point_data <- data.frame(
-  lat = 40,
+  lat = 50.25,
   temp = 22.5,
   lower = 22.5 - 5,
   upper = 22.5 + 5
@@ -140,7 +140,7 @@ levels(df$ModelID)
 df$ModelID <- factor(df$ModelID, levels = c("LatTempModern", "LatTemp_CoolK", "LatTemp_WarmK"))
 
 
-fishTempLat <- data.frame(TempFishTurt, 45, 0)
+fishTempLat <- data.frame(TempFishTurt, 50.25, 0)
 fishTempLat$X0 <- c("gar")
 fishTempLat <- fishTempLat %>% 
   rename(
@@ -153,16 +153,13 @@ fishTempLat <- fishTempLat %>%
 # Base R Plot
 
 garV1075 <- fishTempLat$temp
-
-#y1 <- LatTempModern$temp
-
 par(mar = c(5,5,1,10))
 
 plot(lat, LatTempModern, 
      las = 1, type = "l", 
      lwd = 1, 
      ylim = c(-10, 40), 
-     xlim = c(30,50), 
+     xlim = c(30,60), 
      xlab = substitute(paste("Latitude (°N)")), 
      ylab=substitute(paste("T (°C)")), 
      font = 1, 
@@ -230,7 +227,7 @@ plot(lat,
      type = "l",
      las = 1,
      lwd = 2,
-     xlim = c(30, 50),
+     xlim = c(30, 60),
      ylim = c(-10, -4),
      xlab = substitute(paste("Latitude (°N)")),
      ylab=(oxydeltwater),

@@ -177,6 +177,15 @@ for (category in eco_categories) {
   eco_type <- group_by(V1075_cl, Eco)
   eco_summary <- summarize(eco_type, mean = mean(d18O..VSMOW.), n = n(), min = min(d18O..VSMOW.), max = max(d18O..VSMOW.), sd = sd(d18O..VSMOW.), se = (sd(d18O..VSMOW.)/sqrt(n))) # remember that n = n() command produces column with sample size for each group
   
+  # compute stats for RAW DATA
+  raw_eco_type <- group_by(raw, Eco)
+  raw_eco_summary <- summarize(raw_eco_type, mean = mean(d18O..VSMOW.), n = n(), min = min(d18O..VSMOW.), max = max(d18O..VSMOW.), sd = sd(d18O..VSMOW.), se = (sd(d18O..VSMOW.)/sqrt(n))) # remember that n = n() command produces column with sample size for each group
+  
+  
+  # Write data to CSV
+  write.csv(raw_eco_summary, file = "/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/raw_eco_summary.csv", row.names = FALSE)
+  
+  
   write.csv(eco_summary,file='/Users/allen/Desktop/table.csv', row.names=FALSE)
   grid.table(eco_summary)
   
