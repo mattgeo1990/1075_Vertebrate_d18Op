@@ -1,0 +1,61 @@
+---
+title: "d18O Evap Temp Model"
+author: "Matthew Allen"
+date: "2024-03-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Let's run some experiments to explore the discrepancies between our emperical estimates and model predictions of d18Oprecip. First, let's see what the temperature estimate would be if we assume that the Cretaceous climate models accurately estimate d18O along a latitudinal gradient. 
+
+### Models predict a d18Oprecip of ~ -12 per mille VSMOW at Cloverly paleolatitude of ~50°N. 
+
+
+```{r}
+# Set conditions:
+  NIST120c <- 22.56714 # per mille VSMOW
+  d18Ophosphate <- 14.5 # per mille VSMOW
+  d18Omodel <- -12
+
+# Calculate temperature:
+temp_mod <- 118.7 - 4.22*((d18Ophosphate  +(22.6 - NIST120c)) - d18Omodel ) 
+
+cat("Model experiment yields temperature of ", temp_mod, " °C")
+```
+### This temperature seems unrealistic for this latitude in the Albian.
+
+### Now let's run one where we assume that our emperical d18Owater reconstruction is accurate.
+
+### d18O of Cloverly surface water reconstructed from d18Op of vertebrate phosphates is ~ -8 per mille VSMOW.
+
+
+```{r}
+
+# Set conditions:
+  NIST120c <- 22.56714 # per mille VSMOW
+  d18Ophosphate <- 14.5 # per mille VSMOW
+  d18Oemperical <- -8
+# Calculate temperature:
+temp_emp <- 118.7 - 4.22*((d18Ophosphate  +(22.6 - NIST120c)) - d18Oemperical ) 
+
+cat("Emperical experiment yields temperature of", temp_emp, " °C")
+```
+
+### This temperature better fits the modeled temperature gradients.
+
+### Now, as a final experiment, let's see what happens if we assume that our d18Op values are enriched due to evaporative effects on Cloverly surface waters. For this, we'll assume the d18Oprecip value predicted by models (-12) is accurate. We will also assume that our d18Owater estimate from fish phosphate is an overestimate by roughly 4 degrees (equal to the discrepancy between our emperically estimated d18Owater and modeled d18Oprecip). So, we will set the d18Op value at 10.5 per mille VSMOW.
+
+```{r}
+
+# Set conditions:
+  NIST120c <- 22.56714 # per mille VSMOW
+  d18Ophosphate <- 10.5 # per mille VSMOW
+  d18Omodel <- -12
+# Calculate temperature:
+sim_temp <- 118.7 - 4.22*((d18Ophosphate  +(22.6 - NIST120c)) - d18Omodel ) 
+
+cat("Accounting for possible evaporative bias in our emperical d18Oprecip estimates yields temperature of", sim_temp, " °C")
+```
