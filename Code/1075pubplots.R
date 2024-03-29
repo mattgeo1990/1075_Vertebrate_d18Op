@@ -40,11 +40,11 @@ V1075_alldata <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
 # Water by Taxon -----------------------------------------------------------------------
 
 # Remove rows corresponding to "Shark" and "Fish"
-V1075_MCwater <- subset(V1075_MCwater, Taxon != "Shark" & Taxon != "Fish")
+V1075_MCwater <- subset(V1075_MCwater, Taxon != "Hybodontiformes" & Taxon != "Lepisosteids" & Taxon != "Carcharodontosaurid")
 
 # Define the conditions for assigning values to the "Habitat" column
-V1075_MCwater$Habitat <- ifelse(V1075_MCwater$Taxon %in% c("Aquatic Turtle", "Croc G", "Croc B"), "Aquatic or Semi-Aquatic", 
-                                ifelse(V1075_MCwater$Taxon %in% c("Terrestrial Turtle", "Small Theropod", "Sauropoda", "Ornithischian", "Croc A"), "Terrestrial", NA))
+V1075_MCwater$Habitat <- ifelse(V1075_MCwater$Taxon %in% c("Glyptops sp.", "Neosuchian G", "Neosuchian B"), "Amphibious", 
+                                ifelse(V1075_MCwater$Taxon %in% c("Naomichelys sp.", "Maniraptorans", "Sauropoda=s", "Ornithischians", "Neosuchian A"), "Terrestrial", NA))
 
 # Display the modified data frame
 V1075_MCwater
@@ -76,9 +76,20 @@ ggplot(V1075_MCwater, aes(x = MEAN, y = Taxon)) +
         panel.background = element_blank(),
         panel.border = element_rect(colour = "black", fill=NA, size=1),  # Remove background
         axis.text.x = element_text(color= "black", size=8),
-        axis.text.y = element_text(color= "black", size=8),
+        axis.text.y = element_text(color= "black", size=8, face = "italic"),
         axis.ticks = element_line())
 
+
+
+#using tiff() and dev.off
+
+setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Exports")
+
+tiff("gg_d18Ow.tiff", units="in", width= 6.2361, height= 2.787, res=500)
+
+ggsave("gg_d18Ow.tiff", units="in", width= 6.2361, height= 2.787, dpi=500, compression = 'lzw')
+
+dev.off()
 
 
 
@@ -96,13 +107,13 @@ ggplot(V1075_BySpec, aes(x = d18O, y = Taxon)) +
 
 
 # Calculate mean d18O by eco_type
-mean_d18O_by_eco_type <- V1075_BySpec %>%
-  group_by(eco_type) %>%
-  summarise(mean_d18O = mean(d18O, na.rm = TRUE)) %>%
+mean_d18O_by_Taxon <- V1075_BySpec %>%
+  group_by(Taxon) %>%
+  summarise(mean_d18O = mean(d18O..VSMOW., na.rm = TRUE)) %>%
   arrange(mean_d18O)
 
 # Reorder eco_type levels based on mean d18O
-V1075_BySpec$eco_type <- factor(V1075_BySpec$eco_type, levels = mean_d18O_by_eco_type$eco_type)
+V1075_BySpec$Taxon <- factor(V1075_BySpec$Taxon, levels = mean_d18O_by_Taxon$Taxon)
 
 # Create the plot
 ggplot(V1075_BySpec, aes(x = d18O, y = eco_type)) +
@@ -112,44 +123,70 @@ ggplot(V1075_BySpec, aes(x = d18O, y = eco_type)) +
   theme(strip.placement = "outside")
 
 
-# all measurements --------------------------------------------------------
-
-
-# Calculate mean d18O by Eco
-mean_d18O_by_Eco <- V1075_alldata %>%
-  group_by(Eco) %>%
-  summarise(mean_d18O = mean(d18O..VSMOW., na.rm = TRUE)) %>%
-  arrange(mean_d18O)
-
-# Reorder Eco levels based on mean d18O
-V1075_alldata$Eco <- factor(V1075_alldata$Eco, levels = mean_d18O_by_Eco$Eco)
-
-# Create the plot with "Eco" instead of "Taxon" and open circles
-gg_alldata <- ggplot(V1075_alldata, aes(x = d18O..VSMOW., y = Eco)) +
+ggplot(V1075_BySpec, aes(x = d18O..VSMOW., y = Taxon)) +
   geom_jitter(width = 0.2, height = 0, size = 2, alpha = 0.7, shape = 1) +  # Use shape = 1 for open circles
   theme_minimal() +
-  labs(x = oxydeltphosphate, y = "Taxon") +
+  ggtitle("V1075 d18Op by fossil specimen") +
+  labs(x = oxydeltphosphate, y = "") +
   theme(strip.placement = "outside",
         panel.grid.major = element_blank(),  # Remove major gridlines
         panel.grid.minor = element_blank(),  # Remove minor gridlines
         panel.border = element_rect(color = "black", fill = NA),  # Set border color and remove fill
         axis.ticks.x = element_line(color = "black"),  # Set x-axis ticks color
         axis.ticks.y = element_line(color = "black"),  # Set y-axis ticks color
-        axis.text.x = element_text(size = 10, hjust = 1, face = "bold"),  # Set x-axis tick label size, orientation, and bold font
-        axis.text.y = element_text(size = 10, hjust = 1, face = "italic")) +  # Set y-axis tick label size, orientation, and bold font
+        axis.text.x = element_text(size = 8, hjust = 1, face = "bold"),  # Set x-axis tick label size, orientation, and bold font
+        axis.text.y = element_text(size = 8, hjust = 1, face = "italic")) +  # Set y-axis tick label size, orientation, and bold font
   coord_cartesian(expand = FALSE, xlim = c(8, 24), ylim = c(0, 12)) +
   scale_x_continuous(breaks = seq(8, 24, by = 2))
 
-print(gg_alldata)
+# Print and export using tiff() and dev.off
+
+setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Exports")
+
+tiff("gg_BySpec.tiff", units="in", width= 6.2, height= 2.7, res=500)
+
+ggsave("gg_BySpec.tiff", units="in", width= 6.2, height= 2.7, dpi=500, compression = 'lzw')
+
+dev.off()
+
+# all measurements --------------------------------------------------------
+
+
+# Calculate mean d18O by Taxon
+  #mean_d18O_by_Taxon <- V1075_alldata %>%
+    #group_by(Taxon) %>%
+    #summarise(mean_d18O = mean(d18O..VSMOW., na.rm = TRUE)) %>%
+    #arrange(mean_d18O)
+
+# Reorder Taxon levels based on mean d18O
+V1075_alldata$Taxon <- factor(V1075_alldata$Taxon, levels = mean_d18O_by_Taxon$Taxon)
+
+# Create the plot with "Taxon" and open circles
+ggplot(V1075_alldata, aes(x = d18O..VSMOW., y = Taxon)) +
+  geom_jitter(width = 0.2, height = 0, size = 2, alpha = 0.7, shape = 1) +  # Use shape = 1 for open circles
+  theme_minimal() +
+  ggtitle("V1075 individual d18Op measurements") +  # Add main title here
+  labs(x = oxydeltphosphate, y = "") +
+  theme(strip.placement = "outside",
+        panel.grid.major = element_blank(),  # Remove major gridlines
+        panel.grid.minor = element_blank(),  # Remove minor gridlines
+        panel.border = element_rect(color = "black", fill = NA),  # Set border color and remove fill
+        axis.ticks.x = element_line(color = "black"),  # Set x-axis ticks color
+        axis.ticks.y = element_line(color = "black"),  # Set y-axis ticks color
+        axis.text.x = element_text(size = 8, hjust = 1, face = "bold"),  # Set x-axis tick label size, orientation, and bold font
+        axis.text.y = element_text(size = 8, hjust = 1, face = "italic")) +  # Set y-axis tick label size, orientation, and bold font
+  coord_cartesian(expand = FALSE, xlim = c(8, 24), ylim = c(0, 12)) +
+  scale_x_continuous(breaks = seq(8, 24, by = 2))
+
 
 
 #using tiff() and dev.off
 
 setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Exports")
 
-tiff("gg_alldata.tiff", units="in", width= 6.2361, height= 2.787, res=500)
+tiff("gg_alldata.tiff", units="in", width= 6.2, height= 2.7, res=500)
 
-ggsave("gg_alldata.tiff", units="in", width= 6.2361, height= 2.787, dpi=500, compression = 'lzw')
+ggsave("gg_alldata.tiff", units="in", width= 6.2, height= 2.7, dpi=500, compression = 'lzw')
 
 dev.off()
 

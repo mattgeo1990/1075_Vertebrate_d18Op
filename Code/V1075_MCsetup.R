@@ -69,22 +69,23 @@ library(dplyr)
     #V1075_cl <- subset(V1075_cl, !(Eco == "Fish" & Element.type == "tooth"))
 
   # Remove groups with n < 3
-    table(V1075_cl$Eco)
-    V1075_cl <- V1075_cl[!(V1075_cl$Eco %in% c("Large Theropod")), ]
+    #table(V1075_cl$Eco)
+    #V1075_cl <- V1075_cl[!(V1075_cl$Eco %in% c("Large Theropod")), ]
     
 # Group by Specimen -------------------------------------------------------
 
     # for each unique specimen in V1075, calculate mean of that specimen 
     # use dplyr to summarize by group, assign to new dataframe 
-    V1075_BySpec <- group_by(V1075_cl, Specimen.ID)
+    V1075_BySpec <- group_by(raw, Specimen.ID)
     # compute mean and n by specimen
     V1075_mean <- summarize(V1075_BySpec, d18O = mean(d18O..VSMOW.), n = n()) # remember that n = n() command produces column with sample size for each group
     SD <- summarize(V1075_BySpec, SD = sd(d18O..VSMOW.))
     # clean and merge
     # condense lit_data df to one row per unique specimen
-    V1075_BySpec <- V1075_BySpec[!duplicated(V1075_BySpec$Specimen.ID), ]
+     a<- V1075_BySpec[!duplicated(V1075_BySpec$Specimen.ID), ]
+     V1075_BySpec <- V1075_BySpec[!duplicated(V1075_BySpec$Specimen.ID), ]
     # remove unwanted columns
-    V1075_BySpec <- dplyr::select(V1075_BySpec, c(-1, -4:-8, -14:-26))
+    V1075_BySpec <- dplyr::select(V1075_BySpec, c(-1, -4:-6, -8, -14:-26))
     # merge condensed lit_data with summarized data
     V1075_BySpec <- merge(V1075_BySpec,V1075_mean,by="Specimen.ID")
     V1075_BySpec <- merge(V1075_BySpec,SD,by="Specimen.ID")
@@ -106,7 +107,7 @@ library(dplyr)
   
   # Remove unnecessary columns for Monte Carlo
     colnames(V1075_BySpec)
-    V1075MC_data <- V1075_BySpec[, c("Specimen.ID", "eco_type", "d18O")]
+    V1075MC_data <- V1075_BySpec[, c("Specimen.ID", "Taxon", "d18O")]
   
   # Export V1075MC_data
     write.csv(V1075MC_data, "V1075MC_data.csv", row.names = FALSE)
