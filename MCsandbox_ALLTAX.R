@@ -106,7 +106,6 @@ combined_data <- rbind(
 combined_data$group <- factor(combined_data$group, levels = c("Gar", "Sharks", "Glyptops", "Croc G", "Croc A", "Croc B", "Theropods", "Sauropods", "Ornithischians", "NIST"))
 
 # Plotting with ggplot2 using facet_wrap
-dev.off()
 ggplot(combined_data, aes(x = values, fill = group)) +
   geom_histogram(position = "identity", alpha = 0.7, bins = 30, color = "black") +
   labs(title = "Histogram of Means",
@@ -350,8 +349,8 @@ ggplot(combined_data, aes(x = values, fill = group)) +
       
       # Take mean
       mean_SauropodWater <- round(mean(subset_CIsetup_water), 1)
-      lowCI_water <- round(abs(SauropodWater - lower_percentile_water), 1)
-      highCI_water <- round(abs(SauropodWater - upper_percentile_water), 1)
+      lowCI_water <- round(abs(mean_SauropodWater - lower_percentile_water), 1)
+      highCI_water <- round(abs(mean_SauropodWater - upper_percentile_water), 1)
       cat(mean_SauropodWater, "+", highCI_water, "/", "-", lowCI_water)
       
       # store results
@@ -399,6 +398,7 @@ ggplot(combined_data, aes(x = values, fill = group)) +
   # export d18Owater estimates
       setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
       write.csv(V1075_MCwater, "V1075_MCwater.csv", row.names = FALSE)
+
 #  calculate temps -------------------------------------------------------
 
 
@@ -460,45 +460,4 @@ ggplot(combined_data, aes(x = values, fill = group)) +
 
     
 
-# plots -------------------------------------------------------------------
 
-    # Remove rows corresponding to "Shark" and "Fish"
-    V1075_MCwater <- subset(V1075_MCwater, Taxon != "Shark" & Taxon != "Fish")
-    
-    # Define the conditions for assigning values to the "Habitat" column
-    V1075_MCwater$Habitat <- ifelse(V1075_MCwater$Taxon %in% c("Aquatic Turtle", "Croc G", "Croc B"), "Aquatic or Semi-Aquatic", 
-                                    ifelse(V1075_MCwater$Taxon %in% c("Terrestrial Turtle", "Small Theropod", "Sauropoda", "Ornithischian", "Croc A"), "Terrestrial", NA))
-    
-    # Display the modified data frame
-    V1075_MCwater
-    
-    V1075_MCwater$PlotOrder <- 
-    
-
-    # Reorder Taxon based on Habitat
-    V1075_MCwater$Taxon <- factor(V1075_MCwater$Taxon, levels = unique(V1075_MCwater$Taxon[order(V1075_MCwater$Habitat)]))
-    
-    # Plotting
-    ggplot(V1075_MCwater, aes(x = MEAN, y = Taxon)) +
-      geom_point() +  # Add points for mean
-      geom_errorbarh(aes(xmin = loCL, xmax = hiCL), height = 0.2) +  # Add horizontal error bars
-      labs(x = "d18Owater", y = "Taxon")  # Label x and y axes
-
-    # create delta notation for label
-    oxydeltphosphate <- expression(paste(delta^{18}, "O"[p], " (‰ V-SMOW)"))
-    oxydeltwater <- expression(paste(delta^{18}, "O"[ingested_water], " (‰ V-SMOW)"))
-    # Plotting
-    ggplot(V1075_MCwater, aes(x = MEAN, y = Taxon)) +
-      geom_point() +  # Add points for mean
-      geom_errorbarh(aes(xmin = loCL, xmax = hiCL), height = 0.2) +  # Add horizontal error bars
-      labs(x = oxydeltwater, y = element_blank()) +  # Label x and y axes
-      theme_minimal() +  # Set minimal theme
-      scale_x_continuous(breaks = seq(0, -10, by = -1)) +
-      theme(panel.grid.major = element_blank(),  # Remove major grid lines
-            panel.grid.minor = element_blank(),  # Remove minor grid lines
-            panel.background = element_blank(),
-            panel.border = element_rect(colour = "black", fill=NA, size=1),  # Remove background
-            axis.text.x = element_text(color= "black", size=8),
-            axis.text.y = element_text(color= "black", size=8),
-            axis.ticks = element_line())
-    

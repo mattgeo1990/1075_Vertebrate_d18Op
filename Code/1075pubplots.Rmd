@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Load Dependencies, Read Data, Create Objects
+## Load De pendencies, Read Data, Create Objects
 ```{r, results='hide', message=FALSE, warning=FALSE}
 
     # Install and load required packages
@@ -42,7 +42,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Plot stripchart
-
 ```{r, results='hide', message=FALSE, warning=FALSE}
 # d18O by Eco_type
   ggplot(V1075_cl, aes(x=reorder(Eco, d18O..VSMOW., na.rm = TRUE), y=d18O..VSMOW.))+

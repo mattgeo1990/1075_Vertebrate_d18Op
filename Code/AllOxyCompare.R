@@ -23,8 +23,8 @@
 # Load compiled Cretaceous d180p dataset
   setwd("/Users/allen/Documents/Data Analysis/Data")
   lit_data <- read.csv("Cretaceous_d18Ocompile.csv")
-  #lit_dataindiv <- read.csv("Cretaceous_oxyIndividuals.csv")
-  #lit_dataindiv$specimen <- as.factor(lit_dataindiv$specimen)
+  lit_dataindiv <- read.csv("Cretaceous_oxyIndividuals.csv")
+  lit_dataindiv$specimen <- as.factor(lit_dataindiv$specimen)
 
 # Load Cloverly V1075 data
   # source("/Users/allen/Documents/Data Analysis/Code/V1075_d18O.R")
@@ -817,3 +817,5 @@ V1075_ByEco
   ggplot(subset_data, aes(x = d18O_phosphate, y = taxon)) +
     geom_point() +
     labs(x = "d18O", y = "Taxon", title = "Taxon by d18O at Site LSM")  
+
+  
