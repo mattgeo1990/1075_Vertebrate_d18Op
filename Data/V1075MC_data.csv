@@ -22,7 +22,7 @@
 "60379-r","Naomichelys sp.",14.91338284
 "60386-a","Glyptops sp.",12.76557415
 "60386-b","Glyptops sp.",13.12658347
-"60391-a","Carcharodontosaurid",14.72616354
+"60391-a","Allosauroid",14.72616354
 "60406-a","Maniraptorans",14.22288194
 "60406-b","Maniraptorans",17.55405804
 "60406-c","Maniraptorans",13.71248653
@@ -88,9 +88,9 @@
 "80794-a","Ornithischians",13.795
 "80795-c","Ornithischians",13.53
 "80795-d","Ornithischians",15.89
-"80859-a","Hybodontiformes",10.8
-"80859-b","Hybodontiformes",15.27
-"80859-c","Hybodontiformes",9.77
+"80859-a","Hybodonts",10.8
+"80859-b","Hybodonts",15.27
+"80859-c","Hybodonts",9.77
 "UNCAT001-a","Sauropods",15.13298883
 "UNCAT002-a","Neosuchian A",16.16911066
 "UNCAT003-a","Neosuchian A",17.96348348

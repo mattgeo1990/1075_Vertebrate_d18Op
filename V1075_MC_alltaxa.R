@@ -2,6 +2,7 @@
 
 # Setup -------------------------------------------------------------------
 
+# !!! V1075_MCdata is sourced from script "V1075_d18O_wrangle.R"
 
 # Packages
 
@@ -30,7 +31,7 @@ nMCrepetitions <- 1e5
 
 # Subset V1075_cl by biological group
 gar <- subset(V1075_MCdata, Taxon == "Lepisosteids")
-shark <- subset(V1075_MCdata, Taxon == "Hybodontiformes")
+shark <- subset(V1075_MCdata, Taxon == "Hybodonts")
 glyptops <- subset(V1075_MCdata, Taxon == "Glyptops sp.")
 naomichelys <- subset(V1075_MCdata, Taxon == "Naomichelys sp.")
 crocG <- subset(V1075_MCdata, Taxon == "Neosuchian G")

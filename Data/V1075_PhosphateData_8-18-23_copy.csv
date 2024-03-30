@@ -66,10 +66,10 @@
 147,61573,61573-a,61573-a.1,567.5,9/2/22,Lepisosteids,ectotherm,aquatic,EI,Fish,tooth,bulk,enamel,793.2,1.397709251,,,2,2.1,,61573-a1,0.7932,3068,37.966,8.854489586,13.99884977
 148,61573,61573-b,61573-b.1,534.8,9/2/22,Lepisosteids,ectotherm,aquatic,EI,Fish,tooth,bulk,enamel,,0,,,2,2.1,,61573-b1,0.5058,3319,40.126,14.55050623,11.52110142
 152,61573,61573-c,61573-c.1,304.1,9/2/22,Lepisosteids,ectotherm,aquatic,,Fish,tooth,bulk,enamel,,0,,,2,2.1,,61573-c1,0.2211,1660,20.41,18.49795894,9.468175898
-97,60391,60391-a,60391-a.1,365.7,4/28/22,Carcharodontosaurid,endotherm,terrestrial,ES,Large Theropod,tooth fragment,serial,enamel,463.5,1.267432322,,,1,1.3,,60391-a1,0.4635,3220,40.036,16.11642082,15.09799283
-98,60391,60391-a,60391-a.2,383.6,4/28/22,Carcharodontosaurid,endotherm,terrestrial,ES,Large Theropod,tooth fragment,serial,enamel,408.4,1.064650678,,,1,1.3,,60391-a2,0.4084,2802,33.624,15.44452559,14.58912521
-99,60391,60391-a,60391-a.3a,344.4,4/28/22,Carcharodontosaurid,endotherm,terrestrial,ES,Large Theropod,tooth,serial,enamel,378.7,1.099593496,,,1,1.3,,60391-a3a,0.3787,2571,30.87,15.31533226,14.34743249
-100,60391,60391-a,60391-a.3b,390.7,4/28/22,Carcharodontosaurid,endotherm,terrestrial,ES,Large Theropod,tooth,serial,enamel,514.9,1.317890965,,,1,1.3,,60391-a3b,0.5149,3490,43.978,16.02465288,14.87010363
+97,60391,60391-a,60391-a.1,365.7,4/28/22,Allosauroid,endotherm,terrestrial,ES,Large Theropod,tooth fragment,serial,enamel,463.5,1.267432322,,,1,1.3,,60391-a1,0.4635,3220,40.036,16.11642082,15.09799283
+98,60391,60391-a,60391-a.2,383.6,4/28/22,Allosauroid,endotherm,terrestrial,ES,Large Theropod,tooth fragment,serial,enamel,408.4,1.064650678,,,1,1.3,,60391-a2,0.4084,2802,33.624,15.44452559,14.58912521
+99,60391,60391-a,60391-a.3a,344.4,4/28/22,Allosauroid,endotherm,terrestrial,ES,Large Theropod,tooth,serial,enamel,378.7,1.099593496,,,1,1.3,,60391-a3a,0.3787,2571,30.87,15.31533226,14.34743249
+100,60391,60391-a,60391-a.3b,390.7,4/28/22,Allosauroid,endotherm,terrestrial,ES,Large Theropod,tooth,serial,enamel,514.9,1.317890965,,,1,1.3,,60391-a3b,0.5149,3490,43.978,16.02465288,14.87010363
 110,60430,60430-b,60430-b.1,521.8,5/24/22,Ornithischians,endotherm,terrestrial,ES,Ornithischian,tooth,,enamel,360.6,0.691069375,,,1,1.3,,60430-b1,0.36,2461,29.965,15.30043356,19.53171901
 117,61341,61341-a,61341-a.1,375.5,5/24/22,Ornithischians,endotherm,terrestrial,ES,Ornithischian,tooth,,enamel,381.3,1.015446072,,,1,1.3,,61341-a1,0.3813,2608,32.955,15.98362286,17.02903048
 118,61389,61389-a,61389-a.1,378.3,5/24/22,Ornithischians,endotherm,terrestrial,ES,Ornithischian,tooth,,enamel,206.9,0.546920434,,,1,1.3,,61389-a1,0.2069,1457,17.964,15.46241255,14.17646587
@@ -88,9 +88,9 @@
 145,60484,60484-a,60484-a.1,571.4,9/2/22,Sauropods,endotherm,terrestrial,ES,Sauropoda,tooth,,enamel,,0,,,2,2.1,,60484-a1,0.3223,2384,29.453,17.35302492,18.59571597
 140,61220,61220-a,61220-a.1,597.4,9/1/22,Sauropods,endotherm,terrestrial,ES,Sauropoda,tooth,,enamel,,0,,,2,2.1,,61220-a1,0.4717,3146,37.904,14.82523227,19.1076203
 143,UNCAT001,UNCAT001-a,UNCAT001-a.1,501.6,9/2/22,Sauropods,endotherm,terrestrial,,Sauropoda,tooth,,enamel,565.2,1.126794258,,1,2,2.1,,UC001-a1,0.5652,2807,35.065,11.56900597,15.13298883
-,80859,80859-a,80859-a.1,,,Hybodontiformes,ectotherm,aquatic,,Shark,,,enamel,,,,,,,,80859-a.1,0.116,611,9.133,17.05,10.8
-,80859,80859-b,80859-b.1,,,Hybodontiformes,ectotherm,aquatic,,Shark,,,enamel,,,,,,,,80859-b.1,0.266,1803,23.807,15.91,15.27
-,80859,80859-c,80859-c.1,,,Hybodontiformes,ectotherm,aquatic,,Shark,,,enamel,,,,,,,,80859-c.1,0.269,1792,25.012,16.28,9.77
+,80859,80859-a,80859-a.1,,,Hybodonts,ectotherm,aquatic,,Shark,,,enamel,,,,,,,,80859-a.1,0.116,611,9.133,17.05,10.8
+,80859,80859-b,80859-b.1,,,Hybodonts,ectotherm,aquatic,,Shark,,,enamel,,,,,,,,80859-b.1,0.266,1803,23.807,15.91,15.27
+,80859,80859-c,80859-c.1,,,Hybodonts,ectotherm,aquatic,,Shark,,,enamel,,,,,,,,80859-c.1,0.269,1792,25.012,16.28,9.77
 119,60406,60406-a,60406-a.1,498,5/24/22,Maniraptorans,endotherm,terrestrial,ES,Small Theropod,tooth,,enamel,592.8,1.190361446,,,1,1.3,,60406-a1,0.5728,3726,46.878,15.36906261,14.22288194
 120,60406,60406-b,60406-b.1,349.1,5/24/22,Maniraptorans,endotherm,terrestrial,ES,Small Theropod,tooth,,enamel,208.8,0.598109424,,,1,1.3,,60406-b1,0.2088,1424,16.682,15.30882563,17.55405804
 121,60406,60406-c,60406-c.1a,482,5/24/22,Maniraptorans,endotherm,terrestrial,ES,Small Theropod,tooth,,enamel,454.4,0.942738589,,,1,1.3,,60406-c1a,0.4544,3138,38.935,15.97064577,13.71248653

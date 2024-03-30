@@ -1,6 +1,8 @@
 
 # Packages, Data ----------------------------------------------------------
 
+# V1075_MCwater is sourced from script "V1075_MC_alltaxa.R"
+# V1075_BySpec is sourced from "V1075_d18O_wrangle.R"
 
 # Install and load required packages
 packages_to_install <- c("ggpubr", "gridExtra", "ggplot2", "knitr", "outliers", "dplyr", "readr")
