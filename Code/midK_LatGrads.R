@@ -74,6 +74,7 @@ df$ModelID <- factor(df$ModelID, levels = c("LatTempModern", "LatTemp_CoolK", "L
 # create new dataframe with V1075 temp datapoint and paleolat
 Cloverly_paleolats <- c(53, 47, 51, 50) # See 4 model options at paleolatitude.org, based on modern lat/long of 45°N/-108°W
 l <- mean(Cloverly_paleolats)
+l <- 45
 V1075TempLat <- data.frame(cbind(temp = c(TempFishTurt), lat = l, ModelID = "gar"))
 
 
@@ -203,11 +204,11 @@ polygon(x_coords, y_coords_warmk, col = "gray", border = NA)
   points(median(LSCelinaTurts$Palaeolatitude), median(LSCelinaTurts$d18Ow), pch = 4, col="black", lwd = 1, cex = 1)
   points(median(HFCelinaTurts$Palaeolatitude), median(HFCelinaTurts$d18Ow), pch = 4, col="black", lwd = 1, cex = 1)
   points(median(RRCelinaTurts$Palaeolatitude), median(RRCelinaTurts$d18Ow), pch = 4, col="black", lwd = 1, cex = 1)
-  points(c(50.25), V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Aquatic Turtle")], pch = 7, col="black", lwd = 1, cex = 1)
-  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Croc A")], pch = 12, col="black", lwd = 1, cex = 1)
-  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Croc B")], pch = 10, col="black", lwd = 1, cex = 1)
-  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Croc G")], pch = 9, col="black", lwd = 1, cex = 1)
-  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Terrestrial Turtle")], pch = 8, col="black", lwd = 1, cex = 1)
+  points(c(50.25), V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Glyptops sp.")], pch = 7, col="black", lwd = 1, cex = 1)
+  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Neosuchian A")], pch = 12, col="black", lwd = 1, cex = 1)
+  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Neosuchian B")], pch = 10, col="black", lwd = 1, cex = 1)
+  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Neosuchian G")], pch = 9, col="black", lwd = 1, cex = 1)
+  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Naomichelys sp.")], pch = 8, col="black", lwd = 1, cex = 1)
 
 # Add Legends (if you want)
 #box(lwd =3)
@@ -226,7 +227,7 @@ inset=c(0, 0),
 xpd = TRUE,
 box.lwd = 0,
 bg = "transparent",
-legend = c("Glyptops", "'Croc A'", "'Croc B'", "'Croc G'", "Naomichelys", "CASturtles"), 
+legend = c("Glyptops sp.", "Neosuchian A", "Neosuchian B", "Neosuchian G", "Naomichelys sp.", "Turtles"), 
 pch = c(7, 12, 10, 9, 8, 4),
 pt.cex = 1,
 cex = 0.75)
