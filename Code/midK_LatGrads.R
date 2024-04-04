@@ -95,10 +95,12 @@ plot(lat, LatTempModern,
      cex.axis = 1) 
 
 # Add Cretaceous models
-  lines(LatTemp_CoolK, lty = 2, lwd = 0)
-  lines(LatTemp_WarmK, lty = 3, lwd = 0)
-  #lines(LatTemp_GENESIS_MOM, lty = 5, lwd = 1)
+  lines(LatTemp_CoolK, lty = 2, lwd = 1)
+  lines(LatTemp_WarmK, lty = 3, lwd = 1)
+  lines(LatTemp_GENESIS_MOM, lty = 5, lwd = 1)
 
+LatTemp_CoolK[52]
+LatTemp_WarmK[52]
 # Add model shade band
   # Identify the x and y coordinates for "Cool K" and "GENESIS-MOM"
     x_coords <- c(lat, rev(lat))
@@ -247,3 +249,4 @@ cex = 0.75)
 #points(37, 31)
 
 #points(37, 27)
+
