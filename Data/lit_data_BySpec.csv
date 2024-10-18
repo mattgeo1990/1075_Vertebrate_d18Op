@@ -1,0 +1,510 @@
+"specimen","taxon","diet","eco_type","tissue","age","formation","strat_mbr","site","continent","lat","lng","paleolat","paleolng","ref","d18O","n","SD","SE"
+"","Achelousaurus horneri","H","ornithischian","Dinosaur bone","Campanian","","","Montana","United Sates","","","54.8 (+ 7.6/− 6.8)",NA,"Barrick et al., 1996",15.2865853658537,82,3.27424526013048,0.361579900819542
+"2016-13-Macro-1","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",19.725,4,0.512347538297981,0.25617376914899
+"2016-13-Macro-10","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",18.0666666666667,6,0.823812276351031,0.336319953483452
+"2016-13-Macro-11","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",18.175,4,0.377491721763538,0.188745860881769
+"2016-13-Macro-2","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",17.9833333333333,6,0.803533861555732,0.328041325309954
+"2016-13-Macro-3","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",19.4333333333333,3,1.36503968196288,0.788106027835793
+"2016-13-Macro-4","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",18.05,4,0.932737905308882,0.466368952654441
+"2016-13-Macro-5","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",19.0666666666667,3,0.321455025366432,0.185592145427668
+"2016-13-Macro-6","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",18.9333333333333,3,0.305505046330388,0.176383420737639
+"2016-13-Macro-7","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",18.7,3,0.4,0.230940107675851
+"2016-13-Macro-8","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",18.6333333333333,3,0.416333199893227,0.240370085030933
+"2016-13-Macro-9","Naomichelys speciosa","","terrestrial turtle","bone","Aptian-Albian","Holly Creek","","Holly Creek","North America","","","",NA,"Suarez et al., 2020",18.9666666666667,3,0.723417813807024,0.417665469538056
+"AUS 240","Theropoda","C","theropod","Dinosaur bulk tooth","Late Maastrichtian","","","Ausseing","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",18.2,1,NA,NA
+"BG52","Goniopholis sp.","C","croc","Crocodilian tooth enamel","Berriasian","","","Cherves-de-Cognac","France","","","32.6 (+ 5.5/− 4.8)",NA,"Amiot et al., 2006",22.1,1,NA,NA
+"BG53","Pholidosaurus sp.","C","croc","Crocodilian tooth enamel","Berriasian","","","Cherves-de-Cognac","France","","","32.6 (+ 5.5/− 4.8)",NA,"Amiot et al., 2006",22.4,1,NA,NA
+"BG55","?Pleurosternon sp.","?","aquatic turtle","Turtle osteoscute","Berriasian","","","Cherves-de-Cognac","France","","","32.6 (+ 5.5/− 4.8)",NA,"Amiot et al., 2006",21.6,1,NA,NA
+"BG56","?Tretosternon sp.","?","","Turtle osteoscute","Berriasian","","","Cherves-de-Cognac","France","","","32.6 (+ 5.5/− 4.8)",NA,"Amiot et al., 2006",23,1,NA,NA
+"BG57","Goniopholis sp.","C","croc","Crocodilian osteoderm","Berriasian","","","Cherves-de-Cognac","France","","","32.6 (+ 5.5/− 4.8)",NA,"Amiot et al., 2006",21.8,1,NA,NA
+"BG58","Goniopholis sp.","C","croc","Crocodilian osteoderm","Berriasian","","","Cherves-de-Cognac","France","","","32.6 (+ 5.5/− 4.8)",NA,"Amiot et al., 2006",21.3,1,NA,NA
+"BR01","Anhanguerid pterosaur","","pterosaur","Tooth enamel","Aptian–Albian","Crato","","Crato Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",21,1,NA,NA
+"BR02","Anhanguerid pterosaur","","pterosaur","Tooth bulk","Aptian–Albian","Crato","","Crato Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",20.4,1,NA,NA
+"BR03","Anhanguerid pterosaur","","pterosaur","Tooth bulk","Aptian–Albian","Crato","","Crato Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",20.7,1,NA,NA
+"BR04","Anhanguerid pterosaur","","pterosaur","Tooth bulk","Aptian–Albian","Crato","","Crato Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",21.5,1,NA,NA
+"BR05","Anhanguerid pterosaur","","pterosaur","Tooth bulk","Aptian–Albian","Crato","","Crato Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",21.2,1,NA,NA
+"BR06","Anhanguerid pterosaur","","pterosaur","Tooth bulk","Aptian–Albian","Crato","","Crato Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",21.4,1,NA,NA
+"BR07","Anhanguerid pterosaur","","pterosaur","Tooth bulk","Aptian–Albian","Crato","","Crato Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",21.2,1,NA,NA
+"BR08","Neoproscinetes penalvai","","marine fish","5 bulk teeth","Aptian–Albian","Romualdo","","Romualdo Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",22.5,1,NA,NA
+"BR09","Neoproscinetes penalvai","","marine fish","Tooth enamel","Aptian–Albian","Romualdo","","Romualdo Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",22.5,1,NA,NA
+"BR10","Neoproscinetes penalvai","","marine fish","Tooth enamel","Aptian–Albian","Romualdo","","Romualdo Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",21.9,1,NA,NA
+"BR11","Vinctifer","","marine fish","Scales","Aptian–Albian","Romualdo","","Romualdo Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",19.9,1,NA,NA
+"BR12","Araripemys","","marine turtle","Shell bone","Aptian–Albian","Romualdo","","Romualdo Fm.","South America","","","− 10.2",NA,"Amiot et al., 2010",19.7,1,NA,NA
+"BYUM-CISGO-TS014-1","Chelonia","","turtle indet.","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",14.2,1,NA,NA
+"BYUM-CISGO-TS014-2","Chelonia","","turtle indet.","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",14.3,1,NA,NA
+"BYUM-CISGO-TS014-3","Chelonia","","turtle indet.","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",13.5,1,NA,NA
+"BYUM-CISGO-TS014-4","Chelonia","","turtle indet.","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",14,1,NA,NA
+"BYUM-CISGO-TS014-5","Chelonia","","turtle indet.","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",14.5,1,NA,NA
+"BYUVP 14452","Utahraptor","","theropod","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",18.24,5,0.630872411823501,0.282134719593318
+"BYUVP 18099","Utahraptor","","theropod","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",18.5,5,0.6,0.268328157299975
+"BYUVP 18104","Utahraptor","","theropod","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",17.2,5,1.23895116933639,0.554075807087803
+"BYUVP 18156","sauropod","","sauropod","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",22.34,5,0.207364413533277,0.092736184954957
+"BYUVP 18185","sauropod","","sauropod","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",17.12,5,0.192353840616713,0.0860232526704261
+"BYUVP-18171","sauropod","","sauropod","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",22.24,5,0.577061521850141,0.258069758011279
+"BYUVP11340","Iguanodontid","","ornithischian","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",21.8666666666667,6,0.535412613473634,0.2185812841434
+"BYUVP11532","sauropod","","sauropod","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",25.0142857142857,7,1.64664160381929,0.622372026022627
+"BYUVP14173","Utahraptor","","theropod","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",18.575,4,0.457347424467075,0.228673712233538
+"CA001","Theropoda","C","theropod","Dinosaur bulk tooth","Late Campanian","","","Onefour","Canada","","","58.6 (+ 8.1/− 7.2)",NA,"Amiot et al., 2006",11.9,1,NA,NA
+"CA004","Crocodylia","C","croc","Crocodilian bulk tooth","Late Campanian","","","Onefour","Canada","","","58.6 (+ 8.1/− 7.2)",NA,"Amiot et al., 2006",12,1,NA,NA
+"CA006","Chelonia","?","turtle indet.","Osteoscute","Late Campanian","","","Onefour","Canada","","","58.6 (+ 8.1/− 7.2)",NA,"Amiot et al., 2006",14.8,1,NA,NA
+"CA010","Ornithopoda","H","ornithischian","Dinosaur bulk tooth","Late Campanian","","","Onefour","Canada","","","58.6 (+ 8.1/− 7.2)",NA,"Amiot et al., 2006",13.9,1,NA,NA
+"CEUM 10882","Crocodylomorpha","C","croc","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",16.7,1,NA,NA
+"CEUM 11736","Testudinata indet.","","turtle indet.","osteoscute","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",15.65,6,0.450555213042752,0.183938395484285
+"CEUM 11736 ","Testudinata indet.","","turtle indet.","osteoscute","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",13.7,2,0.424264068711928,0.3
+"CEUM 12760","small theropod","C","theropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",17.7,1,NA,NA
+"CEUM 12843","Naomichelys sp","","terrestrial turtle","osteoscute","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",14.85,6,0.339116499156263,0.138443731048635
+"CEUM 26312","small theropod","C","theropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",21.4,1,NA,NA
+"CEUM 31232","Acrocanthosaur","C","theropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",24.1,4,0.848528137423856,0.424264068711928
+"CEUM 31234","Brachiosaur","H","sauropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",18.03,10,0.612916525039639,0.193821223468088
+"CEUM 31946","small theropod","C","theropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",17.6,1,NA,NA
+"CEUM 31948","Brachiosaur","H","sauropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",20.8428571428571,14,0.893320758754647,0.238750015410916
+"CEUM 35798","Crocodylomorpha","C","croc","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",17.3,4,0.355902608401043,0.177951304200522
+"CEUM 35842","Acrocanthosaur","C","theropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",18.42,5,1.95371441106422,0.873727646352111
+"CEUM 38739","small theropod","C","theropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",17.05,2,0.494974746830583,0.35
+"CEUM12500","Acrocanthosaur","C","theropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",18.1625,8,0.261520280557469,0.0924613818999973
+"CEUM23266","Acrocanthosaur","C","theropod","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",21.6875,8,1.1357030547513,0.40153166571446
+"CHE-02-10","cf. Nuthetes","C","theropod","Dinosaur bulk tooth","Berriasian","","","Cherves-de-Cognac","France","","","32.6 (+ 5.5/− 4.8)",NA,"Amiot et al., 2006",22.6,1,NA,NA
+"DB-Acro-1","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.8,1,NA,NA
+"DB-Acro-10","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18.8,1,NA,NA
+"DB-Acro-11","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.1,1,NA,NA
+"DB-Acro-12","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.1,1,NA,NA
+"DB-Acro-13","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.2,1,NA,NA
+"DB-Acro-14","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18.8,1,NA,NA
+"DB-Acro-15","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18.5,1,NA,NA
+"DB-Acro-16","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.3,1,NA,NA
+"DB-Acro-17","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.1,1,NA,NA
+"DB-Acro-18","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",17.8,1,NA,NA
+"DB-Acro-19","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18.5,1,NA,NA
+"DB-Acro-2","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",20,1,NA,NA
+"DB-Acro-20","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.5,1,NA,NA
+"DB-Acro-21","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.7,1,NA,NA
+"DB-Acro-22","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.6,1,NA,NA
+"DB-Acro-23","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18.9,1,NA,NA
+"DB-Acro-24","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.2,1,NA,NA
+"DB-Acro-25","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.6,1,NA,NA
+"DB-Acro-26","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.3,1,NA,NA
+"DB-Acro-27","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18.8,1,NA,NA
+"DB-Acro-28","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18.2,1,NA,NA
+"DB-Acro-29","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18,1,NA,NA
+"DB-Acro-3","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",20.3,1,NA,NA
+"DB-Acro-30","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",17.7,1,NA,NA
+"DB-Acro-4","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.7,1,NA,NA
+"DB-Acro-5","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",20,1,NA,NA
+"DB-Acro-6","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.7,1,NA,NA
+"DB-Acro-7","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",20.1,1,NA,NA
+"DB-Acro-9","Acrocanthosaur","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18.4,1,NA,NA
+"DB-Brach1","Brachiosaur","","sauropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",23.6064516129032,31,0.535372445979412,0.0961557298569455
+"DB-Brach2","Brachiosaur","","sauropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",17.4666666666667,6,0.445720390678581,0.181964587519416
+"DB-Brach3","Brachiosaur","","sauropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",17.9571428571429,7,1.28951818244534,0.487392060263771
+"DB-Croc1","Crocodile","","croc","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.06,5,0.421900462194579,0.188679622641132
+"DB-Croc2","Crocodile","","croc","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.275,4,0.64485140407177,0.322425702035885
+"DB-Iguano1","Iguanodontid","","ornithischian","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",14.8,7,0.577350269189626,0.218217890235992
+"DB-Iguano2","Iguanodontid","","ornithischian","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",15.1,3,0.264575131106459,0.152752523165195
+"DB-Iguano3","Iguanodontid","","ornithischian","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.95,4,0.793725393319377,0.396862696659689
+"DB-Theropod1","small theropod","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",15.4090909090909,11,0.372705099118715,0.112374815566272
+"DB-Theropod2","small theropod","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.06,5,0.654217089351845,0.292574776766556
+"DBDP-107a","Iguanodontid","","ornithischian","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",16.85,2,0.212132034355965,0.15
+"DBDP-15","Iguanodontid","","ornithischian","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",20.4,5,1.00747208398049,0.450555213042752
+"DBDP-28","Iguanodontid","","ornithischian","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",18.74,5,0.993981891183134,0.444522215417857
+"DBDP-57","small theropod","","theropod","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",17.6833333333333,6,1.4274686219552,0.582761624604015
+"DBDP-58","Iguanodontid","","ornithischian","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",19.02,5,1.41315250415516,0.631981012372999
+"DBSP-3-1","Iguanodontid","","ornithischian","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",16.8,1,NA,NA
+"DBSP-3-2","Iguanodontid","","ornithischian","","","Cedar Mountain","","lYCM","","","","",NA,"Suarez et al., 2014",16.45,2,0.353553390593274,0.25
+"DMNH-55492","Ornithischian","H","ornithischian","tooth enamel","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",15.0538461538462,13,0.442747830063165,0.122796154107166
+"F001","Tarascosaurus salluvicus","C","theropod","Dinosaur tooth enamel","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",20.7,1,NA,NA
+"F002","Tarascosaurus salluvicus","C","theropod","Dinosaur tooth enamel","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",19.4,1,NA,NA
+"F003","Rhabdodon priscus","H","ornithischian","Dinosaur bulk tooth","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",18,1,NA,NA
+"F004","Rhabdodon priscus","H","ornithischian","Dinosaur bulk tooth","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",18.9,1,NA,NA
+"F005","Crocodylia","C","croc","Crocodilian tooth enamel","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",18.6,1,NA,NA
+"F007","cf. Foxemys","?","turtle","Turtle osteoscute","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",17.6,1,NA,NA
+"F008","Theropoda","C","theropod","Dinosaur bulk tooth","Late Maastrichtian","","","Cassagnau 1","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",19,1,NA,NA
+"F009","Chelonia","?","turtle indet.","Turtle osteoscute","Late Maastrichtian","","","Cassagnau 1","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",18.2,1,NA,NA
+"F010","Theropoda","C","theropod","Dinosaur tooth enamel","Late Maastrichtian","","","Cassagnau 1","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",19.5,1,NA,NA
+"F012","Hadrosauridae","H","ornithischian","Dinosaur bulk tooth","Late Maastrichtian","","","Cassagnau 1","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",19.9,1,NA,NA
+"F013","Thoracosaurus sp.","C","croc","Crocodilian bulk tooth","Late Maastrichtian","","","Cassagnau 1","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",17.4,1,NA,NA
+"F014","Theropoda","C","theropod","Dinosaur tooth enamel","Late Maastrichtian","","","Cassagnau 2","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",21.5,1,NA,NA
+"F015","Chelonia","?","turtle indet.","Turtle osteoscute","Late Maastrichtian","","","Cassagnau 2","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",18.9,1,NA,NA
+"F016","Theropoda","C","theropod","Dinosaur tooth enamel","Late Maastrichtian","","","Cassagnau 2","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",21,1,NA,NA
+"F017","Thoracosaurus sp.","C","croc","Crocodilian bulk tooth","Late Maastrichtian","","","Cassagnau 2","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",18.5,1,NA,NA
+"F018","Hadrosauridae","H","ornithischian","Dinosaur bulk tooth","Late Maastrichtian","","","Cassagnau 2","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",20.8,1,NA,NA
+"F019","Thoracosaurus sp.","C","croc","Crocodilian osteoderm","Late Maastrichtian","","","Cassagnau 2","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",18.6,1,NA,NA
+"F020","Hadrosauridae","H","ornithischian","Dinosaur bulk tooth","Late Maastrichtian","","","Ausseing","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",21,1,NA,NA
+"F022","Chelonia","?","turtle indet.","Turtle osteoscute","Late Maastrichtian","","","Ausseing","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",18.3,1,NA,NA
+"F023","Acynodon sp.","C","","Crocodilian bulk tooth","Late Maastrichtian","","","Ausseing","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",18.5,1,NA,NA
+"F024","Musturzabalsuchus sp.","C","croc","Crocodilian bulk tooth","Late Maastrichtian","","","Ausseing","France","","","34.7 (+ 3.7/− 3.4)",NA,"Amiot et al., 2006",18.4,1,NA,NA
+"F026","Crocodylia","C","croc","Crocodilian bulk tooth","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",17.5,1,NA,NA
+"F028","Ampelosaurus atacis","H","sauropod","Dinosaur bulk tooth","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",18.8,1,NA,NA
+"F029","cf. Foxemys","?","turtle","Turtle osteoscute","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",17.5,1,NA,NA
+"F030","cf. Foxemys","?","turtle","Turtle osteoscute","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",16.8,1,NA,NA
+"F031","Ampelosaurus atacis","H","sauropod","Dinosaur bulk tooth","Late Campanian–Early Maastrichtian","","","Cruzy","France","","","35.5 (+ 5.1/− 4.6)",NA,"Amiot et al., 2006",18.9,1,NA,NA
+"KMT-03","? Titanosauriformes indet.","H","sauropod","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",12.3,1,NA,NA
+"KMT-04","Ornithopoda indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",11,1,NA,NA
+"KMT-05","? Theropoda indet.","C","theropod","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",11.8,1,NA,NA
+"KMT-06","Titanosauriformes indet.","H","sauropod","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",14.1,1,NA,NA
+"KMT-08","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",12.6,1,NA,NA
+"KMT-09","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",12.7,1,NA,NA
+"KMT-10","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",12.8,1,NA,NA
+"KMT-11","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",11.6,1,NA,NA
+"KMT-12","Theropoda indet.","C","theropod","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",11.2,1,NA,NA
+"KMT-13","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",10.9,1,NA,NA
+"KMT-14","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",13.3,1,NA,NA
+"KMT-15","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",11.2,1,NA,NA
+"KMT-16","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",12.4,1,NA,NA
+"KMT-17","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",12.2,1,NA,NA
+"KMT-18","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",12,1,NA,NA
+"KMT-19","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",11.3,1,NA,NA
+"KMT-20","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Albian","","","Tamba","Northeast Asia","35.189346","35.073863","",NA,"Amiot et al., 2021",12,1,NA,NA
+"KTD-01","Goniopholididae indet.","C","croc","Tooth bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",12.8,1,NA,NA
+"KTD-02","Goniopholididae indet.","C","croc","Tooth bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",13.7,1,NA,NA
+"KTD-03","Goniopholididae indet.","C","croc","Tooth bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",12.6,1,NA,NA
+"KTD-04","Theropoda indet.","C","theropod","Tooth bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",13.4,1,NA,NA
+"KTD-05","Sauropoda indet.","H","sauropod","Tooth bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",14,1,NA,NA
+"KTD-06","Iguanodontian indet.","H","ornithischian","Tooth bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",13.6,1,NA,NA
+"KTD-07","Testudinata indet.","","turtle indet.","Shell bone","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",12.6,1,NA,NA
+"KTD-08","Testudinata indet.","","turtle indet.","Shell bone","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",12.2,1,NA,NA
+"KTD-09","Testudinata indet.","","turtle indet.","Shell bone","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",11.7,1,NA,NA
+"KTD-10","Lepisosteidae indet.","","freshwater fish","scale bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",12.2,1,NA,NA
+"KTD-11","Lepisosteidae indet.","","freshwater fish","scale bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",11.5,1,NA,NA
+"KTD-12","Lepisosteidae indet.","","freshwater fish","scale bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",10.2,1,NA,NA
+"KTD-13","Sauropoda indet.","H","sauropod","Tooth enamel","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",13.8,1,NA,NA
+"KTD-14","Theropoda indet.","C","theropod","Tooth bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",11.5,1,NA,NA
+"KTD-15","Theropoda indet.","C","theropod","Tooth enamel","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",14,1,NA,NA
+"KTD-16","Theropoda indet.","C","theropod","Tooth bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",12.5,1,NA,NA
+"KTD-17","Theropoda indet.","C","theropod","Tooth bulk","Early Aptian","","","Kitadani Dinosaur Quarry","Northeast Asia","36.103402","136.559744","",NA,"Amiot et al., 2021",13.8,1,NA,NA
+"M-BL-013","Crocodylia","C","croc","Crocodilian osteoderm","Early Cenomanian","","","Bou Laalou","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",16.7,1,NA,NA
+"M-BL-014","Chelonia","?","turtle indet.","Turtle osteoscute","Early Cenomanian","","","Bou Laalou","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",16.7,1,NA,NA
+"M-BL-016","Chelonia","?","turtle indet.","Turtle osteoscute","Early Cenomanian","","","Bou Laalou","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",17.2,1,NA,NA
+"M-BL-022","Carcharodontosaurus saharicus","C","theropod","Dinosaur tooth enamel","Early Cenomanian","","","Bou Laalou","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",19,1,NA,NA
+"M-BL-023","Carcharodontosaurus saharicus","C","theropod","Dinosaur tooth enamel","Early Cenomanian","","","Bou Laalou","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",18.2,1,NA,NA
+"M-BL-036","Spinosaurus aegypticus","C","theropod","Dinosaur tooth enamel","Early Cenomanian","","","Bou Laalou","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",19.3,1,NA,NA
+"M-BL-038a","cf. Sarcosuchus","C","croc","Crocodilian tooth enamel","Early Cenomanian","","","Bou Laalou","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",18.4,1,NA,NA
+"M-BL-039","Crocodylia","C","croc","Crocodilian tooth enamel","Early Cenomanian","","","Bou Laalou","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",17.4,1,NA,NA
+"M-KS-001","Titanosauridae","H","sauropod","Dinosaur tooth enamel","Early Cenomanian","","","Khetitila Srhira","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",19.4,1,NA,NA
+"M-KS-007","Spinosaurus aegypticus","C","theropod","Dinosaur tooth enamel","Early Cenomanian","","","Khetitila Srhira","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",17.8,1,NA,NA
+"M-KS-012","Chelonia","?","turtle indet.","Turtle osteoscute","Early Cenomanian","","","Khetitila Srhira","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",16.7,1,NA,NA
+"M-KS-023","Carcharodontosaurus saharicus","C","theropod","Dinosaur tooth enamel","Early Cenomanian","","","Khetitila Srhira","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",20.7,1,NA,NA
+"M-KS-028","Carcharodontosaurus saharicus","C","theropod","Dinosaur tooth enamel","Early Cenomanian","","","Khetitila Srhira","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",18.9,1,NA,NA
+"M-KS-034","Crocodylia","C","croc","Crocodilian tooth enamel","Early Cenomanian","","","Khetitila Srhira","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",16.5,1,NA,NA
+"M-KS-036","Spinosaurus aegypticus","C","theropod","Dinosaur tooth enamel","Early Cenomanian","","","Khetitila Srhira","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",20.3,1,NA,NA
+"M-KS-037","Spinosaurus aegypticus","C","theropod","Dinosaur tooth enamel","Early Cenomanian","","","Khetitila Srhira","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",17.3,1,NA,NA
+"M-KS-040","Crocodylia","C","croc","Crocodilian bulk tooth","Early Cenomanian","","","Khetitila Srhira","Morocco","","","16.5 (+ 2.2/− 2.1)",NA,"Amiot et al., 2006",17.8,1,NA,NA
+"NoID turtle","Testudinata indet.","","turtle indet.","osteoscute","Aptian–Albian","Cedar Mountain","Ruby Ranch","RRM","North America","","","",NA,"Suarez et al., 2014",14.4,4,0.529150262212918,0.264575131106459
+"OMNH 22090a","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.3,2,0.565685424949239,0.4
+"OMNH 22090b","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1,1,NA,NA
+"OMNH 22090c","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4,1,NA,NA
+"OMNH 22090d","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.8,1,NA,NA
+"OMNH 22090e","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.2,1,NA,NA
+"OMNH 22092a","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.52,5,0.653452370108183,0.29223278392405
+"OMNH 22092b","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.9333333333333,3,0.450924975282289,0.260341655863555
+"OMNH 22092c","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1666666666667,3,0.208166599946612,0.120185042515466
+"OMNH 22092d","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6,2,0.282842712474621,0.200000000000001
+"OMNH 25543a","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6,2,0,0
+"OMNH 25543b","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.3,3,0.435889894354067,0.251661147842358
+"OMNH 25544a","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.55,4,0.420317340430617,0.210158670215308
+"OMNH 25544b","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.6666666666667,3,0.152752523165195,0.0881917103688198
+"OMNH 25544c","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.7,3,0.3605551275464,0.208166599946614
+"OMNH 25585a","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.9,1,NA,NA
+"OMNH 25585b","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.3,1,NA,NA
+"OMNH 25585c","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4,1,NA,NA
+"OMNH 25585d","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.5,1,NA,NA
+"OMNH 25585e","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.1,1,NA,NA
+"OMNH 25585f","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6,1,NA,NA
+"OMNH 25606a","Tribosphenida","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1,1,NA,NA
+"OMNH 25606b","Tribosphenida","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4,1,NA,NA
+"OMNH 25606c","Tribosphenida","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.6,1,NA,NA
+"OMNH 25606d","Tribosphenida","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16,1,NA,NA
+"OMNH 25768a","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.8,1,NA,NA
+"OMNH 25768b","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.2,1,NA,NA
+"OMNH 25768c","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.6,1,NA,NA
+"OMNH 25768e","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.9,1,NA,NA
+"OMNH 25768f","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.05,2,1.34350288425444,0.95
+"OMNH 25768g","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.35,2,1.34350288425444,0.95
+"OMNH 25768h","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.45,2,0.919238815542511,0.649999999999999
+"OMNH 25768i","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.65,2,2.1920310216783,1.55
+"OMNH 25768j","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.55,2,2.61629509039023,1.85
+"OMNH 26195a","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.6,1,NA,NA
+"OMNH 26195b","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",19.6166666666667,6,0.407021702943058,0.166165914408194
+"OMNH 26195c","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.25,2,0.353553390593274,0.25
+"OMNH 26195d","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.5,1,NA,NA
+"OMNH 26251a","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1,2,0.141421356237309,0.0999999999999996
+"OMNH 26251b","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.05,2,0.777817459305203,0.550000000000001
+"OMNH 26251e","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.6,1,NA,NA
+"OMNH 26251f","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.5,1,NA,NA
+"OMNH 26251g","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.25,2,1.06066017177982,0.75
+"OMNH 26277a","Chelonia costal frag","","turtle indet.","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6,9,0.554526825320471,0.184842275106824
+"OMNH 26285a","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.5,1,NA,NA
+"OMNH 26285b","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6,1,NA,NA
+"OMNH 26285d","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4,1,NA,NA
+"OMNH 26285e","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.2,1,NA,NA
+"OMNH 26285f","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.7,2,0.565685424949239,0.4
+"OMNH 26285g","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.8,1,NA,NA
+"OMNH 26285h","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.8,1,NA,NA
+"OMNH 26285i","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.45,2,0.212132034355964,0.149999999999999
+"OMNH 26285j","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.5,1,NA,NA
+"OMNH 26291a","Crocodylia","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.7,1,NA,NA
+"OMNH 26291b","Crocodylia","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1,1,NA,NA
+"OMNH 26291c","Crocodylia","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",19.3,1,NA,NA
+"OMNH 26496b","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.6,1,NA,NA
+"OMNH 26496c","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1,1,NA,NA
+"OMNH 26496d","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.65,2,0.494974746830583,0.35
+"OMNH 26496e","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.9,2,0.707106781186548,0.5
+"OMNH 26496f","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.9,1,NA,NA
+"OMNH 26496g","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.4,1,NA,NA
+"OMNH 26496h","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.5,1,NA,NA
+"OMNH 26496i","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.4,1,NA,NA
+"OMNH 26496j","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6,1,NA,NA
+"OMNH 26585a","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18,1,NA,NA
+"OMNH 26585b","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.4,1,NA,NA
+"OMNH 26585c","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.8,1,NA,NA
+"OMNH 26585d","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17,1,NA,NA
+"OMNH 26585e","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.8,1,NA,NA
+"OMNH 26585f","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4,1,NA,NA
+"OMNH 26585g","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18,1,NA,NA
+"OMNH 26585h","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16,1,NA,NA
+"OMNH 26585i","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.9,1,NA,NA
+"OMNH 26585j","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.5,1,NA,NA
+"OMNH 26585k","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4,1,NA,NA
+"OMNH 27198a","Chelonia","","turtle indet.","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.6777777777778,9,0.808977406634106,0.269659135544702
+"OMNH 27954a","Glyptops sp?","","aquatic turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.0666666666667,3,0.493288286231625,0.284800124843918
+"OMNH 27954b","Glyptops sp?","","aquatic turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.9666666666667,3,0.404145188432737,0.233333333333333
+"OMNH 27954c","Glyptops sp?","","aquatic turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.8,1,NA,NA
+"OMNH 27956a","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.225,4,0.0957427107756344,0.0478713553878172
+"OMNH 27956b","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.25,2,0.0707106781186558,0.0500000000000007
+"OMNH 27956c","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4,2,0.707106781186546,0.499999999999999
+"OMNH 27958a","Naomichelys sp","","terrestrial turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.825,4,0.287228132326901,0.143614066163451
+"OMNH 27958b","Naomichelys sp","","terrestrial turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.1333333333333,3,0.152752523165195,0.0881917103688198
+"OMNH 27958c","Naomichelys sp","","terrestrial turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.25,2,1.06066017177982,0.75
+"OMNH 28265a","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.9,1,NA,NA
+"OMNH 28265b","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.5,1,NA,NA
+"OMNH 28265c","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.9,1,NA,NA
+"OMNH 28265d","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.7,2,0.141421356237309,0.0999999999999996
+"OMNH 28268a","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.2,3,0.3,0.173205080756888
+"OMNH 28268b","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.5,1,NA,NA
+"OMNH 28268c","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.2,1,NA,NA
+"OMNH 28270a","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4,1,NA,NA
+"OMNH 28270b","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.7,1,NA,NA
+"OMNH 28270c","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.9,1,NA,NA
+"OMNH 28270d","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17,1,NA,NA
+"OMNH 28270e","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.1,1,NA,NA
+"OMNH 28270f","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4,1,NA,NA
+"OMNH 28278a","Naomichelys?","","terrestrial turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.1,1,NA,NA
+"OMNH 28278b","Naomichelys?","","terrestrial turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.9,1,NA,NA
+"OMNH 28278c","Naomichelys?","","terrestrial turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.7,1,NA,NA
+"OMNH 28302a","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.5375,8,0.399776723398735,0.141342416037892
+"OMNH 28783b","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.5,1,NA,NA
+"OMNH 28783d","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.8,1,NA,NA
+"OMNH 28785a","Bernissartia sp","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",19,1,NA,NA
+"OMNH 28785b","Bernissartia sp","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1,1,NA,NA
+"OMNH 28785d","Bernissartia sp","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.1,1,NA,NA
+"OMNH 28785e","Bernissartia sp","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.65,2,0.212132034355965,0.15
+"OMNH 28830a","Trionyclidae","","aquatic turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.875,4,0.788986691902975,0.394493345951487
+"OMNH 28887a","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.3,8,0.962140470884728,0.340168025708305
+"OMNH 28887b","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.76,5,1.41527382509534,0.632929695937867
+"OMNH 28887c","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.775,4,0.694622199472491,0.347311099736245
+"OMNH 28887d","Goniopholidae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.25,2,0.0707106781186558,0.0500000000000007
+"OMNH 28887e","Goniopholidae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.25,2,0.494974746830584,0.35
+"OMNH 29716a","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.8,1,NA,NA
+"OMNH 29716b","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1,1,NA,NA
+"OMNH 29716c","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.9,1,NA,NA
+"OMNH 29716f","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.3,1,NA,NA
+"OMNH 29716g","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.5,1,NA,NA
+"OMNH 29716h","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.3,1,NA,NA
+"OMNH 29716i","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.7,1,NA,NA
+"OMNH 29716j","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.7,1,NA,NA
+"OMNH 29716k","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.1,1,NA,NA
+"OMNH 29743a","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.8,1,NA,NA
+"OMNH 29743b","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",NA,1,NA,NA
+"OMNH 29743c","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.3,1,NA,NA
+"OMNH 29743d","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.5,1,NA,NA
+"OMNH 29743e","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.7,1,NA,NA
+"OMNH 29743f","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17,1,NA,NA
+"OMNH 29743g","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.4,1,NA,NA
+"OMNH 29743h","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1,1,NA,NA
+"OMNH 29952a","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.1,1,NA,NA
+"OMNH 29952c","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.7,1,NA,NA
+"OMNH 29952d","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.8,1,NA,NA
+"OMNH 29952e","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.8,1,NA,NA
+"OMNH 29952f","Atoposauridae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.6,1,NA,NA
+"OMNH 29953a","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.9,1,NA,NA
+"OMNH 29953b","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16,1,NA,NA
+"OMNH 29953c","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.45,2,0.353553390593274,0.25
+"OMNH 29953d","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6,1,NA,NA
+"OMNH 29953e","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.9,1,NA,NA
+"OMNH 29953f","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.2,1,NA,NA
+"OMNH 30054a","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.5,2,0.282842712474618,0.199999999999999
+"OMNH 30054b","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18,1,NA,NA
+"OMNH 30054d","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6,1,NA,NA
+"OMNH 30054e","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.6,1,NA,NA
+"OMNH 30054f","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.7,1,NA,NA
+"OMNH 30477a","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17,1,NA,NA
+"OMNH 30477b","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.5,1,NA,NA
+"OMNH 30477c","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.5,1,NA,NA
+"OMNH 30477d","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.8,1,NA,NA
+"OMNH 30477e","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.3,1,NA,NA
+"OMNH 30477f","Multituberculata","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17,3,0.519615242270664,0.300000000000001
+"OMNH 32073a","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.5,2,0.141421356237309,0.0999999999999996
+"OMNH 32073b","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6666666666667,3,1.28582010146573,0.74236858171067
+"OMNH 32073c","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.575,4,0.834166250416147,0.417083125208073
+"OMNH 32701a","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",14.9,2,0.565685424949239,0.4
+"OMNH 32701b","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.9,2,0.282842712474621,0.200000000000001
+"OMNH 32701c","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.55,2,0.212132034355965,0.15
+"OMNH 32782a","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.1,1,NA,NA
+"OMNH 32782b","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",19.5,1,NA,NA
+"OMNH 32782d","Goniopholididae","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.4,1,NA,NA
+"OMNH 32963a","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.9,1,NA,NA
+"OMNH 32963b","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",13.8,1,NA,NA
+"OMNH 32963d","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.1,1,NA,NA
+"OMNH 32963e","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.5,1,NA,NA
+"OMNH 32963h","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.8,1,NA,NA
+"OMNH 32963i","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.2,1,NA,NA
+"OMNH 32963j","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.4,1,NA,NA
+"OMNH 32963k","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.9,1,NA,NA
+"OMNH 32963l","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16,1,NA,NA
+"OMNH 32963m","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.5,1,NA,NA
+"OMNH 32963n","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.3,1,NA,NA
+"OMNH 33404a","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.3444444444444,9,0.406543697255015,0.135514565751672
+"OMNH 33404b","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.25,4,0.173205080756887,0.0866025403784437
+"OMNH 33404c","Ornithischia","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.5,1,NA,NA
+"OMNH 33973a","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.6,1,NA,NA
+"OMNH 33973c","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.2,2,0.42426406871193,0.300000000000001
+"OMNH 33973e","Mammalia","","mammal","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.3,1,NA,NA
+"OMNH 34374a","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.4,1,NA,NA
+"OMNH 34374b","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.2,1,NA,NA
+"OMNH 34374c","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.5,1,NA,NA
+"OMNH 34374d","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.6,1,NA,NA
+"OMNH 34374e","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.5,1,NA,NA
+"OMNH 34374f","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.4,1,NA,NA
+"OMNH 34374g","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.8,1,NA,NA
+"OMNH 34374h","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.2,1,NA,NA
+"OMNH 34374i","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.5,1,NA,NA
+"OMNH 34374j","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.2,2,0.282842712474618,0.199999999999999
+"OMNH 34571croc-2","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.6,1,NA,NA
+"OMNH 34571croc-3","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",13.5,1,NA,NA
+"OMNH 34571croc-4","Crocodylia scute","","croc","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.9,1,NA,NA
+"OMNH 60901a","Chelonia","","turtle indet.","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4142857142857,7,0.437525509460387,0.165369098611289
+"OMNH 60901c","Chelonia","","turtle indet.","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.625,4,0.0957427107756333,0.0478713553878167
+"OMNH 60901d","Chelonia","","turtle indet.","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.56,5,0.415932686861709,0.186010752377383
+"OMNH 60901e","Chelonia","","turtle indet.","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.3,1,NA,NA
+"OMNH-27852a","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.025,4,0.556027577253743,0.278013788626871
+"OMNH-27852b","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",15.56,5,0.378153408023781,0.169115345252878
+"OMNH-28036a","Naomichelys sp.","","terrestrial turtle","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.04,10,0.656928881657334,0.207739152678438
+"OMNH-28880","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.6666666666667,3,0.351188458428424,0.20275875100994
+"OMNH-32104a","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.7714285714286,7,1.2539461521058,0.473947096562618
+"OMNH-32104b","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.6375,8,0.342000417710689,0.12091540726593
+"OMNH-32104c","Hadrosauridae","","ornithischian","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",16.4666666666667,6,1.08012344973464,0.440958551844098
+"OMNH-34824","Naomichelys","","terrestrial turtle","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",15.6,2,0.707106781186549,0.500000000000001
+"OMNH-60308","Chelonia","","turtle indet.","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",14.7,1,NA,NA
+"OMNH-60381","Chelonia","","turtle indet.","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",14.4,1,NA,NA
+"OMNH-60449","Glyptops","","aquatic turtle","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",15,1,NA,NA
+"OMNH-61405","Chelonia","","turtle indet.","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",15.5,1,NA,NA
+"OMNH-61560a","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",17.0666666666667,3,0.585946527708232,0.338296385503075
+"OMNH-61560b","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",18.45,2,0.919238815542512,0.65
+"OMNH-61560c","Theropoda","","theropod","","","Cedar Mountain","","MM","","","","",NA,"Suarez et al., 2014",19.0333333333333,3,0.802080627701065,0.463081466314994
+"OMNH-62523","Chelonia","","turtle indet.","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",16.5,2,0.141421356237312,0.100000000000001
+"OMNH-62526","Chelonia","","turtle indet.","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",16.3,1,NA,NA
+"OMNH-63323","Trionychoidea","","aquatic turtle","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",15.65,2,1.06066017177982,0.749999999999999
+"OMNH-63442","Chelonia","","turtle indet.","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",13.6,2,0.141421356237309,0.0999999999999996
+"OMNH-63443","Chelonia","","turtle indet.","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",13.45,2,0.636396103067893,0.45
+"OMNH-63444","Chelonia","","turtle indet.","bone","Aptian","Cloverly","Little Sheep","LSM","North America","","","",NA,"Suarez et al., 2020",11.9,1,NA,NA
+"TH001","Theropoda","C","theropod","tooth enamel","Aptian–Albian","","","Khok Pha Suam","Southeast Asia","","","24.3",NA,"Amiot et al, 2006",15.5,1,NA,NA
+"TH002","Crocodylia","C","croc","tooth enamel","Aptian–Albian","","","Khok Pha Suam","Southeast Asia","","","24.3",NA,"Amiot et al, 2006",14.7,1,NA,NA
+"TH003","Chelonia","","turtle indet.","osteoscute","Aptian–Albian","","","Khok Pha Suam","Southeast Asia","","","24.3",NA,"Amiot et al, 2006",12.8,1,NA,NA
+"TH005","Theropoda","C","theropod","tooth enamel","Aptian–Albian","","","Khok Pha Suam","Southeast Asia","","","24.3",NA,"Amiot et al, 2006",14.9,1,NA,NA
+"TH006","Nemegtosauridae","H","sauropod","bulk tooth","Aptian–Albian","","","Khok Pha Suam","Southeast Asia","","","24.3",NA,"Amiot et al, 2006",20.2,1,NA,NA
+"TH007","Crocodylia","C","croc","tooth enamel","Aptian–Albian","","","Khok Pha Suam","Southeast Asia","","","24.3",NA,"Amiot et al, 2006",14,1,NA,NA
+"TH008","Theropoda","C","theropod","tooth enamel","Aptian–Albian","","","Khok Pha Suam","Southeast Asia","","","24.3",NA,"Amiot et al, 2006",17.3,1,NA,NA
+"TMP1996.062.0120","Dromaeosaurus","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.5666666666667,6,0.733939143707887,0.299629400723257
+"TMP1996.062.0121","Richardoestesia","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.6,3,0.62449979983984,0.360555127546399
+"TMP1996.062.0122","Richardoestesia","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",12.4333333333333,3,0.650640709864771,0.375647588986155
+"TMP1996.062.0123","Saurornitholestes","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.1666666666667,3,0.98657657246325,0.569600249687836
+"TMP1996.062.0124","Saurornitholestes","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",12.94,5,2.2534418119845,1.00776981498753
+"TMP1996.062.0125","Saurornitholestes","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",10.7333333333333,3,0.642910050732863,0.371184290855335
+"TMP1996.062.0126","Troodon","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",12,3,0.435889894354067,0.251661147842358
+"TMP1996.062.0127","Troodon","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",16.1875,8,2.96187078911768,1.04717945999173
+"TMP1996.062.0128","Troodon","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",11.0333333333333,3,2.05507501890645,1.18649811537051
+"TMP1996.062.0129","Troodon","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",10.6166666666667,6,2.39617751151009,0.978235372721946
+"TMP1996.070.0034","Ankylosauria","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.6333333333333,3,1.48436293854749,0.856997342145496
+"TMP1996.070.0035","Ankylosauria","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.6666666666667,3,0.602771377334171,0.348010216963685
+"TMP1996.071.0043","Myledaphus","C","chondrichthyan","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",12.4333333333333,3,0.503322295684717,0.290593262902712
+"TMP1996.073.0094","Champsosaurus","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.1666666666667,3,0.251661147842358,0.145296631451356
+"TMP1996.073.0095","Champsosaurus","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",11.2666666666667,3,0.472581562625261,0.272845092395749
+"TMP1996.073.0096","Champsosaurus","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",10.7,3,2.78388218141501,1.60727512683216
+"TMP1996.073.0097","Eusuchia_(Alligatorinae)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",16,4,1.20277457017791,0.601387285088957
+"TMP1996.073.0098","Eusuchia_(Alligatorinae)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.9,3,0.964365076099296,0.556776436283002
+"TMP1996.073.0099","Eusuchia_(Alligatorinae)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.0333333333333,3,1.85022521151706,1.0682280239308
+"TMP1996.073.0100","Eusuchia_(Leidyosuchus)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",19.7285714285714,7,3.98903258351959,1.50771259824662
+"TMP1996.073.0101","Eusuchia_(Leidyosuchus)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.9333333333333,3,0.152752523165194,0.0881917103688194
+"TMP1996.073.0102","Eusuchia_(Leidyosuchus)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.42,5,1.42548237449644,0.637495098020369
+"TMP1996.077.0196","Holostean_A","","fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",12.9666666666667,3,0.66583281184794,0.384418753155694
+"TMP1996.077.0197","Holostean_A","","fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",11.9666666666667,3,0.0577350269189624,0.0333333333333332
+"TMP1996.077.0198","Lepisosteidae","C","freshwater fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.81,10,2.3844170030522,0.754018862127762
+"TMP1996.077.0199","Lepisosteidae","C","freshwater fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",16.08,5,0.978263768111648,0.437492857084547
+"TMP1996.077.0200","Lepisosteidae","C","freshwater fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.1,6,1.21161049846888,0.494637914707988
+"TMP1996.077.0201","Lepisosteidae","C","freshwater fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",11.55,6,0.73143694191639,0.298607881119482
+"TMP1996.077.0202","Lepisosteidae","C","freshwater fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.2,6,2.41660919471891,0.98657657246325
+"TMP1996.077.0203","Lepisosteidae","C","freshwater fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",12.9333333333333,3,1.32035348802256,0.762306441735285
+"TMP1996.083.0039","Ceratopsidae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",17.5333333333333,3,1.00664459136943,0.581186525805423
+"TMP1996.083.0040","Ceratopsidae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",17.3333333333333,3,0.60277137733417,0.348010216963685
+"TMP1996.083.0041","Ceratopsidae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",18.0666666666667,3,2.13853532431272,1.23468394516348
+"TMP1996.083.0042","Hadrosauridae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.1666666666667,3,1.11504857891185,0.643773597194265
+"TMP1996.083.0043","Hadrosauridae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",16.7448275862069,29,2.43465841061014,0.452104716903853
+"TMP1996.083.0044","Hadrosauridae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.0333333333333,3,1.06926766215636,0.617341972581737
+"TMP2013.019.0105","Ankylosauria","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",11.425,4,2.47571538482651,1.23785769241325
+"TMP2013.019.0106","Ankylosauria","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",11.8666666666667,3,0.472581562625261,0.272845092395749
+"TMP2013.019.0107","Ankylosauria","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",16.2,3,1.73493515728975,1.00166528008778
+"TMP2013.019.0108","Ankylosauria","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.3666666666667,3,0.680685928555405,0.392994204085053
+"TMP2013.019.0109","Ceratopsidae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",16.3,3,0.608276253029822,0.351188458428425
+"TMP2013.019.0110","Ceratopsidae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.0666666666667,3,3.41955162752858,1.97427905266145
+"TMP2013.019.0111","Ceratopsidae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",12.5666666666667,3,0.838649708360608,0.484194634877798
+"TMP2013.019.0112","Ceratopsidae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.2666666666667,3,0.923760430703402,0.533333333333334
+"TMP2013.019.0113","Champsosaurus","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.9,2,4.10121933088198,2.9
+"TMP2013.019.0114","Champsosaurus","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.3333333333333,3,3.19739477283199,1.84601673280005
+"TMP2013.019.0115","Champsosaurus","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.775,4,2.21716786313832,1.10858393156916
+"TMP2013.019.0116","Dromaeosaurus","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.5714285714286,7,0.813867896148357,0.307613150466842
+"TMP2013.019.0117","Dromaeosaurus","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.2833333333333,6,0.567156650905786,0.231540733157497
+"TMP2013.019.0118","Dromaeosaurus","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",11.85,6,0.831264097624816,0.339362146779317
+"TMP2013.019.0119","Eusuchia_(Alligatorinae)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.95,6,1.7626684316683,0.719606373883204
+"TMP2013.019.0120","Eusuchia_(Alligatorinae)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",18.1666666666667,3,0.251661147842358,0.145296631451356
+"TMP2013.019.0121","Eusuchia_(Alligatorinae)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",18.6666666666667,3,0.0577350269189613,0.0333333333333326
+"TMP2013.019.0122","Eusuchia_(Leidyosuchus)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",16.7333333333333,3,0.251661147842358,0.145296631451356
+"TMP2013.019.0123","Eusuchia_(Leidyosuchus)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.3666666666667,3,3.28075194632775,1.89414301935672
+"TMP2013.019.0124","Eusuchia_(Leidyosuchus)","C","croc","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",17.6,3,0.435889894354066,0.251661147842358
+"TMP2013.019.0125","Hadrosauridae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",19.8,2,0.141421356237309,0.0999999999999996
+"TMP2013.019.0126","Hadrosauridae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.6833333333333,6,1.21064720982897,0.494244653767522
+"TMP2013.019.0127","Hadrosauridae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.5,3,0.300000000000001,0.173205080756888
+"TMP2013.019.0128","Hadrosauridae","H","ornithischian","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.75,2,0.353553390593274,0.25
+"TMP2013.019.0129","Holostean_A","","fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.5333333333333,3,1.12398102000582,0.648930744464393
+"TMP2013.019.0130","Holostean_A","","fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",10.3,3,0.264575131106459,0.152752523165195
+"TMP2013.019.0131","Holostean_A","","fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.1666666666667,3,0.55075705472861,0.317979733805649
+"TMP2013.019.0132","Lepisosteidae","C","freshwater fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.2666666666667,3,0.461880215351701,0.266666666666667
+"TMP2013.019.0133","Lepisosteidae","C","freshwater fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.2333333333333,3,0.737111479583199,0.425571511160124
+"TMP2013.019.0134","Lepisosteidae","C","freshwater fish","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.7,3,0.5,0.288675134594813
+"TMP2013.019.0135","Metatheria","","mammal","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",10.1,4,2.11029223884592,1.05514611942296
+"TMP2013.019.0136","Bivalve_Shell","","","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",14.95,2,0.0707106781186545,0.0499999999999998
+"TMP2013.019.0137","Bivalve_Shell","","","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.8833333333333,6,4.92236393074168,2.00954665976627
+"TMP2013.019.0138","Multituberculata","O","mammal","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",16.025,8,4.86466853958212,1.71992005628169
+"TMP2013.019.0139","Multituberculata","O","mammal","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.68,5,0.749666592559653,0.335261092284804
+"TMP2013.019.0140","Multituberculata","O","mammal","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13,3,1.4,0.808290376865476
+"TMP2013.019.0141","Myledaphus","C","chondrichthyan","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",12.5666666666667,3,0.577350269189626,0.333333333333333
+"TMP2013.019.0142","Myledaphus","C","chondrichthyan","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",8.13333333333333,3,0.0577350269189624,0.0333333333333332
+"TMP2013.019.0143","Myledaphus","C","chondrichthyan","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",9.86666666666667,3,1.53079500042734,0.883804905570857
+"TMP2013.019.0144","Saurornitholestes","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",12.5,3,1.94679223339318,1.12398102000582
+"TMP2013.019.0145","Saurornitholestes","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",15.0333333333333,3,0.45092497528229,0.260341655863555
+"TMP2013.019.0146","Saurornitholestes","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",16.2666666666667,3,0.230940107675849,0.133333333333333
+"TMP2013.019.0147","Troodon","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",9.73333333333333,3,2.01080415091409,1.16093831781787
+"TMP2013.019.0148","Tyrannosauridae","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",18.9363636363636,11,2.09201946801301,0.630767602683462
+"TMP2013.019.0149","Tyrannosauridae","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",13.65,2,0.494974746830583,0.35
+"TMP2013.019.0150","Tyrannosauridae","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",17,3,1.55884572681199,0.9
+"TMP2013.019.0151","Tyrannosauridae","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",19.9,3,0.6557438524302,0.378593889720018
+"TMP2013.019.0153","Tyrannosauridae","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",19.1333333333333,3,0.351188458428424,0.20275875100994
+"TMP2013.019.0154","Tyrannosauridae","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",17.2,3,1.15325625946708,0.66583281184794
+"TMP2013.019.0155","Tyrannosauridae","C","theropod","","Campanian","Oldman ","upper","Rainy Day Site","North America","49.194°N","110.733°W","",NA,"Cullen et al., 2020",26.725,4,2.80876603985926,1.40438301992963
+"TU-001","Theropoda","C","theropod","tooth enamel","Early Albian","","","Bateun el Hmaima","Africa","","","12.4",NA,"Amiot et al, 2006",20,1,NA,NA
+"TU-002","Theropoda","C","theropod","tooth enamel","Early Albian","","","Bateun el Hmaima","Africa","","","12.4",NA,"Amiot et al, 2006",21.2,1,NA,NA
+"TU-003","Theropoda","C","theropod","tooth enamel","Early Albian","","","Bateun el Hmaima","Africa","","","12.4",NA,"Amiot et al, 2006",20.3,1,NA,NA
+"TU-004","cf. Spinosaurus","C","theropod","tooth enamel","Early Albian","","","Bateun el Hmaima","Africa","","","12.4",NA,"Amiot et al, 2006",22.2,1,NA,NA
+"TU-005","Crocodylia?","C","croc","tooth enamel","Early Albian","","","Bateun el Hmaima","Africa","","","12.4",NA,"Amiot et al, 2006",16.4,1,NA,NA
+"TU-006","cf. Spinosaurus","C","theropod","tooth enamel","Early Albian","","","Bateun el Hmaima","Africa","","","12.4",NA,"Amiot et al, 2006",19.8,1,NA,NA
+"TU-007","Crocodylia","C","croc","tooth enamel","Early Albian","","","Bateun el Hmaima","Africa","","","12.4",NA,"Amiot et al, 2006",18.2,1,NA,NA
+"TU-008","Crocodylia","C","croc","tooth enamel","Early Albian","","","Bateun el Hmaima","Africa","","","12.4",NA,"Amiot et al, 2006",18.4,1,NA,NA
+"UMNH 16867","crocodilian scute","","croc","","","Cedar Mountain","","uYCM","","","","",NA,"Suarez et al., 2014",13.65,12,0.561653403314308,0.162135371797393

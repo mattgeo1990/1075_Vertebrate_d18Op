@@ -60,7 +60,9 @@
   
   # calculate SE and merge with lit_data_BySpec
   lit_data_BySpec <- mutate(lit_data_BySpec, SE = (SD/sqrt(n)))
-
+  setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+  write.csv(lit_data_BySpec, "lit_data_BySpec.csv", row.names = FALSE)
+  
   
   # Calculate sample size for each eco_type and site
   sample_size_by_eco_site <- lit_data_BySpec %>%

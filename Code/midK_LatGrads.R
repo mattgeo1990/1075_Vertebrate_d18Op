@@ -6,8 +6,28 @@ library(dplyr)
 
  # read in V1075_MCwater.csv (LOCAL)
   setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
-  V1075_MCwater <- read.csv("V1075_MCwater.csv")
-
+  #V1075_MCwater <- read.csv("V1075_MCwater.csv")
+  V1075_all <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
+  lit_data_BySpec <- read.csv("lit_data_BySpec.csv")
+  V1075_BySpec_water <- read.csv("V1075_BySpec_water.csv")
+  
+  # subset fish scales
+  Gar_scales <- subset(V1075_all, Element.type == "ganoid scale")
+  # subset Croc G
+  CrocG <- subset(V1075_BySpec_water, Taxon == "Neosuchian G")
+  CrocG$paleolatitude <- 52
+  # subset Aquatic Turtle
+  Glyp <- subset(V1075_BySpec_water, Taxon == "Glyptops sp.")
+  Glyp$paleolatitude <- 52
+  
+  # Subset the literature data for plotting along latitude
+  Suarez_all <- subset(lit_data_BySpec, formation %in% c("Holly Fork", "Cedar Mountain", "Cloverly"))
+  Suarez_croc <- subset(Suarez_all, eco_type %in% c("croc"))
+  Suarez_Goni <- Suarez_croc <- subset(Suarez_all, taxon %in% c("Goniopholididae", "Goniopholidae"))
+  
+  #calculate water from Celina's crocs
+  Suarez_Goni$d18Ow <-   0.82 * Suarez_Goni$d18O - 19.93
+  
 # MAT ---------------------------------------------------------------------
 
   # Latitude vs MAT (see Table 1, Suarez et al. 2011)
@@ -72,9 +92,8 @@ levels(df$ModelID)
 df$ModelID <- factor(df$ModelID, levels = c("LatTempModern", "LatTemp_CoolK", "LatTemp_WarmK"))
 
 # create new dataframe with V1075 temp datapoint and paleolat
-Cloverly_paleolats <- c(53, 47, 51, 50) # See 4 model options at paleolatitude.org, based on modern lat/long of 45°N/-108°W
-l <- mean(Cloverly_paleolats)
-l <- 45
+Cloverly_paleolats <- c(52) # See 4 model options at paleolatitude.org, based on modern lat/long of 45°N/-108°W
+l <- Cloverly_paleolats
 V1075TempLat <- data.frame(cbind(temp = c(TempFishTurt), lat = l, ModelID = "gar"))
 
 
@@ -146,25 +165,35 @@ cex = 0.75)
     RRCelinaTurts <- CelinaTurtles[which(CelinaTurtles$Member %in% c("Ruby Ranch")), ]
     LSCelinaTurts <- CelinaTurtles[which(CelinaTurtles$Member %in% c("Little Sheep")), ]
     HFCelinaTurts <- CelinaTurtles[which(CelinaTurtles$Member %in% c("")), ]
-
+    HFCelinaTurts$Taxon
+    LSCelinaTurts$Taxon
+    LSCelina_Glyp <- subset(LSCelinaTurts, Taxon == "Glyptops")
+    
 # updated paleolat model
+    # Cedar Mountain
+    RRlat <- 46.2 # based on 39.2, -105 @ 105 Ma (Vaes et al., 2023)
+    Suarez_Goni$paleolat[which(Suarez_Goni$formation %in% "Cedar Mountain")] <- RRlat
     RRCelinaTurts$Palaeolatitude <- RRlat
     
     # Holly Fork 
-    HFlat <- mean(c(53-10.5, 47-10.5, 51-10.5, 50-10.5))
+    HFlat <- 38.2 
     HFCelinaTurts$Palaeolatitude <- HFlat
     
     # Cloverly 
-    LSCelinaTurts$Palaeolatitude <- l
+    CFlat <- 52
+    LSCelina_Glyp$Palaeolatitude <- CFlat
+    V1075_BySpec_water$paleolatitude <- CFlat
+    
+    
 
 
 # Latitude vs Meteoric water d180 (see Table 1, Suarez et al. 2011)
 LatMeteoric_Modern <- -0.003* (lat^2) + 0.0595* lat - 3.699 #Rozanski et al., 1993
 LatMeteoric_CoolK <- -0.005 * (lat^2) + 0.1137 * lat - 5.270 #Barron (1983)
 LatMeteoric_WarmK <- -0.005 * (lat^2) + 0.1299 * lat - 4.901 #Barron (1983)
-LatMeteoric_GENESIS_MOM <- -0.005* (lat^2) +0.0730* lat - 4.001 #Zhou et al. (2008)
+#LatMeteoric_GENESIS_MOM <- -0.005* (lat^2) +0.0730* lat - 4.001 #Zhou et al. (2008)
 
-LatPedocarb <- -0.0042* (lat^2) + 0.08* lat - 4.33 #Suarez et al. 2011
+#LatPedocarb <- -0.0042* (lat^2) + 0.08* lat - 4.33 #Suarez et al. 2011
 
 
 
@@ -181,7 +210,7 @@ plot(lat,
      las = 1,
      lwd = 2,
      xlim = c(30, 60),
-     ylim = c(-10, -2),
+     ylim = c(-16, 0),
      xlab = substitute(paste("Latitude (°N)")),
      ylab = expression(delta^18*"O"[precipitation]*" (‰ V-SMOW)"),
      font = 1,
@@ -203,15 +232,31 @@ y_coords_warmk <- c(LatMeteoric_WarmK, rev(LatMeteoric_CoolK))
 polygon(x_coords, y_coords_warmk, col = "gray", border = NA)
 
 # Add points
-  points(median(LSCelinaTurts$Palaeolatitude), median(LSCelinaTurts$d18Ow), pch = 4, col="black", lwd = 1, cex = 1)
-  points(median(HFCelinaTurts$Palaeolatitude), median(HFCelinaTurts$d18Ow), pch = 4, col="black", lwd = 1, cex = 1)
-  points(median(RRCelinaTurts$Palaeolatitude), median(RRCelinaTurts$d18Ow), pch = 4, col="black", lwd = 1, cex = 1)
-  points(c(50.25), V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Glyptops sp.")], pch = 7, col="black", lwd = 1, cex = 1)
-  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Neosuchian A")], pch = 12, col="black", lwd = 1, cex = 1)
-  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Neosuchian B")], pch = 10, col="black", lwd = 1, cex = 1)
-  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Neosuchian G")], pch = 9, col="black", lwd = 1, cex = 1)
-  points(50.25, V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Naomichelys sp.")], pch = 8, col="black", lwd = 1, cex = 1)
+  points(LSCelina_Glyp$Palaeolatitude, LSCelina_Glyp$d18Ow, pch = 3, col="black", lwd = 1, cex = 1)
+  #points(HFCelinaTurts$Palaeolatitude, HFCelinaTurts$d18Ow, pch = 3, col="black", lwd = 1, cex = 1)
+  #points(RRCelinaTurts$Palaeolatitude, RRCelinaTurts$d18Ow, pch = 3, col="black", lwd = 1, cex = 1)
+  points(Suarez_Goni$paleolat, Suarez_Goni$d18Ow,)
+  points(Glyp$paleolatitude, Glyp$d18Owater, pch = 3, col="blue", lwd = 1, cex = 1)
+  points(CrocG$paleolatitude, CrocG$d18Owater, pch = 1, col="blue", lwd = 1, cex = 1)
+  #points(CFlat, V1075_BySpec_water$d18Owater[which(V1075_BySpec_water$Taxon == "Neosuchian B")], pch = 10, col="black", lwd = 1, cex = 1)
+  #points(CFlat, V1075_BySpec_water$d18Owater[which(V1075_BySpec_water$Taxon == "Neosuchian G")], pch = 9, col="black", lwd = 1, cex = 1)
+  #points(CFlat, V1075_BySpec_water$d18Owater[which(V1075_BySpec_water$Taxon == "Naomichelys sp.")], pch = 8, col="black", lwd = 1, cex = 1)
 
+# Export using tiff() and dev.off
+  
+  setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Exports")
+  
+  tiff("d18Ow_LatGrad.tiff", units="in", width= 4, height= 4, res=500)
+  
+  ggsave("d18Ow_LatGrad.tiff", units="in", width= 4, height= 4, dpi=500, compression = 'lzw')
+  
+  dev.off()
+  
+  
+  
+  
+  
+  
 # Add Legends (if you want)
 #box(lwd =3)
 #legend("bottomright",
@@ -248,5 +293,72 @@ cex = 0.75)
 #points(40, TempFishCroc, col = "dark green")
 #points(37, 31)
 
+
 #points(37, 27)
 
+
+# Celina's data ---------------------------------------------------------
+
+litdata_d18Op_BySpec <- read.csv("lit_data_BySpec.csv")
+
+colnames(litdata_d18Op_BySpec)
+unique(lit_data_BySpec$formation)
+
+Suarez_d18Op_BySpec <- subset(litdata_d18Op_BySpec, formation %in% c("Holly Creek", "Cedar Mountain", "Cloverly"))
+
+unique(Suarez_d18Op_BySpec$paleolat)
+ # assign updated paleolats
+Suarez_d18Op_BySpec$paleolat[Suarez_d18Op_BySpec$formation == "Holly Creek"] <- 38.2
+Suarez_d18Op_BySpec$paleolat[Suarez_d18Op_BySpec$formation == "Cloverly"] <- 52
+Suarez_d18Op_BySpec$paleolat[Suarez_d18Op_BySpec$formation == "Cedar Mountain"] <- 46
+
+unique(Suarez_d18Op_BySpec$eco_type)
+# filter out the taxa you want
+Suarez_d18Op_BySpec <- subset(Suarez_d18Op_BySpec, eco_type %in% c("croc", "turtle indet.", "aquatic turtle", "terrestrial turtle"))
+
+
+
+# Plot all d18Omw. This might not actually be useful --------
+
+# run turtle water on all Glyptops values
+Glyp$d18Owater <- 1.01 *(Glyp$d18O..VSMOW.) - 22.3 #Barrick et al. (1999)
+
+# add paleolatitude
+Glyp$paleolat <- 52
+
+# test your code
+plot(Glyp$d18O..VSMOW., Glyp$d18Owater)
+
+# Look OK? Proceed with plotting
+par(mar = c(5,5,1,1))
+
+# plot d18Omw vs latitude with models overlain
+plot(lat, 
+     LatMeteoric_Modern,
+     type = "l",
+     las = 1,
+     lwd = 2,
+     xlim = c(30, 60),
+     ylim = c(-15, -2),
+     xlab = substitute(paste("Latitude (°N)")),
+     ylab = expression(delta^18*"O"[precipitation]*" (‰ V-SMOW)"),
+     font = 1,
+     cex.lab = 1,
+     cex.axis = 1) 
+
+# Add Cretaceous Models
+lines(LatMeteoric_CoolK, lty = 2, lwd = 0)
+lines(LatMeteoric_WarmK, lty = 3, lwd = 0)
+# lines(LatMeteoric_GENESIS_MOM, lty = 3, lwd = 1)
+#lines(LatPedocarb, lty = 4, lwd = 2)
+
+# Add model shade band
+# Identify the x and y coordinates for "LatMeteoric_CoolK" and "LatMeteoric_GENESIS-MOM"
+x_coords <- c(lat, rev(lat))
+y_coords_warmk <- c(LatMeteoric_WarmK, rev(LatMeteoric_CoolK))
+
+# Shade in the area between "LatMeteoric_WarmK" and "LatMeteoric_GENESIS-MOM"
+polygon(x_coords, y_coords_warmk, col = "gray", border = NA)
+
+# Add points
+points(Glyp$d18Owater, Glyp$paleolat, pch = 4, col="black", lwd = 1, cex = 10)
