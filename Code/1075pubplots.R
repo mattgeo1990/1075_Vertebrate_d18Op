@@ -42,17 +42,19 @@ V1075_alldata <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
 
 # Water by Taxon -----------------------------------------------------------------------
 
-# Remove rows corresponding to "Shark" and "Fish"
-V1075_MCwater <- subset(V1075_MCwater, Taxon != "Hybodontiformes" & Taxon != "Lepisosteids" & Taxon != "Carcharodontosaurid")
+# Remove gar, sharks, and dinosaurs
+# The fish can't inform water estimates because body temp is variable
+# dinosaur d18Owater can't be reliably reconstructed because there is no framework (Kohn's mammal equations aren't a good fit, and we have to assume humidity if we use those anyways)
+
+V1075_MCwater <- subset(V1075_MCwater, Taxon != "Hybodonts" & Taxon != "Lepisosteids" & Taxon != "Carcharodontosaurid" & Taxon != "Allosauroid" & Taxon != "Maniraptorans" & Taxon != "Sauropods" & Taxon != "Ornithischians") 
 
 # Define the conditions for assigning values to the "Habitat" column
 V1075_MCwater$Habitat <- ifelse(V1075_MCwater$Taxon %in% c("Glyptops sp.", "Neosuchian G", "Neosuchian B"), "Amphibious", 
-                                ifelse(V1075_MCwater$Taxon %in% c("Naomichelys sp.", "Maniraptorans", "Sauropods", "Ornithischians", "Neosuchian A"), "Terrestrial", NA))
+                                ifelse(V1075_MCwater$Taxon %in% c("Naomichelys sp.", "Neosuchian A"), "Terrestrial", NA))
 
 # Display the modified data frame
-V1075_MCwater
-
-V1075_MCwater$PlotOrder <- 
+#V1075_MCwater
+#V1075_MCwater$PlotOrder <- 
   
   
   # Reorder Taxon based on Habitat
@@ -83,70 +85,24 @@ ggplot(V1075_MCwater, aes(x = MEAN, y = Taxon)) +
         axis.ticks = element_line())
 
 
-
 #using tiff() and dev.off
 
 setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Exports")
 
-tiff("gg_d18Ow.tiff", units="in", width= 6.2361, height= 2.787, res=500)
+tiff("gg_d18Ow_nodinos_small.tiff", units="in", width= 3.5, height= 3, res=500)
 
-ggsave("gg_d18Ow.tiff", units="in", width= 6.2361, height= 2.787, dpi=500, compression = 'lzw')
+ggsave("gg_d18Ow_nodinos_small.tiff", units="in", width= 3.5, height= 3, dpi=500, compression = 'lzw')
 
 dev.off()
 
 
 # all water by taxon ------------------------------------------------------
 
-V1075_BySpec <- read.csv("V1075_BySpec_water.csv")
+# Looking for the plot with all the taxa water reconstructions?
+# I removed it because we are no longer including dinosaurs and fish in the reconstructions
+# See first round reviewers comments on 1075 Frontiers manuscript
+# Also see comments above in "Water by Taxon" section
 
-# Define the conditions for assigning values to the "Habitat" column
-V1075_BySpec$Habitat <- ifelse(V1075_BySpec$Taxon %in% c("Glyptops sp.", "Neosuchian G", "Neosuchian B"), 
-                                "Amphibious", 
-                                ifelse(V1075_BySpec$Taxon %in% c("Naomichelys sp.", "Maniraptorans", "Sauropods", "Ornithischians", "Neosuchian A"), 
-                                       "Terrestrial", 
-                                       ifelse(V1075_BySpec$Taxon %in% c("Lepisosteids", "Hybodonts"), 
-                                              "Aquatic", 
-                                              NA)))
-
-  
-  
-  # Reorder Taxon based on Habitat
-  V1075_BySpec$Taxon <- factor(V1075_BySpec$Taxon, levels = unique(V1075_BySpec$Taxon[order(V1075_BySpec$Habitat)]))
-
-  # Define custom levels for Habitat
-  custom_levels <- c("Aquatic", "Amphibious", "Terrestrial")
-  
-  # Reorder the Taxon variable based on Habitat with custom levels
-  V1075_BySpec$Taxon <- factor(V1075_BySpec$Taxon, levels = unique(V1075_BySpec$Taxon[order(factor(V1075_BySpec$Habitat, levels = custom_levels))]))
-  
-
-
-# Create the plot
-ggplot(V1075_BySpec, aes(x = d18Owater, y = Taxon)) +
-  geom_jitter(width = 0.2, height = 0, size = 2, alpha = 0.7, shape = 1) +  # Use shape = 1 for open circles
-  theme_minimal() +
-  ggtitle("V1075 d18Owater by fossil specimen") +
-  labs(x = oxydeltwater, y = "") +
-  theme(strip.placement = "outside",
-        panel.grid.major = element_blank(),  # Remove major gridlines
-        panel.grid.minor = element_blank(),  # Remove minor gridlines
-        panel.border = element_rect(color = "black", fill = NA),  # Set border color and remove fill
-        axis.ticks.x = element_line(color = "black"),  # Set x-axis ticks color
-        axis.ticks.y = element_line(color = "black"),  # Set y-axis ticks color
-        axis.text.x = element_text(size = 8, hjust = 1, face = "bold"),  # Set x-axis tick label size, orientation, and bold font
-        axis.text.y = element_text(size = 8, hjust = 1, face = "italic")) +  # Set y-axis tick label size, orientation, and bold font
-  coord_cartesian(expand = FALSE, xlim = c(-14, 0), ylim = c(0, 12)) +
-  scale_x_continuous(breaks = seq(-14, 0, by = 1))
-
-#using tiff() and dev.off
-
-setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Exports")
-
-tiff("gg_d18Ow.tiff", units="in", width= 6.2361, height= 2.787, res=500)
-
-ggsave("gg_d18Ow.tiff", units="in", width= 6.2361, height= 2.787, dpi=500, compression = 'lzw')
-
-dev.off()
 # d18O by Specimen --------------------------------------------------------
 
 
@@ -173,16 +129,16 @@ V1075_BySpec$Taxon <- factor(V1075_BySpec$Taxon, levels = mean_d18O_by_Taxon$Tax
 ggplot(V1075_BySpec, aes(x = d18O..VSMOW., y = Taxon)) +
   geom_jitter(width = 0.2, height = 0, size = 2, alpha = 0.7, shape = 1) +  # Use shape = 1 for open circles
   theme_minimal() +
-  ggtitle("V1075 d18Op by fossil specimen") +
+  # ggtitle("V1075 d18Op by fossil specimen") +
   labs(x = oxydeltphosphate, y = "") +
   theme(strip.placement = "outside",
         panel.grid.major = element_blank(),  # Remove major gridlines
         panel.grid.minor = element_blank(),  # Remove minor gridlines
-        panel.border = element_rect(color = "black", fill = NA),  # Set border color and remove fill
+        panel.border = element_rect(color = "black", size = 1, fill = NA),  # Set border color and remove fill
         axis.ticks.x = element_line(color = "black"),  # Set x-axis ticks color
         axis.ticks.y = element_line(color = "black"),  # Set y-axis ticks color
-        axis.text.x = element_text(size = 8, hjust = 1, face = "bold"),  # Set x-axis tick label size, orientation, and bold font
-        axis.text.y = element_text(size = 8, hjust = 1, face = "italic")) +  # Set y-axis tick label size, orientation, and bold font
+        axis.text.x = element_text(size = 8, color = "black", hjust = 1),  # Set x-axis tick label size, orientation, and bold font
+        axis.text.y = element_text(size = 8, color = "black", hjust = 1, face = "italic")) +  # Set y-axis tick label size, orientation, and bold font
   coord_cartesian(expand = FALSE, xlim = c(8, 24), ylim = c(0, 12)) +
   scale_x_continuous(breaks = seq(8, 24, by = 2))
 
@@ -190,11 +146,12 @@ ggplot(V1075_BySpec, aes(x = d18O..VSMOW., y = Taxon)) +
 
 setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Exports")
 
-tiff("gg_BySpec.tiff", units="in", width= 6.2, height= 2.7, res=500)
+tiff("gg_BySpec_small.tiff", units="in", width= 3.5, height= 3, res=500)
 
-ggsave("gg_BySpec.tiff", units="in", width= 6.2, height= 2.7, dpi=500, compression = 'lzw')
+ggsave("gg_BySpec_small.tiff", units="in", width= 3.5, height= 3, dpi=500, compression = 'lzw')
 
 dev.off()
+
 
 # all measurements --------------------------------------------------------
 
