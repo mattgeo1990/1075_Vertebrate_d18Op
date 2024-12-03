@@ -37,11 +37,12 @@ naomichelys <- subset(V1075_MCdata, Taxon == "Naomichelys sp.")
 crocG <- subset(V1075_MCdata, Taxon == "Neosuchian G")
 crocA <- subset(V1075_MCdata, Taxon == "Neosuchian A")
 crocB <- subset(V1075_MCdata, Taxon == "Neosuchian B")
-theropods <- subset(V1075_MCdata, Taxon == "Maniraptorans")
-sauropods <- subset(V1075_MCdata, Taxon == "Sauropods")
-ornithischians <- subset(V1075_MCdata, Taxon == "Ornithischians")
 
-# resample
+
+# Bootstrapping
+# Resample d18Op for each taxon
+# Take mean of each resample
+# Compile means in data frame
 
 synth_shark <- data_frame(num = 1:nMCrepetitions) %>% 
   group_by(num) %>% 
@@ -71,18 +72,6 @@ synth_crocB <- data_frame(num = 1:nMCrepetitions) %>%
   group_by(num) %>% 
   mutate(means = mean(sample(crocB$d18O, replace = TRUE))) 
 
-synth_theropods <- data_frame(num = 1:nMCrepetitions) %>% 
-  group_by(num) %>% 
-  mutate(means = mean(sample(theropods$d18O, replace = TRUE))) 
-
-synth_sauropods <- data_frame(num = 1:nMCrepetitions) %>% 
-  group_by(num) %>% 
-  mutate(means = mean(sample(sauropods$d18O, replace = TRUE))) 
-
-synth_ornithischians <- data_frame(num = 1:nMCrepetitions) %>% 
-  group_by(num) %>% 
-  mutate(means = mean(sample(ornithischians$d18O, replace = TRUE))) 
-
 synth_NIST <- data_frame(num = 1:nMCrepetitions) %>% 
   group_by(num) %>% 
   mutate(means = mean(sample(NIST120c$d.18O.16O, replace = TRUE))) 
@@ -97,16 +86,13 @@ combined_data <- rbind(
   data.frame(group = "Neosuchian G", values = synth_crocG$means),
   data.frame(group = "Neosuchian A", values = synth_crocA$means),
   data.frame(group = "Neosuchian B", values = synth_crocB$means),
-  data.frame(group = "Theropods", values = synth_theropods$means),
-  data.frame(group = "Sauropods", values = synth_sauropods$means),
-  data.frame(group = "Ornithischians", values = synth_ornithischians$means),
   data.frame(group = "NIST", values = synth_NIST$means)
 )
 
 # Set order of facets
-combined_data$group <- factor(combined_data$group, levels = c("Gar", "Sharks", "Glyptops", "Neosuchian G", "Neosuchian A", "Neosuchian B", "Theropods", "Sauropods", "Ornithischians", "NIST"))
+combined_data$group <- factor(combined_data$group, levels = c("Gar", "Sharks", "Glyptops", "Neosuchian G", "Neosuchian A", "Neosuchian B", "NIST"))
 
-# Plotting with ggplot2 using facet_wrap
+# Plot histogram of resampled means for each taxon
 ggplot(combined_data, aes(x = values, fill = group)) +
   geom_histogram(position = "identity", alpha = 0.7, bins = 30, color = "black") +
   labs(title = "Histogram of Means",
@@ -295,108 +281,7 @@ ggplot(combined_data, aes(x = values, fill = group)) +
       V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Neosuchian A")] <- lower_percentile_water
       
       
-      
-# Ornithischians --------------------------------------------------------------
-      
-
-      # Create Function
-      Herbivore_Water <- function(synthmeans, h){
-        (synthmeans) - 26.8 + (8.9*(h))/0.76
-      }
-      
-      # run Herbivore_Water on synth_ornithischians. We'll assume 50% mean annual humidity
-      synth_ornithischians <- synth_ornithischians %>%
-        mutate(d18Owater = Herbivore_Water(means, h = 0.5))
-      
-      # CI, mean of ornithischian d18Owater
-      CIsetup_water <- sort(synth_ornithischians$d18Owater)
-      str(CIsetup_water)
-      
-      # Calculate the lower and upper percentiles for the middle 95%
-      lower_percentile_water <- quantile(CIsetup_water, 0.025)
-      upper_percentile_water <- quantile(CIsetup_water, 0.975)
-      
-      # Subset the middle 95% of the data
-      subset_CIsetup_water <- CIsetup_water[CIsetup_water >= lower_percentile_water & CIsetup_water <= upper_percentile_water]
-      
-      # Take mean
-      mean_OrniWater <- round(mean(subset_CIsetup_water), 1)
-      lowCI_water <- round(abs(mean_OrniWater - lower_percentile_water), 1)
-      highCI_water <- round(abs(mean_OrniWater - upper_percentile_water), 1)
-      cat(mean_OrniWater, "+", highCI_water, "/", "-", lowCI_water)
-      
-      # store results
-      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Ornithischians")] <- mean_OrniWater
-      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Ornithischians")] <- upper_percentile_water
-      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Ornithischians")] <- lower_percentile_water
-      
-# Sauropods --------------------------------------------------------------
-      
-      
-      # run Herbivore_Water on synth_sauropods. We'll assume 50% mean annual humidity
-      synth_sauropods <- synth_sauropods %>%
-        mutate(d18Owater = Herbivore_Water(means, h = 0.5))
-      
-      # CI, mean of sauropod d18Owater
-      CIsetup_water <- sort(synth_sauropods$d18Owater)
-      str(CIsetup_water)
-      
-      # Calculate the lower and upper percentiles for the middle 95%
-      lower_percentile_water <- quantile(CIsetup_water, 0.025)
-      upper_percentile_water <- quantile(CIsetup_water, 0.975)
-      
-      # Subset the middle 95% of the data
-      subset_CIsetup_water <- CIsetup_water[CIsetup_water >= lower_percentile_water & CIsetup_water <= upper_percentile_water]
-      
-      # Take mean
-      mean_SauropodWater <- round(mean(subset_CIsetup_water), 1)
-      lowCI_water <- round(abs(mean_SauropodWater - lower_percentile_water), 1)
-      highCI_water <- round(abs(mean_SauropodWater - upper_percentile_water), 1)
-      cat(mean_SauropodWater, "+", highCI_water, "/", "-", lowCI_water)
-      
-      # store results
-      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Sauropods")] <- mean_SauropodWater
-      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Sauropods")] <- upper_percentile_water
-      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Sauropods")] <- lower_percentile_water
-      
-      
-# Maniraptorans --------------------------------------------------------------
-      
-      
-      # Create Function
-      TheroWater <- function(synthmeans_thero, h){
-        (synthmeans_thero) - 21.3 + (3*(h))/0.74
-      }
-      
-      # run TheroWater on synth_thero. We'll assume 50% mean annual humidity
-      synth_theropods <- synth_theropods %>%
-        mutate(d18Owater = TheroWater(means, h = 0.5))
-      
-      # CI, mean of croc d18Owater
-      CIsetup_water <- sort(synth_theropods$d18Owater)
-      str(CIsetup_water)
-      
-      # Calculate the lower and upper percentiles for the middle 95%
-      lower_percentile_water <- quantile(CIsetup_water, 0.025)
-      upper_percentile_water <- quantile(CIsetup_water, 0.975)
-      
-      # Subset the middle 95% of the data
-      subset_CIsetup_water <- CIsetup_water[CIsetup_water >= lower_percentile_water & CIsetup_water <= upper_percentile_water]
-      
-      # Take mean
-      mean_TheroWater <- round(mean(subset_CIsetup_water), 1)
-      lowCI_water <- round(abs(mean_TheroWater - lower_percentile_water), 1)
-      highCI_water <- round(abs(mean_TheroWater - upper_percentile_water), 1)
-      cat(mean_TheroWater, "+", highCI_water, "/", "-", lowCI_water)
-      
-      # store results
-      V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Maniraptorans")] <- mean_TheroWater
-      V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Maniraptorans")] <- upper_percentile_water
-      V1075_MCwater$loCL[which(V1075_MCwater$Taxon == "Maniraptorans")] <- lower_percentile_water
-
-      
-      
-      
+  
 # EXPORT d18Owater estimates
     setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
     write.csv(V1075_MCwater, "V1075_MCwater.csv", row.names = FALSE)
