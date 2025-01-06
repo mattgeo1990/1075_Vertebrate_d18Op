@@ -145,7 +145,7 @@ crocwater <- function(crocG_synthmeans, slope, intercept) {
 
 # Simulate regression coefficients for the regression model
 set.seed(123)  # For reproducibility
-n_iterations <- 1e5  # Number of Monte Carlo simulations
+n_iterations <- 10  # Number of Monte Carlo simulations
 
 # Define 
 Amiot_residual_sd <- summary(Amiot_lm_model)$sigma
@@ -161,6 +161,17 @@ Amiot_residual_error <- rnorm(n_iterations, mean = 0, sd = Amiot_residual_sd)
 # Store Croc G d18Op synth means in vector
 crocG_synthmeans_d18Op <- synth_crocG$means
 mean(crocG_synthmeans_d18Op)
+
+
+
+# Expand d18Op values to interact with all simulated parameters
+expanded_d18Op <- rep(crocG_synthmeans_d18Op, each = n_iterations)
+expanded_slopes <- rep(Amiot_simulated_slope, times = length(crocG_synthmeans_d18Op))
+expanded_intercepts <- rep(Amiot_simulated_intercept, times = length(crocG_synthmeans_d18Op))
+expanded_residuals <- rep(Amiot_residual_error, times = length(crocG_synthmeans_d18Op))
+
+# Calculate water simulations
+crocG_water_simulations <- expanded_slopes * expanded_d18Op + expanded_intercepts + expanded_residuals
 
 # simulate d18Owater estimates
 crocG_water_simulations <- Amiot_simulated_slope * crocG_synthmeans_d18Op + Amiot_simulated_intercept + Amiot_residual_error
