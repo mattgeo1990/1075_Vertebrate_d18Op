@@ -94,7 +94,21 @@ library(dplyr)
     # rename columns consistent with lit_data dataset
     names(V1075_BySpec)[names(V1075_BySpec) == "Eco"] <- "eco_type"
     
-  
+# Remove d18O..VSMOW., it shouldn't be there anymore
+V1075_BySpec <- V1075_BySpec %>% select(-d18O..VSMOW.)
+
+# Look at your data (eval distributions) ----------------------------------
+table(V1075_BySpec$Taxon)
+gar_raw <- V1075_BySpec$d18O[which(V1075_BySpec$Taxon == "Lepisosteids")]
+glyp_raw <- V1075_BySpec$d18O[which(V1075_BySpec$Taxon == "Glyptops sp.")]
+crocG_raw <- V1075_BySpec$d18O[which(V1075_BySpec$Taxon == "Neosuchian G")]
+NIST_raw <- NIST120c$d.18O.16O
+
+
+shapiro.test(gar_raw)
+shapiro.test(glyp_raw)
+shapiro.test(crocG_raw)
+shapiro.test(NIST_raw)
 
 # Export Data -------------------------------------------------------------
   

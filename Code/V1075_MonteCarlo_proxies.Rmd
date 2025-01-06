@@ -1,0 +1,176 @@
+---
+title: "Monte Carlo Simulation of d18O Estimates"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(knitr)
+
+# Set global chunk options
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Monte Carlo Simulation of \( \delta^{18}O \) Estimates
+
+## 1. Data Preparation
+
+```{r data-preparation}
+# Load input distributions (replace paths with actual file locations)
+load("~/Documents/GitHub/1075_Vertebrate_d18Op/Data/synth_NIST.RData")
+load("~/Documents/GitHub/1075_Vertebrate_d18Op/Data/MC_d18Op_dist.RData")
+# Extract d18Op data for Glyptops
+d18Op_synthglyp <- MC_d18Op_dist$values[MC_d18Op_dist$group == "Glyptops"]
+
+# Load regression models
+Barrick_lm_model <- readRDS("path/to/Barrick_regression_model.rds")
+Puceat_lm_model <- readRDS("path/to/Puceat_regression_model.rds")
+```
+
+---
+
+## 2. Barrick Regression Analysis
+
+### Model Summary
+
+```{r barrick-model-summary}
+# Extract model statistics
+summary_barrick <- summary(Barrick_lm_model)
+intercept_barrick <- coef(summary_barrick)[1, "Estimate"]
+slope_barrick <- coef(summary_barrick)[2, "Estimate"]
+intercept_se_barrick <- coef(summary_barrick)[1, "Std. Error"]
+slope_se_barrick <- coef(summary_barrick)[2, "Std. Error"]
+residual_sd_barrick <- summary_barrick$sigma
+```
+
+- **Intercept:** `r round(intercept_barrick, 2)` ± `r round(intercept_se_barrick, 2)`
+- **Slope:** `r round(slope_barrick, 2)` ± `r round(slope_se_barrick, 2)`
+- **Residual SD:** `r round(residual_sd_barrick, 2)`
+
+---
+
+## 3. Monte Carlo Simulation for Water \( \delta^{18}O \)
+
+```{r monte-carlo-water}
+# Set up simulation parameters
+n_iterations <- 10000
+set.seed(123)
+
+# Simulate regression coefficients
+simulated_slope <- rnorm(n_iterations, mean = slope_barrick, sd = slope_se_barrick)
+simulated_intercept <- rnorm(n_iterations, mean = intercept_barrick, sd = intercept_se_barrick)
+
+# Simulate residual error
+residual_error <- rnorm(n_iterations, mean = 0, sd = residual_sd_barrick)
+
+# Perform Monte Carlo simulation
+water_simulations <- outer(d18Op_synthglyp, simulated_slope, "*") + simulated_intercept + residual_error
+```
+
+### Results
+
+```{r water-results}
+# Compute statistics
+water_means <- rowMeans(water_simulations)
+water_sd <- apply(water_simulations, 1, sd)
+water_ci <- apply(water_simulations, 1, function(x) quantile(x, probs = c(0.025, 0.975)))
+
+# Extract overall statistics
+mean_water <- mean(water_means)
+lower_95_CI_water <- min(water_ci[1, ])
+upper_95_CI_water <- max(water_ci[2, ])
+
+# Visualize
+ggplot(data = data.frame(Simulations = water_means), aes(x = Simulations)) +
+  geom_histogram(bins = 50, fill = "blue", alpha = 0.7) +
+  geom_vline(xintercept = c(lower_95_CI_water, upper_95_CI_water), linetype = "dashed", color = "red") +
+  labs(
+    title = "Distribution of Simulated Water \( \delta^{18}O \) Estimates",
+    x = "Water \( \delta^{18}O \) (‰)",
+    y = "Frequency"
+  )
+```
+
+- **Mean Water \( \delta^{18}O \):** `r round(mean_water, 2)`
+- **95% Confidence Interval:** [`r round(lower_95_CI_water, 2)`, `r round(upper_95_CI_water, 2)`]
+
+---
+
+## 4. Puceat Regression Analysis
+
+### Model Summary
+
+```{r puceat-model-summary}
+# Extract model statistics
+summary_puceat <- summary(Puceat_lm_model)
+intercept_puceat <- coef(summary_puceat)[1, "Estimate"]
+slope_puceat <- coef(summary_puceat)[2, "Estimate"]
+intercept_se_puceat <- coef(summary_puceat)[1, "Std. Error"]
+slope_se_puceat <- coef(summary_puceat)[2, "Std. Error"]
+residual_sd_puceat <- summary_puceat$sigma
+```
+
+- **Intercept:** `r round(intercept_puceat, 2)` ± `r round(intercept_se_puceat, 2)`
+- **Slope:** `r round(slope_puceat, 2)` ± `r round(slope_se_puceat, 2)`
+- **Residual SD:** `r round(residual_sd_puceat, 2)`
+
+---
+
+## 5. Monte Carlo Simulation for Temperature
+
+```{r monte-carlo-temp}
+# Simulate temperature predictions
+temperature_simulations <- outer(water_means, simulated_slope, "*") + simulated_intercept + residual_error
+temp_means <- rowMeans(temperature_simulations)
+temp_sd <- apply(temperature_simulations, 1, sd)
+temp_ci <- apply(temperature_simulations, 1, function(x) quantile(x, probs = c(0.025, 0.975)))
+
+# Extract overall statistics
+mean_temp <- mean(temp_means)
+lower_95_CI_temp <- min(temp_ci[1, ])
+upper_95_CI_temp <- max(temp_ci[2, ])
+
+# Visualize
+ggplot(data = data.frame(Simulations = temp_means), aes(x = Simulations)) +
+  geom_histogram(bins = 50, fill = "orange", alpha = 0.7) +
+  geom_vline(xintercept = c(lower_95_CI_temp, upper_95_CI_temp), linetype = "dashed", color = "red") +
+  labs(
+    title = "Distribution of Simulated Temperature Estimates",
+    x = "Temperature (°C)",
+    y = "Frequency"
+  )
+```
+
+- **Mean Temperature:** `r round(mean_temp, 2) °C`
+- **95% Confidence Interval:** [`r round(lower_95_CI_temp, 2)`, `r round(upper_95_CI_temp, 2)`]
+
+---
+
+## 6. Error Contributions
+
+```{r error-contributions}
+# Baseline standard deviation
+baseline_sd <- sd(temp_means)
+
+# Fixed variable contributions
+delta_Op_fixed <- mean(delta_Op_distribution)
+delta_Ow_fixed <- mean(water_means)
+
+# Compute contributions
+contributions <- c(
+  delta_Op = sd(outer(delta_Op_fixed, simulated_slope, "*") + simulated_intercept + residual_error),
+  delta_Ow = sd(outer(delta_Ow_fixed, simulated_slope, "*") + simulated_intercept + residual_error)
+)
+
+contributions <- contributions / baseline_sd * 100
+
+kable(data.frame(
+  Variable = names(contributions),
+  Contribution = round(contributions, 2)
+))

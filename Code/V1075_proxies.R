@@ -2,6 +2,7 @@
 
 # Install/load required packages ------------------------------------------
 library(ggplot2)
+library(dplyr)
   # Read in cleaned data (include link to script that cleans the data?)
     # Call V1075_cl from GitHub 
     # cleaning script is here: https://github.com/mattgeo1990/1075_Vertebrate_d18Op/blob/main/Code/V1075_d18O.R
@@ -22,9 +23,14 @@ library(ggplot2)
         raw <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
         NIST120c <- read.csv("V1075_NIST120c.csv")
         
+  # Remove d18OVSMOW column from V1075_BySpec, this column is an artifact
+        V1075_BySpec <- V1075_BySpec %>% select(-d18O..VSMOW.)
+        
 # For testing exactly what data you used in calculations        
       Gar_all_d18Op <- subset(raw$d18O..VSMOW., raw$Taxon == "Lepisosteids")
       Gar_scales_d18Op <- subset(raw$d18O..VSMOW., raw$Element.type == "ganoid scale")
+      Gar_teeth_d18Op <- subset(raw$d18O..VSMOW., raw$Element.type == "tooth")
+  summary(Gar_teeth_d18Op)
   summary(Gar_all_d18Op)
   summary(Gar_scales_d18Op)
   
@@ -141,13 +147,13 @@ write.csv(V1075_BySpec, "V1075_BySpec_water.csv")
     
 # Dual-Taxon Temperatures -------------------------------------------------
  # We will actually take the value and CI limits calculated by Monte Carlo sim
-  
+garmean <- mean(Gar_all_d18Op)
   # Calculate d18Osurface_water
     #crocwater <- 0.82*(AquaCroc_d18Op_mean) - 19.93 #Amiot et al.(2007)
     #turtwater <- 1.01 *(AquaTurt_d18Op_mean) - 22.3 #Barrick et al. (1999)
   # Calculate Temps (Puceat et al., 2010)
     #temp_CrocFish <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - crocwater ) 
-    #temp_TurtleFish <- 118.7 - 4.22*((GarScales_d18Op_mean  +(22.6 - NIST120c_mean)) - turtwater ) 
+    temp_TurtleFish <- 118.7 - 4.22*((Gar_all_d18Op  +(22.6 - NIST120c_mean)) - turtwater ) 
 
     
 # Endotherm-Ectotherm Combined Mean (EECM, Cullen et al., 2019) -----------
@@ -197,6 +203,15 @@ write.csv(V1075_BySpec, "V1075_BySpec_water.csv")
       #  EECM19 <- EECM2019(ecto_mean, endo_mean)
 
     
+
+# Transfer Function -------------------------------------------------------
+# water temp
+Tw <- 25
+# transfer function for growing season water temp to mean annual air temp from Hren and Sheldon (2012):
+MAAT <- -0.0146 * (Tw^2) +
+  1.753 * Tw - 
+  16.079
+
 
 
 

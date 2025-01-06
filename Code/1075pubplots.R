@@ -36,8 +36,10 @@ oxydeltwater <- expression("δ"^18 * "O"[water] * "(‰ V-SMOW)")
 setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
 V1075_BySpec <- read.csv("V1075_BySpec_water.csv")
 NIST120c <- read.csv("V1075_NIST120c.csv")
-V1075_MCwater <- read.csv("V1075_MCwater.csv")
+V1075_MCwater <- read.csv("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/d18Owater_MCsim_summary.csv")
+#V1075_MCwater <- read.csv("V1075_MCwater.csv")
 V1075_alldata <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
+
 
 
 # Water by Taxon -----------------------------------------------------------------------
@@ -46,11 +48,14 @@ V1075_alldata <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
 # The fish can't inform water estimates because body temp is variable
 # dinosaur d18Owater can't be reliably reconstructed because there is no framework (Kohn's mammal equations aren't a good fit, and we have to assume humidity if we use those anyways)
 
-V1075_MCwater <- subset(V1075_MCwater, Taxon != "Hybodonts" & Taxon != "Lepisosteids" & Taxon != "Carcharodontosaurid" & Taxon != "Allosauroid" & Taxon != "Maniraptorans" & Taxon != "Sauropods" & Taxon != "Ornithischians") 
+V1075_MCwater$Taxon[which(V1075_MCwater$Taxon == "crocA")] <- "Neosuchian A"
+V1075_MCwater$Taxon[which(V1075_MCwater$Taxon == "crocB")] <- "Neosuchian B"
+V1075_MCwater$Taxon[which(V1075_MCwater$Taxon == "crocG")] <- "Neosuchian G"
+
 
 # Define the conditions for assigning values to the "Habitat" column
-V1075_MCwater$Habitat <- ifelse(V1075_MCwater$Taxon %in% c("Glyptops sp.", "Neosuchian G", "Neosuchian B"), "Amphibious", 
-                                ifelse(V1075_MCwater$Taxon %in% c("Naomichelys sp.", "Neosuchian A"), "Terrestrial", NA))
+V1075_MCwater$Habitat <- ifelse(V1075_MCwater$Taxon %in% c("Glyptops", "crocG", "crocB"), "Amphibious", 
+                                ifelse(V1075_MCwater$Taxon %in% c("Naomichelys", "crocA"), "Terrestrial", NA))
 
 # Display the modified data frame
 #V1075_MCwater
@@ -61,18 +66,18 @@ V1075_MCwater$Habitat <- ifelse(V1075_MCwater$Taxon %in% c("Glyptops sp.", "Neos
   V1075_MCwater$Taxon <- factor(V1075_MCwater$Taxon, levels = unique(V1075_MCwater$Taxon[order(V1075_MCwater$Habitat)]))
 
 # Plotting
-ggplot(V1075_MCwater, aes(x = MEAN, y = Taxon)) +
+ggplot(V1075_MCwater, aes(x = Mean_d18Owater, y = Taxon)) +
   geom_point() +  # Add points for mean
-  geom_errorbarh(aes(xmin = loCL, xmax = hiCL), height = 0.2) +  # Add horizontal error bars
+  geom_errorbarh(aes(xmin = Lower_95_CI, xmax = Upper_95_CI), height = 0.2) +  # Add horizontal error bars
   labs(x = "d18Owater", y = "Taxon")  # Label x and y axes
 
 # create delta notation for label
 oxydeltphosphate <- expression(paste(delta^{18}, "O"[p], " (‰ V-SMOW)"))
-oxydeltwater <- expression(paste(delta^{18}, "O"[ingested_water], " (‰ V-SMOW)"))
+oxydeltwater <- expression(paste(delta^{18}, "O"[sw], " (‰ V-SMOW)"))
 # Plotting
-ggplot(V1075_MCwater, aes(x = MEAN, y = Taxon)) +
+ggplot(V1075_MCwater, aes(x = Mean_d18Owater, y = Taxon)) +
   geom_point() +  # Add points for mean
-  geom_errorbarh(aes(xmin = loCL, xmax = hiCL), height = 0.2) +  # Add horizontal error bars
+  geom_errorbarh(aes(xmin = Lower_95_CI, xmax = Upper_95_CI), height = 0.2) +  # Add horizontal error bars
   labs(x = oxydeltwater, y = element_blank()) +  # Label x and y axes
   theme_minimal() +  # Set minimal theme
   scale_x_continuous(breaks = seq(0, -10, by = -1)) +

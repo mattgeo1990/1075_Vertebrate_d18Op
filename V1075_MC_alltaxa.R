@@ -51,6 +51,7 @@ synth_shark <- data_frame(num = 1:nMCrepetitions) %>%
 synth_gar <- data_frame(num = 1:nMCrepetitions) %>% 
   group_by(num) %>% 
   mutate(means = mean(sample(gar$d18O, replace = TRUE))) 
+mean(synth_gar$means)
 
 synth_glyptops <- data_frame(num = 1:nMCrepetitions) %>% 
   group_by(num) %>% 
@@ -82,15 +83,16 @@ combined_data <- rbind(
   data.frame(group = "Gar", values = synth_gar$means),
   data.frame(group = "Sharks", values = synth_shark$means),
   data.frame(group = "Glyptops", values = synth_glyptops$means),
-  data.frame(group = "Naomichelys", values = synth_glyptops$means),
+  data.frame(group = "Naomichelys", values = synth_naomichelys$means),
   data.frame(group = "Neosuchian G", values = synth_crocG$means),
   data.frame(group = "Neosuchian A", values = synth_crocA$means),
   data.frame(group = "Neosuchian B", values = synth_crocB$means),
   data.frame(group = "NIST", values = synth_NIST$means)
 )
 
+
 # Set order of facets
-combined_data$group <- factor(combined_data$group, levels = c("Gar", "Sharks", "Glyptops", "Neosuchian G", "Neosuchian A", "Neosuchian B", "NIST"))
+combined_data$group <- factor(combined_data$group, levels = c("Gar", "Sharks", "Glyptops", "Neosuchian G", "Neosuchian A", "Neosuchian B", "Naomichelys", "NIST"))
 
 # Plot histogram of resampled means for each taxon
 ggplot(combined_data, aes(x = values, fill = group)) +
@@ -100,6 +102,13 @@ ggplot(combined_data, aes(x = values, fill = group)) +
        y = "Frequency") +
   theme_minimal() +
   facet_wrap(~group, scales = "free")
+
+
+
+# Export simulated d18Op distributions
+
+write.csv(combined_data, file = "/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/V1075_MC_d18Op_dist.csv", row.names = FALSE)
+
 
 
 # CALCULATE WATER
@@ -143,8 +152,8 @@ ggplot(combined_data, aes(x = values, fill = group)) +
       mean_turtlewater <- round(mean(subset_CIsetup_water), 1)
       lowCI_water <- round(abs(mean_turtlewater - lower_percentile_water), 1)
       highCI_water <- round(abs(mean_turtlewater - upper_percentile_water), 1)
-      cat(mean_turtlewater, "+", highCI_water, "/", "-", lowCI_water)
-    
+      cat(mean_turtlewater, "95% CI:", round(lower_percentile_water, digits = 1), "to", round(upper_percentile_water, digits = 1))
+      
       # store results
       V1075_MCwater$MEAN[which(V1075_MCwater$Taxon == "Glyptops sp.")] <- mean_turtlewater
       V1075_MCwater$hiCL[which(V1075_MCwater$Taxon == "Glyptops sp.")] <- upper_percentile_water
@@ -212,7 +221,8 @@ ggplot(combined_data, aes(x = values, fill = group)) +
       mean_crocGwater <- round(mean(subset_CIsetup_water), 1)
       lowCI_water <- round(abs(mean_crocGwater - lower_percentile_water), 1)
       highCI_water <- round(abs(mean_crocGwater - upper_percentile_water), 1)
-      cat(mean_crocGwater, "+", highCI_water, "/", "-", lowCI_water)
+      cat(mean_crocGwater, "95% CI:", round(lower_percentile_water, digits = 1), "to", round(upper_percentile_water, digits = 1))
+      
    
     
       # store results
@@ -325,7 +335,7 @@ ggplot(combined_data, aes(x = values, fill = group)) +
     mean_temp <- round(mean(subset_CIsetup), 1)
     lowCI <- round(abs(mean_temp - lower_percentile), 1)
     highCI <- round(abs(mean_temp - upper_percentile), 1)
-    cat(mean_temp, "+", highCI, "/", "-", lowCI)
+    cat(mean_temp, "+", lower_percentile, "/", "-", upper_percentile)
 
     
     CIfun <- function(data) {

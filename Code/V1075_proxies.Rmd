@@ -1,0 +1,109 @@
+---
+title: "V1075_proxies"
+author: "Matthew Allen"
+date: "2024-12-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+```
+
+## READ PRIORS
+
+```{r}
+setwd("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data")
+V1075_BySpec <- read.csv("V1075_BySpec.csv")
+raw <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
+NIST120c <- read.csv("V1075_NIST120c.csv")
+
+# Remove d18OVSMOW column from V1075_BySpec, this column is an artifact
+V1075_BySpec <- V1075_BySpec %>% select(-d18O..VSMOW.)
+
+```
+
+## SUBSETTING DATA
+
+```{r}
+# subset the Glyptops, Neosuchian G, and gar
+  
+  # gar first
+    gar <- V1075_BySpec[which(V1075_BySpec$Taxon == "Lepisosteids"),]
+    # test it (should be 17 rows)
+      nrow(gar)
+    
+    #subset gar teeth vs gar scales
+    gar_teeth <- gar[which(gar$Element.type == "tooth"),]
+    # test it (should be 7 rows)
+    nrow(gar_teeth)
+    # now scales
+    gar_scales <- gar[which(gar$Element.type == "ganoid scale"),]
+    # test it (should be 10)
+    nrow(gar_scales)
+    
+  # now Glyptops
+    turtle <- V1075_BySpec[which((V1075_BySpec$Taxon == "Glyptops sp.")),]
+    # test it (should be 7 rows)
+    nrow(turtle)
+    
+  # now Neosuchian G
+    croc_g <- V1075_BySpec[which((V1075_BySpec$Taxon == "Neosuchian G")),]
+    # test it (should be 12 rows)
+    nrow(croc_g)
+    
+# plotting gar data to look at distributions
+# need to decide whether to include teeth or not
+    # Combine the data into a list
+data <- list(Teeth = gar_teeth$d18O, Scales = gar_scales$d18O)
+
+# Create a strip chart
+stripchart(data,
+           vertical = TRUE,            # Make the plot vertical
+           method = "jitter",          # Add jitter to avoid overlap
+           col = c("blue", "red"),     # Colors for teeth and scales
+           pch = 16,                   # Use filled circles for points
+           xlab = "Sample Type",       # X-axis label
+           ylab = "δ18O (per mil)")    # Y-axis label
+
+```
+## WATER RECONSTRUCTIONS
+```{r}
+# from turtle
+    # d18Owater <- 1.01 *(d18O..VSMOW.) - 22.3 #Barrick et al. (1999)
+    
+    mean_turtle_d18Op <- mean(turtle$d18O)
+    turtle_water <- 1.01 *(mean_turtle_d18Op) - 22.3
+     # I am satisfied with this value, it is consistent
+
+#from croc
+    # d18Owater <- 0.82 * V1075_BySpec$d18O - 19.93
+
+    mean_crocg_d18Op <- mean(croc_g$d18O)
+    croc_water <- 0.82 * mean_crocg_d18Op - 19.93
+    
+    # I am happy with this value, it is consistent
+    
+```
+# DUAL-TAXON TEMP RECONSTRUCTION
+```{r}
+# dual-taxon temperature --------------------------------------------------
+# first NIST120c
+    NIST120c_mean <- mean(NIST120c$d.18O.16O)
+# gar scale temp
+    mean_d18Op_gar_scales <- mean(gar_scales$d18O)
+    temp_TurtleFishscales <- 118.7 - 4.22*((mean_d18Op_gar_scales  +(22.6 - NIST120c_mean)) - turtle_water) 
+    
+# gar teeth temp
+    mean_d18Op_gar_teeth <- mean(gar_teeth$d18O)
+    temp_TurtleFishteeth <- 118.7 - 4.22*((mean_d18Op_gar_teeth  +(22.6 - NIST120c_mean)) - turtle_water) 
+    
+# gar all
+    mean_d18Op_gar_all <- mean(gar$d18O)
+    temp_TurtleFishall <- 118.7 - 4.22*((mean_d18Op_gar_all  +(22.6 - NIST120c_mean)) - turtle_water) 
+    
+# Print the formatted message
+cat(sprintf("Temp using gar scales: %.2f, Temp using gar teeth: %.2f, Temp using all gar data: %.2f\n",
+            temp_TurtleFishscales, temp_TurtleFishteeth, temp_TurtleFishall))
+```

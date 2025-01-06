@@ -1,0 +1,22 @@
+﻿Sample,Description,Locality,δ18OH2O,δ18OPO4,Δa,Δa_corrected,t(°C),t_avg. (°C),t(°C) calculated
+P-1,Nirogrex terraesanctae,Lake Kinnereth,-2.1,19.4,21.6,23.8,13-30,,18.5
+P-2,Mugil cephalus,Lake Kinnereth,-2.1,19.6,21.6,23.8,13-30,21.5,18.5
+P-4,Sarothrodon galilaeos,Lake Kinnereth,-2.1,18.5,20.6,22.8,13-30,22.8,18.5
+P-6,Epinephelus sp,"Mediterranean, Acre",1.5,22.3,20.8,23,18-28,23,22
+FT-4,Scaruss sp. (teeth),Gulf of Elat,1.9,23.3,20.5,22.7,21-26,23.5,23.2
+FT-3,Scaruss sp. (teeth and bones),Gulf of Elat,1.9,22.7,20.5,22.7,21-26,23.5,23.2
+FT-7,Siganus luriadus,Gulf of Elat,1.9,22.6,20.5,22.7,21-26,23.5,23.2
+FT-2,Variola louti (bones),Gulf of Elat,1.9,22.2,20.5,22.7,21-26,23.5,23.2
+FT-10,Epinephelus fasciatus,Gulf of Elat,1.9,23.2,20.5,22.7,21-26,23.5,23.2
+FT-6,tetradontid fish,Gulf of Elat,1.9,22.3,20.5,22.7,21-26,23.5,23.2
+FT-11a,Sparus aurata,Bardawil lagoon,1-7.5,25.2,20,22.2,30-Nov,25,25.4
+FT-11b,Sparus aurata,Bardawil lagoon,1-7.5,23.6,20,22.2,30-Nov,25,25.4
+FT-11c,Sparus aurata,Bardawil lagoon,1-7.5,24,20,22.2,30-Nov,25,25.4
+FT-11d,Sparus aurata,Bardawil lagoon,1-7.5,25,20,22.2,30-Nov,25,25.4
+FT-I,Salvelinus namaycush,Lake Inari,-13.3,11.1,24.4,26.6,4.2,,6.4
+FTB-1,Perca,Lake Baikal,-15.9,6,22,24.2,18-Jan,9.5,16.8
+FTB-2,Coregorius,Lake Baikal,-15.9,7.3,23.3,25.5,9-Apr,6.5,11.2
+FTB-3,Cottus,Lake Baikal,-15.9,9,25,27.2,8-Mar,5.5,3.9
+FTB-4,Batirochocoitus,Lake Baikal,-15.9,9.2,25.2,27.4,4-Mar,3.5,3
+FTX,Salmo,north of Karaun,-8,14.9,22.9,25.1,14-?,,13
+P-5,Salmo gairdneri (trout),Dan Fish Ponds,-7.5,15.4 ± 0.5,22.9,25.1,15,,13
