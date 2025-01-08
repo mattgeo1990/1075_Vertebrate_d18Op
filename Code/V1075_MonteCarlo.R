@@ -35,15 +35,23 @@ Amiot_lm_model <- readRDS("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/D
 # Load Puceat, Longinelli, Nuti (PLN) regression model (from ~/Documents/GitHub/1075_Vertebrate_d18Op/Code/d18Ow_Proxy_Regressions.R)
 PLN_lm_model <- readRDS("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/PLNd18Op_reg_lm.rds")
 
+# Load Tw~Ta transform model (from )
+TwTa_lm_model <- readRDS("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/TwTa_reg_lm.rds")
+
+
+
+
+
 summary(Amiot_lm_model)
 summary(PLN_lm_model)
+summary(TwTa_lm_model)
 coef(PLN_lm_model)[1]
 
 
 # Monte Carlo Parameters --------------------------------------------------
 
 # Set number of Monte Carlo repetitions 
-nMCrepetitions <- 1e5
+nMCrepetitions <- 1e3
 
 # d18Op bootstrapping -----------------------------------------------------
 
@@ -68,7 +76,6 @@ synth_shark <- data_frame(num = 1:nMCrepetitions) %>%
 synth_gar <- data_frame(num = 1:nMCrepetitions) %>% 
   group_by(num) %>% 
   mutate(means = mean(sample(gar$d18O, replace = TRUE))) 
-mean(synth_gar$means)
 
 synth_glyptops <- data_frame(num = 1:nMCrepetitions) %>% 
   group_by(num) %>% 
@@ -125,6 +132,16 @@ ggplot(combined_data, aes(x = values, fill = group)) +
 
 write.csv(combined_data, file = "/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/V1075_MC_d18Op_dist.csv", row.names = FALSE)
 
+#Evaluate effect of n_nMCrepetitions
+# Compute 95% CI
+nrow(synth_gar)
+meangar <- mean(synth_gar$means)
+lower_95_CI <- quantile(synth_gar$means, probs = 0.025)  # Lower limit
+upper_95_CI <- quantile(synth_gar$means, probs = 0.975)  # Upper limit
+
+# Print results
+cat("Mean simulated gar d18Op:" , meangar, "]\n")
+cat("95% CI for sim gar d18Op: [", lower_95_CI, ",", upper_95_CI, "]\n")
 
 # Neosuchian G --------------------------------------------------------------
 
@@ -138,14 +155,9 @@ Amiot_slope_se <- coef(Amiot_model_summary)[2, "Std. Error"]      # Standard err
 cat("Standard Error for Intercept:", Amiot_intercept_se, "\n")
 cat("Standard Error for Slope:", Amiot_slope_se, "\n")
 
-# Define function to compute d18Owater with regression uncertainty
-crocwater <- function(crocG_synthmeans, slope, intercept) {
-  slope * crocG_synthmeans + intercept
-}
-
 # Simulate regression coefficients for the regression model
 set.seed(123)  # For reproducibility
-n_iterations <- 10  # Number of Monte Carlo simulations
+n_iterations <- 1e3  # Number of Monte Carlo simulations
 
 # Define 
 Amiot_residual_sd <- summary(Amiot_lm_model)$sigma
@@ -162,8 +174,6 @@ Amiot_residual_error <- rnorm(n_iterations, mean = 0, sd = Amiot_residual_sd)
 crocG_synthmeans_d18Op <- synth_crocG$means
 mean(crocG_synthmeans_d18Op)
 
-
-
 # Expand d18Op values to interact with all simulated parameters
 expanded_d18Op <- rep(crocG_synthmeans_d18Op, each = n_iterations)
 expanded_slopes <- rep(Amiot_simulated_slope, times = length(crocG_synthmeans_d18Op))
@@ -172,9 +182,6 @@ expanded_residuals <- rep(Amiot_residual_error, times = length(crocG_synthmeans_
 
 # Calculate water simulations
 crocG_water_simulations <- expanded_slopes * expanded_d18Op + expanded_intercepts + expanded_residuals
-
-# simulate d18Owater estimates
-crocG_water_simulations <- Amiot_simulated_slope * crocG_synthmeans_d18Op + Amiot_simulated_intercept + Amiot_residual_error
 mean(crocG_water_simulations)
 
 # Sort the simulated water values
@@ -189,22 +196,26 @@ mean_crocGwater_synth <- mean(sorted_crocG_synthd18Owater)
 
 # Print the results
 cat("Mean crocG d18Owater:", round(mean_crocGwater_synth, 2), "\n")
-cat("95% CI for crocG d18Owater: [", round(crocGwatersynth_lower_95_CI, 2), ",", round(crocwatersynth_upper_95_CI, 2), "]\n")
-
-summary(crocG_water_simulations)
+cat("95% CI for crocG d18Owater: [", round(crocGwatersynth_lower_95_CI, 2), ",", round(crocGwatersynth_upper_95_CI, 2), "]\n")
 
 # Neosuchian A --------------------------------------------------------------
 
 # Simulate regression coefficients for the regression model
 set.seed(123)  # For reproducibility
-n_iterations <- 1e5  # Number of Monte Carlo simulations
+n_iterations <- 1e3  # Number of Monte Carlo simulations
 
 # Store Croc A d18Op synth means in vector
 crocA_synthmeans_d18Op <- synth_crocA$means
 mean(crocA_synthmeans_d18Op)
 
-# simulate d18Owater estimates
-crocA_water_simulations <- Amiot_simulated_slope * crocA_synthmeans_d18Op + Amiot_simulated_intercept + Amiot_residual_error
+# Expand d18Op values to interact with all simulated parameters
+expanded_d18Op <- rep(crocA_synthmeans_d18Op, each = n_iterations)
+expanded_slopes <- rep(Amiot_simulated_slope, times = length(crocA_synthmeans_d18Op))
+expanded_intercepts <- rep(Amiot_simulated_intercept, times = length(crocA_synthmeans_d18Op))
+expanded_residuals <- rep(Amiot_residual_error, times = length(crocA_synthmeans_d18Op))
+
+# Calculate water simulations
+crocA_water_simulations <- expanded_slopes * expanded_d18Op + expanded_intercepts + expanded_residuals
 mean(crocA_water_simulations)
 
 # Sort the simulated water values
@@ -219,7 +230,7 @@ mean_crocAwater_synth <- mean(sorted_crocA_synthd18Owater)
 
 # Print the results
 cat("Mean crocA d18Owater:", round(mean_crocAwater_synth, 2), "\n")
-cat("95% CI for crocA d18Owater: [", round(crocAwatersynth_lower_95_CI, 2), ",", round(crocwatersynth_upper_95_CI, 2), "]\n")
+cat("95% CI for crocA d18Owater: [", round(crocAwatersynth_lower_95_CI, 2), ",", round(crocAwatersynth_upper_95_CI, 2), "]\n")
 
 summary(crocA_water_simulations)
 
@@ -227,14 +238,20 @@ summary(crocA_water_simulations)
 
 # Simulate regression coefficients for the regression model
 set.seed(123)  # For reproducibility
-n_iterations <- 1e5  # Number of Monte Carlo simulations
+n_iterations <- 1e3  # Number of Monte Carlo simulations
 
 # Store Croc B d18Op synth means in vector
 crocB_synthmeans_d18Op <- synth_crocB$means
 mean(crocB_synthmeans_d18Op)
 
-# simulate d18Owater estimates
-crocB_water_simulations <- Amiot_simulated_slope * crocB_synthmeans_d18Op + Amiot_simulated_intercept + Amiot_residual_error
+# Expand d18Op values to interact with all simulated parameters
+expanded_d18Op <- rep(crocB_synthmeans_d18Op, each = n_iterations)
+expanded_slopes <- rep(Amiot_simulated_slope, times = length(crocB_synthmeans_d18Op))
+expanded_intercepts <- rep(Amiot_simulated_intercept, times = length(crocB_synthmeans_d18Op))
+expanded_residuals <- rep(Amiot_residual_error, times = length(crocB_synthmeans_d18Op))
+
+# Calculate water simulations
+crocB_water_simulations <- expanded_slopes * expanded_d18Op + expanded_intercepts + expanded_residuals
 mean(crocB_water_simulations)
 
 # Sort the simulated water values
@@ -249,16 +266,17 @@ mean_crocBwater_synth <- mean(sorted_crocB_synthd18Owater)
 
 # Print the results
 cat("Mean crocB d18Owater:", round(mean_crocBwater_synth, 2), "\n")
-cat("95% CI for crocB d18Owater: [", round(crocBwatersynth_lower_95_CI, 2), ",", round(crocwatersynth_upper_95_CI, 2), "]\n")
+cat("95% CI for crocB d18Owater: [", round(crocBwatersynth_lower_95_CI, 2), ",", round(crocBwatersynth_upper_95_CI, 2), "]\n")
 
 summary(crocB_water_simulations)
+
 ## Error Analysis for crocwater --------------------------------------------
 
 # Set seed for reproducibility
 set.seed(123)
 
 # Number of Monte Carlo iterations
-n_iterations <- 1e5
+n_iterations <- 1e3
 
 # Input variables
 slope <- Amiot_simulated_slope 
@@ -335,17 +353,9 @@ Barrick_slope_se <- coef(Barrick_model_summary)[2, "Std. Error"]      # Standard
 cat("Standard Error for Intercept:", Barrick_intercept_se, "\n")
 cat("Standard Error for Slope:", Barrick_slope_se, "\n")
 
-# Store Glyptops d18Op synth means in vector
-glyp_synthmeans_d18Op <- synth_glyptops$means
-
-# Define function to compute d18Owater with regression uncertainty
-turtlewater <- function(glyp_synthmeans_d18Op, Barrick_slope, Barrick_intercept) {
-  Barrick_slope * glyp_synthmeans_d18Op + Barrick_intercept
-}
-
 # Simulate regression coefficients for the Barrick regression model
 set.seed(123)  # For reproducibility
-n_iterations <- 1e5  # Number of Monte Carlo simulations
+n_iterations <- 1000  # Number of Monte Carlo simulations
 
 # Define 
 Barrick_residual_sd <- summary(Barrick_lm_model)$sigma
@@ -362,8 +372,14 @@ Barrick_residual_error <- rnorm(n_iterations, mean = 0, sd = Barrick_residual_sd
 glyp_synthmeans_d18Op <- synth_glyptops$means
 mean(glyp_synthmeans_d18Op)
 
-# simulate d18Owater estimates
-glyp_water_simulations <- Barrick_simulated_slope * glyp_synthmeans_d18Op + Barrick_simulated_intercept + Barrick_residual_error
+# Expand d18Op values to interact with all simulated parameters
+glyp_expanded_d18Op <- rep(glyp_synthmeans_d18Op, each = n_iterations)
+glyp_expanded_slopes <- rep(Barrick_simulated_slope, times = length(glyp_synthmeans_d18Op))
+glyp_expanded_intercepts <- rep(Barrick_simulated_intercept, times = length(glyp_synthmeans_d18Op))
+glyp_expanded_residuals <- rep(Barrick_residual_error, times = length(glyp_synthmeans_d18Op))
+
+# Calculate water simulations
+glyp_water_simulations <- glyp_expanded_slopes * glyp_expanded_d18Op + glyp_expanded_intercepts + glyp_expanded_residuals
 mean(glyp_water_simulations)
 
 # Sort the simulated water values
@@ -387,15 +403,21 @@ t.test(glyp_water_simulations, crocG_water_simulations, var.equal = FALSE)
 
 # Simulate regression coefficients for the Barrick regression model
 set.seed(123)  # For reproducibility
-n_iterations <- 1e5  # Number of Monte Carlo simulations
+n_iterations <- 1e3  # Number of Monte Carlo simulations
 
 # Monte Carlo simulation for the regression
 # Store Naomichelys d18Op synth means in vector
 naomi_synthmeans_d18Op <- synth_naomichelys$means
 mean(naomi_synthmeans_d18Op)
 
-# simulate d18Owater estimates
-naomi_water_simulations <- Barrick_simulated_slope * naomi_synthmeans_d18Op + Barrick_simulated_intercept + Barrick_residual_error
+# Expand d18Op values to interact with all simulated parameters
+expanded_d18Op <- rep(naomi_synthmeans_d18Op, each = n_iterations)
+expanded_slopes <- rep(Barrick_simulated_slope, times = length(naomi_synthmeans_d18Op))
+expanded_intercepts <- rep(Barrick_simulated_intercept, times = length(naomi_synthmeans_d18Op))
+expanded_residuals <- rep(Barrick_residual_error, times = length(naomi_synthmeans_d18Op))
+
+# Calculate water simulations
+naomi_water_simulations <- expanded_slopes * expanded_d18Op + expanded_intercepts + expanded_residuals
 mean(naomi_water_simulations)
 
 # Sort the simulated water values
@@ -412,14 +434,13 @@ mean_naomi_synthwater <- mean(naomi_sorted_synthwater)
 cat("Mean Naomichelys d18Owater:", round(mean_naomi_synthwater, 2), "\n")
 cat("95% CI for Naomichelys d18Owater: [", round(naomiwatersynth_lower_95_CI, 2), ",", round(naomiwatersynth_upper_95_CI, 2), "]\n")
 
-
 ## Error Analysis for Glyptops ----------------------------------------------
 
 # Set seed for reproducibility
 set.seed(123)
 
 # Number of Monte Carlo iterations
-n_iterations <- 1e5
+n_iterations <- 1e3
 
 # Input variables
 slope <- Barrick_simulated_slope 
@@ -488,9 +509,8 @@ sum(slope_contribution, intercept_contribution, residual_contribution, synth_con
 
 # Simulate d18Ow distribution based on crocG and glyptops water estimates ----------------------------------------------------------
 
-
 # Define bootstrap iterations
-n_iterations <- 1e5
+n_iterations <- 1e3
 
 # Random sampling and averaging
 bootstrapped_d18Ow <- replicate(n_iterations, {
@@ -503,6 +523,10 @@ bootstrapped_d18Ow <- replicate(n_iterations, {
 mean_d18Ow <- mean(bootstrapped_d18Ow)
 sd_d18Ow <- sd(bootstrapped_d18Ow)
 quantiles <- quantile(bootstrapped_d18Ow, probs = c(0.025, 0.975))
+
+mean_alld18Owater_synth <- mean_d18Ow
+alld18Owater_lower <- quantiles[1]
+alld18Owater_upper <- quantiles[2]
 
 # Print results
 cat("Mean δ¹⁸Ow:", mean_d18Ow, "\n")
@@ -520,7 +544,7 @@ PLN_slope_se <- coef(PLN_model_summary)[2, "Std. Error"]      # Standard error f
 
 # Set up the number of Monte Carlo iterations
 set.seed(123)
-n_iterations <- 1e5
+n_iterations <- 1e3
 
 # Define input distributions (replace with your actual data)
 delta_Op_distribution <- synth_gar$means
@@ -545,28 +569,37 @@ PLN_slope_simulated <- rnorm(n_iterations, mean = slope, sd = slope_sd)
 # Extract residual standard error from your regression model
 residual_sd <- summary(PLN_lm_model)$sigma  # Replace `regression_model` with your lm model
 
-# Monte Carlo simulation for the regression
-temperature_simulations <- PLN_intercept_simulated + PLN_slope_simulated * (
-  delta_Op_distribution + (22.6 - delta_ONBS120c_distribution) - delta_Ow_distribution
-) + rnorm(n_iterations, mean = 0, sd = residual_sd)
+# Initialize vector to store results
+temperature_simulations <- numeric(n_iterations)
+
+# Perform Monte Carlo simulations
+for (i in 1:n_iterations) {
+  # Sample one value from each input distribution
+  delta_Op <- sample(delta_Op_distribution, 1, replace = TRUE)
+  delta_Ow <- sample(delta_Ow_distribution, 1, replace = TRUE)
+  delta_ONBS120c <- sample(delta_ONBS120c_distribution, 1, replace = TRUE)
+  
+  # Simulate regression parameters and residual error
+  intercept_sim <- rnorm(1, mean = PLN_intercept, sd = PLN_intercept_se)
+  slope_sim <- rnorm(1, mean = PLN_slope, sd = PLN_slope_se)
+  residual_error <- rnorm(1, mean = 0, sd = residual_sd)
+  
+  # Calculate temperature for this iteration
+  temperature_simulations[i] <- intercept_sim + slope_sim * (
+    delta_Op + (22.6 - delta_ONBS120c) - delta_Ow
+  ) + residual_error
+}
 
 # Summarize the results
-mean_temperature <- mean(temperature_simulations)
-lower_95_CI <- quantile(temperature_simulations, probs = 0.025)
-upper_95_CI <- quantile(temperature_simulations, probs = 0.975)
+Tw_mean_temperature <- mean(temperature_simulations)
+Tw_lower_95_CI <- quantile(temperature_simulations, probs = 0.025)
+Tw_upper_95_CI <- quantile(temperature_simulations, probs = 0.975)
 
 # Display results
-cat("Mean Temperature (°C):", mean_temperature, "\n")
-cat("95% Confidence Interval (°C): [", lower_95_CI, ",", upper_95_CI, "]\n")
+cat("Mean Temperature (MAWSWT °C):", Tw_mean_temperature, "\n")
+cat("95% Confidence Interval (°C): [", Tw_lower_95_CI, ",", Tw_upper_95_CI, "]\n")
 
-# Calculate statistics
-mean_temp <- mean(temperature_simulations)
-ci_lower <- quantile(temperature_simulations, probs = 0.025)
-ci_upper <- quantile(temperature_simulations, probs = 0.975)
-
-# Create the histogram using ggplot2
-library(ggplot2)
-
+# Plot histogram of simulated MAWSWT means
 ggplot(data.frame(temperature_simulations), aes(x = temperature_simulations)) +
   geom_histogram(bins = 50, fill = "blue", color = "black", alpha = 0.7) +
   # Add vertical lines for mean and 95% CI
@@ -574,11 +607,11 @@ ggplot(data.frame(temperature_simulations), aes(x = temperature_simulations)) +
   geom_vline(xintercept = ci_lower, color = "blue", linetype = "dotted", size = 1) +
   geom_vline(xintercept = ci_upper, color = "blue", linetype = "dotted", size = 1) +
   # Add labels for the lines
-  annotate("text", x = mean_temp, y = 4000, label = paste("Mean:", round(mean_temp, 2)), 
+  annotate("text", x = mean_temp, y = 50, label = paste("Mean:", round(mean_temp, 2)), 
            color = "red", angle = 90, vjust = -0.5) +
-  annotate("text", x = ci_lower, y = 4000, label = paste("Lower 95% CI:", round(ci_lower, 2)), 
+  annotate("text", x = ci_lower, y = 50, label = paste("Lower 95% CI:", round(ci_lower, 2)), 
            color = "blue", angle = 90, vjust = -0.5) +
-  annotate("text", x = ci_upper, y = 4000, label = paste("Upper 95% CI:", round(ci_upper, 2)), 
+  annotate("text", x = ci_upper, y = 50, label = paste("Upper 95% CI:", round(ci_upper, 2)), 
            color = "blue", angle = 90, vjust = -0.5) +
   # Add titles and labels
   labs(title = "Simulated Temperature Distribution",
@@ -603,13 +636,12 @@ cat("Standard Error of the Mean:", se_mean_temp_sim, "\n")
 ## Temp Error Analysis ----------------------------------------------------------
 
 # Set up the number of Monte Carlo iterations
-n_iterations <- 1e5
+n_iterations <- 1e3
 
 # Calculate means of input variables
 mean_d18Op <- mean(synth_gar$means)
 mean_d18Ow <- mean(bootstrapped_d18Ow)
 mean_NIST <- mean(synth_NIST$means)
-
 
 # Set regression coefficients
 intercept_simulated <- PLN_intercept_simulated
@@ -723,35 +755,48 @@ library(ggplot2)
 set.seed(123) # For reproducibility
 
 # Regression coefficients from your model
-intercept <- 4.4788
-slope <- 0.7668
-intercept_se <- 3.5883
-slope_se <- 0.1340
-residual_sd <- 1.586 # Residual standard error from the model
+# Extract the regression coefficients and standard errors
+TwTa_model_summary <- summary(TwTa_lm_model)
+TwTa_intercept <- coef(TwTa_lm_model)[1]
+TwTa_slope <- coef(TwTa_lm_model)[2]
+TwTa_intercept_se <- coef(TwTa_model_summary)[1, "Std. Error"]  # Standard error for intercept
+TwTa_slope_se <- coef(TwTa_model_summary)[2, "Std. Error"]      # Standard error for slope
+
+# Extract residual error
+TwTa_residual_sd <- summary(TwTa_lm_model)$sigma
+
+cat("Standard Error for Intercept:", TwTa_intercept_se, "\n")
+cat("Standard Error for Slope:", TwTa_slope_se, "\n")
 
 # Monte Carlo simulation parameters
-n_iterations <- 1e5 # Number of Monte Carlo iterations
+n_iterations <- 1e3 # Number of Monte Carlo iterations
 
 # Provide your distribution of Tw_AMJJAS values
 Tw_distribution <- temperature_simulations
+str(temperature_simulations)
+str(Tw_distribution)
 
-# Vectorized Monte Carlo simulation
-# Simulate regression coefficients
-simulated_intercept <- rnorm(n_iterations, mean = intercept, sd = intercept_se)
-simulated_slope <- rnorm(n_iterations, mean = slope, sd = slope_se)
-residual_error <- rnorm(n_iterations, mean = 0, sd = residual_sd)
+# Monte Carlo simulation incorporating all uncertainties
+Ta_simulations <- sapply(Tw_distribution, function(Tw) {
+  TwTa_simulated_intercept <- rnorm(n_iterations, mean = TwTa_intercept, sd = TwTa_intercept_se)
+  TwTa_simulated_slope <- rnorm(n_iterations, mean = TwTa_slope, sd = TwTa_slope_se)
+  TwTa_residual_error <- rnorm(n_iterations, mean = 0, sd = TwTa_residual_sd)
+  Tw * TwTa_simulated_slope + TwTa_simulated_intercept + TwTa_residual_error
+})
 
-# Compute Ta for all iterations and Tw values in a single step
-Ta_simulations <- Tw_distribution * simulated_slope + simulated_intercept + residual_error
+# Compute mean and 95% CI for all simulations
+mean_Ta <- apply(Ta_simulations, 1, mean)
+Ta_lower_95_CI <- apply(Ta_simulations, 1, quantile, probs = 0.025)
+Ta_upper_95_CI <- apply(Ta_simulations, 1, quantile, probs = 0.975)
 
-# Compute statistics for each Tw value
-mean_Ta <- mean(Ta_simulations)
-lower_95_CI <- quantile(Ta_simulations, probs = 0.025)
-upper_95_CI <- quantile(Ta_simulations, probs = 0.975)
+# Overall mean and 95% CI
+overall_mean_Ta <- mean(mean_Ta)
+Ta_lower_95_CI <- mean(Ta_lower_95_CI)
+Ta_upper_95_CI <- mean(Ta_upper_95_CI)
 
 # Display results
-cat("Mean Temperature (°C):", mean_Ta, "\n")
-cat("95% Confidence Interval (°C): [", lower_95_CI, ",", upper_95_CI, "]\n")
+cat("Overall Mean Temperature (°C):", overall_mean_Ta, "\n")
+cat("95% Confidence Interval (°C): [", Ta_lower_95_CI, ",", Ta_upper_95_CI, "]\n")
 
 
 # Export Results ----------------------------------------------------------
@@ -784,3 +829,21 @@ print(water_sims)
 
 # Export to CSV
 write.csv(water_sims, file = "/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/d18Owater_MCsim_summary.csv", row.names = FALSE)
+
+mean_alld18Owater_synth <- mean_d18Ow
+alld18Owater_lower <- quantiles[1]
+alld18Owater_upper <- quantiles[2]
+
+
+# Create a data frame summarizing the results
+V1075_MC_output_summary <- data.frame(
+  Metric = c("Glyptops δ18Osw", "CrocG δ18Osw", "dual_d18Osw", "MAWSWT", "MAWSAT"),
+  Mean = c(mean_glyp_synthwater, mean_crocGwater_synth, mean_alld18Owater_synth, Tw_mean_temperature, overall_mean_Ta),
+  Lower_95_CI = c(glypwatersynth_lower_95_CI, crocGwatersynth_lower_95_CI, alld18Owater_lower, Tw_lower_95_CI, Ta_lower_95_CI),
+  Upper_95_CI = c(glypwatersynth_upper_95_CI, crocGwatersynth_upper_95_CI, alld18Owater_upper, Tw_upper_95_CI, Ta_upper_95_CI)
+)
+
+
+# write and export the .csv of results summary 
+write.csv(V1075_MC_output_summary, file = "/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/DataV1075_MCoutput_summary.csv", row.names = FALSE)
+

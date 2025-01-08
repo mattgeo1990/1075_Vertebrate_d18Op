@@ -154,13 +154,12 @@ d18Op + (118.7 - T) / 4.22
       1.753 * Tw - 
       16.079
   
-
     # Define coefficients
     intercept <- 3.72984
     slope <- 0.78520
     
     # Input Tw_AMJJAS value
-    Tw_AMJJAS <- 26  # Replace with your value
+    Tw_AMJJAS <- 26.71467  # Replace with your value
     
     # Calculate Ta_AMJJAS
     Ta_AMJJAS <- intercept + slope * Tw_AMJJAS

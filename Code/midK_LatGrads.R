@@ -129,7 +129,7 @@ LatTemp_WarmK[52]
     polygon(x_coords, y_coords_coolk, col = "gray", border = NA)
 
 # Add points
-  points(V1075TempLat$lat, V1075TempLat$temp, pch = 1, lwd = 1, cex = 1)
+  points(V1075TempLat$lat, 24, pch = 1, lwd = 1, cex = 1)
   points(OKTX_TempLat$lat, OKTX_TempLat$temp, pch =2, lwd = 1, cex = 1)
   points(RRTempLat$lat, RRTempLat$temp, pch =3, lwd = 1, cex = 1)
 
@@ -152,13 +152,148 @@ box.lwd = 0,
 pt.cex = 1,
 cex = 0.75)
 
+
+# Temperature -------------------------------------------------------------
+
+
+# Set Constant Parameters
+# Paleolatitude of Cloverly Formation (Vaes et al., 2023)
+Cloverly_Paleolat_mean <- 51.76046
+Cloverly_paleolat_CI_upper <- 50.20277
+Cloverly_paleolat_CI_lower <- 53.36299
+  
+# Create data frames for the main series and the confidence interval
+
+# data to include
+ALbian_LTG <- read.csv("/Users/allen/Documents/GitHub/CLC_paleoclimate/Data/PhanDA_LTG_Albian.csv")
+
+# create latitude vector for modern gradient
+lat <- seq(0,90,by=1)
+
+# create data frame with modern gradient data
+modern <- data.frame(
+  lat = lat,
+  temp = LatTempModern
+)
+
+# create objects for Judd et al 2024
+lat <- ALbian_LTG$Latitude
+LatTempNewUpper <- ALbian_LTG$LTG_95
+LatTempNewLower <- ALbian_LTG$LTG_05
+LatTempNewMean <- ALbian_LTG$LTG_50
+
+# create Judd et al 2024 data frame
+Judd24_Albian <- data.frame(
+  lat = lat,
+  temp_mean = LatTempNewMean,         # Central line of the new series
+  temp_lower = LatTempNewLower,       # Lower bound of confidence interval
+  temp_upper = LatTempNewUpper        # Upper bound of confidence interval
+)
+
+# Read V1075 data
+V1075_MC_output_summary <- read.csv("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/DataV1075_MCoutput_summary.csv")
+print(V1075_MC_output_summary)
+
+# Create V1075 objects for plotting
+V1075_MAWSAT_mean <- data.frame(lat = 52, temp = V1075_MC_output_summary[4,2]) # Replace with your actual coordinates
+V1075_MAWSAT_upper <- V1075_MC_output_summary[4,4]
+V1075_MAWSAT_lower <- V1075_MC_output_summary[4,3]
+
+# Create Suarez et al. (2021) Ruby Ranch objects for plotting
+# Ruby Ranch paleolat (Vaes et al., 2023 reconstruction based on lat: 38.81°N, long: 104.54°W of nearby Colorado Springs, CO)
+RRlat <- 45.34
+RRlat_upper <- 46.94
+RRlat_lower <- 43.79
+ 
+RRtemps <- c(38.6, 32.4, 31.3, 44.5, 19.8)
+RRTempLat <- data.frame(cbind(temp = RRtemps, lat = RRlat, proxy = "D47 CO3"))
+RRTempLat$lat <- as.numeric(RRTempLat$lat)
+RRTempLat$temp <- as.numeric(RRTempLat$temp)
+
+  
+# Kate A.'s Antlers Fm data
+# Trinity paleolat based on lat: 33.73°N, long: -97.16 of the I-35 bridge over the Red River, in vicinity of Kate's sampling sites (https://doi.org/10.1016/j.palaeo.2019.109491)
+OKTXlat <- 38.72
+OKTXlat_upper <- 40.3
+OKTXlat_lower <- 37.2
+
+# create new dataframe with V1075 temp datapoint and paleolat
+OKTX_Temps <- c(31,31,27,26)
+OKTXtemp_upper <- OKTX_TempLat$temp+3
+OKTXtemp_lower <- OKTX_TempLat$temp-3
+OKTX_TempLat <- data.frame(cbind(temp = OKTX_Temps, lat = OKTXlat, proxy = "D47 CO3"))
+OKTX_TempLat$temp <- as.numeric(OKTX_TempLat$temp)
+OKTX_TempLat$lat <- as.numeric(OKTX_TempLat$lat)
+
+OKTX_TempLat$lat_CI_upper <- OKTXlat_upper
+OKTX_TempLat$lat_CI_lower <- OKTXlat_lower
+
+OKTX_TempLat$temp_CI_upper <- OKTXtemp_upper
+OKTX_TempLat$temp_CI_lower <- OKTXtemp_lower
+
+
+# Create the ggplot with the main series, confidence interval, and V1075 MAWSAT
+ggplot() +
+  # Add the main series
+  geom_line(data = modern, aes(x = lat, y = temp), size = 1, color = "black", linetype = "dotted") +
+  # Add the shaded confidence interval
+  geom_ribbon(data = Judd24_Albian, aes(x = lat, ymin = temp_lower, ymax = temp_upper), 
+              fill = "gray", alpha = 0.5) +
+  # Add the central line of the new series
+  geom_line(data = Judd24_Albian, aes(x = lat, y = temp_mean), size = 1, color = "black") +
+  # Add V1075 mean simulated MAWSAT
+  geom_point(data = V1075_MAWSAT_mean, aes(x = lat, y = temp), size = 2, color = "black") +
+  # Add error bars for V1075 simulated MAWSAT
+  geom_errorbar(data = V1075_MAWSAT_mean, aes(x = lat, ymin = V1075_MAWSAT_lower, ymax = V1075_MAWSAT_upper), 
+                width = 0.5, color = "black") +
+  geom_errorbar(data = V1075_MAWSAT_mean, aes(y = temp, xmin = Cloverly_paleolat_CI_lower, xmax = Cloverly_paleolat_CI_upper), 
+                width = 0.5, color = "black") +
+  # Add Suarez et al. (2021) Ruby Ranch temperatures
+  geom_point(data =  RRTempLat, aes(x = lat, y = temp), size = 2, color = "black", shape = 1) +
+  # Add latitude 95% CI error bars for Suarez
+  geom_errorbar(data = RRTempLat, aes(y = temp, xmin = RRlat_lower, xmax = RRlat_upper), 
+                width = 0.5, color = "black") +
+  # Add Kate A.'s Antlers Fm temperatures
+  geom_point(data =  OKTX_TempLat, aes(x = lat, y = temp), size = 2, color = "black", shape = 5) +
+  # Add latitude 95% CI error bars for Antlers
+  geom_errorbar(data = OKTX_TempLat, aes(y = temp, xmin = lat_CI_lower, xmax = lat_CI_upper), 
+                width = 0.5, color = "black") +
+  # Set axis limits
+  coord_cartesian(xlim = c(35, 55), ylim = c(0, 50)) +
+  # Add axis labels
+  labs(
+    x = expression(paste("Latitude (", degree, "N)")),
+    y = expression(paste("T (", degree, "C)"))
+  ) +
+  # Apply minimal theme
+  theme_minimal() +
+  # Customize axis text and title sizes
+  theme(
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 14)
+  )
+
+n <- length(temperature_simulations)
+se <- 8.750734 / sqrt(n)
+
 # Water Isotopes ----------------------------------------------------------
 
 # Aptian-Albian turtles (Suarez et al., 2020)
 
     setwd("/Users/allen/Documents/Data Analysis/Data/Geochem")
     CelinaTurtles <- read.csv("SuarezEtAl2020_AptianAlbianTurtleDATA.csv")
+    str(CelinaTurtles)
     
+    c <- CelinaTurtles[which(CelinaTurtles$Taxon %in% c("Glyptops sp?", "Glyptops", "Trionychoidea", "Trionyclidae")),]
+    
+    table(c$Member)
+    table(CelinaTurtles$Member)
+    
+    CelinaTurtles[which(CelinaTurtles$Formation %in% c("Holly Creek", "Cedar Mountain")),]
+    
+    Suarez_turtles <- CelinaTurtles[which(CelinaTurtles$Taxon %in% c("Glyptops sp?", "Glyptops", "Trionychoidea", "Trionyclidae")),]
+    
+
     table(CelinaTurtles$Formation)
     table(CelinaTurtles$Member)
     
@@ -191,10 +326,10 @@ cex = 0.75)
 LatMeteoric_Modern <- -0.003* (lat^2) + 0.0595* lat - 3.699 #Rozanski et al., 1993
 LatMeteoric_CoolK <- -0.005 * (lat^2) + 0.1137 * lat - 5.270 #Barron (1983)
 LatMeteoric_WarmK <- -0.005 * (lat^2) + 0.1299 * lat - 4.901 #Barron (1983)
-#LatMeteoric_GENESIS_MOM <- -0.005* (lat^2) +0.0730* lat - 4.001 #Zhou et al. (2008)
+LatMeteoric_GENESIS_MOM <- -0.005* (lat^2) +0.0730* lat - 4.001 #Zhou et al. (2008)
 
 #LatPedocarb <- -0.0042* (lat^2) + 0.08* lat - 4.33 #Suarez et al. 2011
-
+# Latitude vs Meteoric water d180 (see Table 1, Suarez et al. 2011)
 
 
 # create delta notation for label
@@ -299,10 +434,10 @@ cex = 0.75)
 
 # Celina's data ---------------------------------------------------------
 
-litdata_d18Op_BySpec <- read.csv("lit_data_BySpec.csv")
+litdata_d18Op_BySpec <- read.csv("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/Data/lit_data_BySpec.csv")
 
 colnames(litdata_d18Op_BySpec)
-unique(lit_data_BySpec$formation)
+unique(litdata_d18Op_BySpec$formation)
 
 Suarez_d18Op_BySpec <- subset(litdata_d18Op_BySpec, formation %in% c("Holly Creek", "Cedar Mountain", "Cloverly"))
 
@@ -317,6 +452,99 @@ unique(Suarez_d18Op_BySpec$eco_type)
 Suarez_d18Op_BySpec <- subset(Suarez_d18Op_BySpec, eco_type %in% c("croc", "turtle indet.", "aquatic turtle", "terrestrial turtle"))
 
 
+# New d18Ow ---------------------------------------------------------------
+
+# create data frame with modern d18Ow~lat gradient
+d18Ow_lat_modern <- data.frame(
+  lat = lat,              # Replace 'lat' with your actual latitude vector
+  d18Ow = (-0.003* (lat^2) + 0.0595* lat - 3.699)   # Replace 'LatTempModern' with your actual data vector
+)
+
+# create data frame with Suarez coolK d18Ow~lat gradient
+d18Ow_lat_coolk <- data.frame(
+  lat = lat,              
+  d18Ow = (-0.005 * (lat^2) + 0.1137 * lat - 5.270)   
+)
+
+# create data frame with Suarez warmK d18Ow~lat gradient
+d18Ow_lat_warmk <- data.frame(
+  lat = lat,              
+  d18Ow = (-0.005 * (lat^2) + 0.1299 * lat - 4.901)   
+)
+
+# create data frame with Suarez warmK d18Ow~lat gradient
+d18Ow_lat_GENMOM <- data.frame(
+  lat = lat,            
+  d18Ow = (-0.005* (lat^2) +0.0730* lat - 4.001)
+)
+
+
+# add V1075 d18Ow data
+V1075_MC_output_summary <- read.csv("/Users/allen/Documents/GitHub/1075_Vertebrate_d18Op/DataV1075_MCoutput_summary.csv")
+print(V1075_MC_output_summary)
+V1075_dual_d18Osw <- V1075_MC_output_summary[3,1:4]
+V1075_dual_d18Osw$lat <- Cloverly_Paleolat_mean
+V1075_dual_d18Osw$lat_upper <- Cloverly_paleolat_CI_upper
+V1075_dual_d18Osw$lat_lower <- Cloverly_paleolat_CI_lower
+
+str(V1075_dual_d18Osw)
+
+# Create ggplot for d18Ow~lat gradients
+ggplot(data = d18Ow_lat_modern, aes(x = lat, y = d18Ow)) +
+  geom_line(size = 1, color = "black", linetype = 3) + # Line style and thickness
+  # CoolK
+  geom_line(data = d18Ow_lat_coolk, aes(x = lat, y = d18Ow), color = "#0072B2", size = 1) +
+  # WarmK
+  geom_line(data = d18Ow_lat_warmk, aes(x = lat, y = d18Ow), color = "#D55E00", size = 1) +
+  # GENMOM 
+  geom_line(data = d18Ow_lat_GENMOM, aes(x = lat, y = d18Ow), color = "#009E73", size = 1) +
+  # add V1075 data
+  geom_point(data = V1075_dual_d18Osw, aes(x = lat, y = Mean), size = 2, color = "black", shape = 5) +
+  # Add latitude 95% CI error bars for V1075
+  geom_errorbarh(data = V1075_dual_d18Osw, aes(y = Mean, xmin = lat_lower, xmax = lat_upper), 
+                  height = 0.5, color = "black") +
+  # Add Celina's data
+  geom_point(data = CelinaTurtles, aes(x = Palaeolatitude, y = d18Ow), size = 2, color = "black", shape = 5) +
+  # Set axis limits
+  coord_cartesian(xlim = c(35, 55), ylim = c(-20, 0)) +
+  # Add axis labels
+  labs(
+    x = expression(paste("Latitude (", degree, "N)")),
+    y = expression("δ"^18 * "O"[sw] * "(‰ V-SMOW)")
+  ) +
+  # Apply minimal theme
+  theme_minimal() +
+  # Customize axis text and title sizes
+  theme(
+    panel.grid = element_blank(),                      # Remove grid lines
+    panel.border = element_rect(color = "black", fill = NA), # Add border
+    axis.ticks = element_line(color = "black"),        # Keep axis tick marks
+    axis.text = element_text(size = 12),               # Customize axis text size
+    axis.title = element_text(size = 14)               # Customize axis title size
+  )
+
+
+# ggplot junkyard
+
+
+# Add V1075 mean simulated MAWSAT
+  geom_point(data = V1075_MAWSAT_mean, aes(x = lat, y = temp), size = 2, color = "black") +
+  # Add error bars for V1075 simulated MAWSAT
+  geom_errorbar(data = V1075_MAWSAT_mean, aes(x = lat, ymin = V1075_MAWSAT_lower, ymax = V1075_MAWSAT_upper), 
+                width = 0.5, color = "black") +
+  geom_errorbar(data = V1075_MAWSAT_mean, aes(y = temp, xmin = Cloverly_paleolat_CI_lower, xmax = Cloverly_paleolat_CI_upper), 
+                width = 0.5, color = "black") +
+  # Add Suarez et al. (2021) Ruby Ranch temperatures
+  geom_point(data =  RRTempLat, aes(x = lat, y = temp), size = 2, color = "black", shape = 1) +
+  # Add latitude 95% CI error bars for Suarez
+  geom_errorbar(data = RRTempLat, aes(y = temp, xmin = RRlat_lower, xmax = RRlat_upper), 
+                width = 0.5, color = "black") +
+  # Add Kate A.'s Antlers Fm temperatures
+  geom_point(data =  OKTX_TempLat, aes(x = lat, y = temp), size = 2, color = "black", shape = 5) +
+  # Add latitude 95% CI error bars for Antlers
+  geom_errorbar(data = OKTX_TempLat, aes(y = temp, xmin = lat_CI_lower, xmax = lat_CI_upper), 
+                width = 0.5, color = "black") +
+  
 
 # Plot all d18Omw. This might not actually be useful --------
 
@@ -362,3 +590,4 @@ polygon(x_coords, y_coords_warmk, col = "gray", border = NA)
 
 # Add points
 points(Glyp$d18Owater, Glyp$paleolat, pch = 4, col="black", lwd = 1, cex = 10)
+
