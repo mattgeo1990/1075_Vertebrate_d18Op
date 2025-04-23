@@ -6,7 +6,9 @@ raw <- read.csv("V1075_PhosphateData_8-18-23_copy.csv")
 NIST120c <- read.csv("V1075_NIST120c.csv")
 
 # Remove d18OVSMOW column from V1075_BySpec, this column is an artifact
-V1075_BySpec <- V1075_BySpec %>% select(-d18O..VSMOW.)
+  # Apparently this isn't a prolem anymore!
+    # V1075_BySpec <- V1075_BySpec %>% select(-d18O..VSMOW.)
+  
 # Remove Allosauroid data, it can't be used for stats because n = 1
 V1075_BySpec_forstats <- V1075_BySpec[which(V1075_BySpec$Taxon != "Allosauroid"),]
 table(V1075_BySpec_forstats$Taxon)
@@ -103,13 +105,17 @@ d18Op + (118.7 - T) / 4.22
     
     mean_turtle_d18Op <- mean(turtle$d18O)
     turtle_water <- 1.01 *(mean_turtle_d18Op) - 22.3
-     # I am satisfied with this value, it is consistent
+    # what if we compute from each d18Op value?
+    turtle_waterZZZZ <- 1.01 *(turtle$d18O) - 22.3 
+    summary(turtle_waterZZZZ)
 
 #from croc
     # d18Owater <- 0.82 * V1075_BySpec$d18O - 19.93
 
     mean_crocg_d18Op <- mean(croc_g$d18O)
     croc_water <- 0.82 * mean_crocg_d18Op - 19.93
+    # what about calc of each d18Op point?
+    croc_waterZZZZ <- 0.82 * croc_g$d18O - 19.93
     
     
     
@@ -144,7 +150,9 @@ d18Op + (118.7 - T) / 4.22
     allwater <- mean(turtle_water,croc_water)
     temp_multitaxa <- 118.7 - 4.22*((mean_d18Op_gar_all  +(22.6 - NIST120c_mean)) - allwater) 
    
-   
+    variable_water <- -7.4
+118.7 - 4.22*((mean_d18Op_gar_all  +(22.6 - NIST120c_mean)) - variable_water) 
+    
 # Transfer Function -------------------------------------------------------
     # water temp
    # Tw <- temp_TurtleFishall

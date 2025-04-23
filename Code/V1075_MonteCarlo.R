@@ -599,25 +599,8 @@ Tw_upper_95_CI <- quantile(temperature_simulations, probs = 0.975)
 cat("Mean Temperature (MAWSWT °C):", Tw_mean_temperature, "\n")
 cat("95% Confidence Interval (°C): [", Tw_lower_95_CI, ",", Tw_upper_95_CI, "]\n")
 
-# Plot histogram of simulated MAWSWT means
-ggplot(data.frame(temperature_simulations), aes(x = temperature_simulations)) +
-  geom_histogram(bins = 50, fill = "blue", color = "black", alpha = 0.7) +
-  # Add vertical lines for mean and 95% CI
-  geom_vline(xintercept = mean_temp, color = "red", linetype = "dashed", size = 1) +
-  geom_vline(xintercept = ci_lower, color = "blue", linetype = "dotted", size = 1) +
-  geom_vline(xintercept = ci_upper, color = "blue", linetype = "dotted", size = 1) +
-  # Add labels for the lines
-  annotate("text", x = mean_temp, y = 50, label = paste("Mean:", round(mean_temp, 2)), 
-           color = "red", angle = 90, vjust = -0.5) +
-  annotate("text", x = ci_lower, y = 50, label = paste("Lower 95% CI:", round(ci_lower, 2)), 
-           color = "blue", angle = 90, vjust = -0.5) +
-  annotate("text", x = ci_upper, y = 50, label = paste("Upper 95% CI:", round(ci_upper, 2)), 
-           color = "blue", angle = 90, vjust = -0.5) +
-  # Add titles and labels
-  labs(title = "Simulated Temperature Distribution",
-       x = "Temperature (°C)",
-       y = "Frequency") +
-  theme_minimal()
+# Plot histogram of simulated MAWSWT means???
+    # GGPLOT CODE HERE
 
 # Summary of temperature simulations
 summary(temperature_simulations)
@@ -798,17 +781,23 @@ Ta_upper_95_CI <- mean(Ta_upper_95_CI)
 cat("Overall Mean Temperature (°C):", overall_mean_Ta, "\n")
 cat("95% Confidence Interval (°C): [", Ta_lower_95_CI, ",", Ta_upper_95_CI, "]\n")
 
+# Create a dataframe
+out_Ta <- data.frame(
+  Overall_Mean_Temperature_C = overall_mean_Ta,
+  Lower_95_CI_C = Ta_lower_95_CI,
+  Upper_95_CI_C = Ta_upper_95_CI
+)
 
 # Export Results ----------------------------------------------------------
 
 cat("Mean crocG d18Owater:", round(mean_crocGwater_synth, 2), "\n")
-cat("95% CI for crocG d18Owater: [", round(crocGwatersynth_lower_95_CI, 2), ",", round(crocwatersynth_upper_95_CI, 2), "]\n")
+cat("95% CI for crocG d18Owater: [", round(crocGwatersynth_lower_95_CI, 2), ",", round(crocGwatersynth_upper_95_CI, 2), "]\n")
 
 cat("Mean crocA d18Owater:", round(mean_crocAwater_synth, 2), "\n")
-cat("95% CI for crocA d18Owater: [", round(crocAwatersynth_lower_95_CI, 2), ",", round(crocwatersynth_upper_95_CI, 2), "]\n")
+cat("95% CI for crocA d18Owater: [", round(crocAwatersynth_lower_95_CI, 2), ",", round(crocAwatersynth_upper_95_CI, 2), "]\n")
 
 cat("Mean crocB d18Owater:", round(mean_crocBwater_synth, 2), "\n")
-cat("95% CI for crocB d18Owater: [", round(crocBwatersynth_lower_95_CI, 2), ",", round(crocwatersynth_upper_95_CI, 2), "]\n")
+cat("95% CI for crocB d18Owater: [", round(crocBwatersynth_lower_95_CI, 2), ",", round(crocBwatersynth_upper_95_CI, 2), "]\n")
 
 cat("Mean Glyptops d18Owater:", round(mean_glyp_synthwater, 2), "\n")
 cat("95% CI for Glyptops d18Owater: [", round(glypwatersynth_lower_95_CI, 2), ",", round(glypwatersynth_upper_95_CI, 2), "]\n")

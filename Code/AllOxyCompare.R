@@ -821,3 +821,29 @@ V1075_ByEco
     labs(x = "d18O", y = "Taxon", title = "Taxon by d18O at Site LSM")  
 
   
+  
+# Plotting by turtle taxon
+  # Basic boxplot of d18O by taxon
+  ggplot(Celina_turtles, aes(x = taxon, y = d18O)) +
+         geom_boxplot(fill = "lightblue", color = "darkblue") +
+         geom_jitter(width = 0.1, alpha = 0.6) +
+         theme_minimal() +
+         labs(
+               title = expression(paste(delta^{18}, "O by Taxon")),
+               x = "Taxon",
+               y = expression(delta^{18}*O~"(‰ VSMOW)")
+           ) +
+         theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+  # Basic boxplot of d18O by taxon
+  ggplot(Celina_turtles, aes(x = formation, y = d18O)) +
+    geom_boxplot(fill = "lightblue", color = "darkblue") +
+    geom_jitter(width = 0.1, alpha = 0.6) +
+    theme_minimal() +
+    labs(
+      title = expression(paste(delta^{18}, "O by formation")),
+      x = "Taxon",
+      y = expression(delta^{18}*O~"(‰ VSMOW)")
+    ) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  

@@ -219,8 +219,8 @@ OKTXlat_lower <- 37.2
 
 # create new dataframe with V1075 temp datapoint and paleolat
 OKTX_Temps <- c(31,31,27,26)
-OKTXtemp_upper <- OKTX_TempLat$temp+3
-OKTXtemp_lower <- OKTX_TempLat$temp-3
+OKTXtemp_upper <- (as.numeric(OKTX_TempLat$temp)) + 3
+OKTXtemp_lower <- (as.numeric(OKTX_TempLat$temp))-3
 OKTX_TempLat <- data.frame(cbind(temp = OKTX_Temps, lat = OKTXlat, proxy = "D47 CO3"))
 OKTX_TempLat$temp <- as.numeric(OKTX_TempLat$temp)
 OKTX_TempLat$lat <- as.numeric(OKTX_TempLat$lat)
@@ -454,6 +454,10 @@ Suarez_d18Op_BySpec <- subset(Suarez_d18Op_BySpec, eco_type %in% c("croc", "turt
 
 # New d18Ow ---------------------------------------------------------------
 
+# Add CLC clumped d18Owater data
+CLC_D47_d18Owater_results <- read.csv("/Users/allen/Documents/GitHub/CLC_paleoclimate/Data/CLC_D47_d18Owater_results.csv")
+CLC_D47_d18Owater_results$Paleolatitude <- 52
+
 # create data frame with modern d18Ow~lat gradient
 d18Ow_lat_modern <- data.frame(
   lat = lat,              # Replace 'lat' with your actual latitude vector
@@ -505,6 +509,8 @@ ggplot(data = d18Ow_lat_modern, aes(x = lat, y = d18Ow)) +
                   height = 0.5, color = "black") +
   # Add Celina's data
   geom_point(data = CelinaTurtles, aes(x = Palaeolatitude, y = d18Ow), size = 2, color = "black", shape = 5) +
+  # Add CLC cumped d18Owater data
+  geom_point(data = CLC_D47_d18Owater_results, aes(x = Paleolatitude, y =   d18Owater_VSMOW), size = 2, color = "red", shape = 2) +
   # Set axis limits
   coord_cartesian(xlim = c(35, 55), ylim = c(-20, 0)) +
   # Add axis labels
